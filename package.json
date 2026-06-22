@@ -1,0 +1,24 @@
+{
+  "name": "taskaholic",
+  "version": "1.0.0",
+  "description": "Taskaholic is a Smart Campus web-based application that is designed for supporting students in the management of their academic-related responsibilities. It falls under the Student Academic Management System category since it is a system used for organizing tasks, monitoring progress, and receiving notifications to improve time management and student productivity in a university setting.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreikristoffermanrique/Taskaholic.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/andreikristoffermanrique/Taskaholic/issues"
+  },
+  "homepage": "https://github.com/andreikristoffermanrique/Taskaholic#readme",
+  "dependencies": {
+    "firebase": "^12.15.0"
+  }
+}

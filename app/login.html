@@ -37,15 +37,15 @@
                 <p>We're happy to see you again!</p>
             </div>
 
-            <form action="#" class="auth-form">
+            <form action="#" class="auth-form" id="login-form">
                 <div class="input-group">
                     <i class="fa-regular fa-envelope input-icon"></i>
-                    <input type="email" placeholder="Gbox account" required>
+                    <input type="email" id="login-email" placeholder="Gbox account" required>
                 </div>
 
                 <div class="input-group">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" placeholder="Password" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
                     <i class="fa-regular fa-eye show-password-icon"></i>
                 </div>
 
@@ -63,5 +63,6 @@
         </div>
     </div>
 
+    <script type="module" src="login.js"></script>
 </body>
 </html>
