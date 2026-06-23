@@ -1,0 +1,212 @@
+/* --- Base Styles & Resets --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+/* --- Layout Container --- */
+.auth-container {
+    display: flex;
+    width: 950px;
+    height: 650px; /* Slightly taller to fit registration fields */
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* --- Modular Panels --- */
+.brand-panel {
+    flex: 0.9;
+    background-color: #FBEFEF;
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.form-panel {
+    flex: 1.1;
+    padding: 40px 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* --- Brand Side Elements --- */
+.brand-header {
+    margin-top: 10px;
+}
+
+.logo-title {
+    font-family: 'Laila', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 4px;
+}
+
+.brand-subtitle {
+    font-size: 11px;
+    color: #555;
+    font-style: italic;
+    line-height: 1.3;
+}
+
+.logo-container {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-logo {
+    max-width: 250px;
+    height: auto;
+}
+
+/* Registration specific brand footer */
+.brand-footer-centered {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.brand-footer-centered h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #000;
+}
+
+.brand-footer-centered p {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.4;
+}
+
+/* --- Form Header Elements --- */
+.form-header-left {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.form-header-left h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #000;
+}
+
+.form-header-left p {
+    font-size: 13px;
+    font-style: italic;
+    color: #666;
+}
+
+/* --- Form Input Elements --- */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input-wrapper label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #000;
+}
+
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 16px;
+    color: #666;
+    font-size: 14px;
+}
+
+.show-password-icon {
+    position: absolute;
+    right: 16px;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 45px;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #F5AFAF;
+}
+
+.input-group input::placeholder {
+    color: #888;
+}
+
+/* --- Form Action Buttons --- */
+.auth-btn {
+    margin-top: 15px;
+    padding: 14px;
+    background: linear-gradient(to right, #FBEFEF, #F9DFDF, #F5AFAF);
+    border: none;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #C24275;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.auth-btn:hover {
+    opacity: 0.85;
+}
+
+/* --- Footer Links --- */
+.form-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 12px;
+    color: #555;
+}
+
+.accent-link {
+    color: #C24275;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.accent-link:hover {
+    text-decoration: underline;
+}
