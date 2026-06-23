@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - My Tasks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
+                <h1 class="brand-title">Taskaholic</h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item" onclick="handleNavigation('workload')">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Workload Overview</span>
+                </a>
+                <a href="dashboard.html" class="nav-item" onclick="handleNavigation('dashboard')">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item active" onclick="handleNavigation('tasks')">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    <span>My Tasks</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('shared')">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Shared Tasks</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('notifications')">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('settings')">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('profile')">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <a href="#" class="logout-btn" onclick="handleLogout(event)">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <div class="welcome-text">
+                    <h2>Good Day, [name] !</h2>
+                    <p>Manage and organize all your tasks</p>
+                </div>
+                <button class="add-task-btn" onclick="openAddTaskModal()">
+                    <i class="fa-solid fa-plus"></i> Add Tasks
+                </button>
+            </header>
+
+            <section class="task-filter-stacked-container">
+                <div class="search-row-wrapper">
+                    <div class="search-box-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" placeholder="Search Tasks" id="taskSearchInput" oninput="executeTaskSearch()">
+                    </div>
+                </div>
+
+                <div class="dropdowns-row-wrapper">
+                    <select class="filter-dropdown" id="categoryFilter" onchange="applyFilters()">
+                        <option value="all">All categories</option>
+                        <option value="academic">Academic</option>
+                        <option value="project">Project</option>
+                        <option value="personal">Personal</option>
+                    </select>
+
+                    <select class="filter-dropdown" id="priorityFilter" onchange="applyFilters()">
+                        <option value="all">All priorities</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+
+                    <select class="filter-dropdown" id="statusFilter" onchange="applyFilters()">
+                        <option value="all">All statuses</option>
+                        <option value="todo">To Do</option>
+                        <option value="progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+
+                    <select class="filter-dropdown" id="dateSortFilter" onchange="applyFilters()">
+                        <option value="duedate">Due Date</option>
+                        <option value="created">Date Created</option>
+                    </select>
+
+                    <select class="filter-dropdown" id="actionsBulkFilter" onchange="applyBulkAction()">
+                        <option value="actions" selected disabled>Actions</option>
+                        <option value="delete">Delete Selected</option>
+                        <option value="mark-complete">Mark Completed</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="tasks-table-main-container">
+                <table class="master-data-grid-table">
+                    <thead>
+                        <tr>
+                            <th>Task Title</th>
+                            <th>Category</th>
+                            <th>Priority</th>
+                            <th>Due Date</th>
+                            <th>Statuses</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+
+                <div class="empty-state-fallback-view" id="emptyStateContainer">
+                    <div class="fallback-graphic-icon">
+                        <div class="clipboard-mock-vector">
+                            <span class="clip-top"></span>
+                            <span class="line short"></span>
+                            <span class="line long"></span>
+                            <span class="line medium"></span>
+                        </div>
+                    </div>
+                    <p class="fallback-message-text">No Tasks Found</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function handleNavigation(pageKey) {
+            console.log("Navigating to: " + pageKey);
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                window.location.href = "login.html"; 
+            }
+        }
+
+        function openAddTaskModal() {
+            alert("Opening Add Task panel.");
+        }
+
+        function executeTaskSearch() {
+            const query = document.getElementById('taskSearchInput').value;
+            console.log("Searching: " + query);
+        }
+
+        function applyFilters() {
+            console.log("Filters applied.");
+        }
+
+        function applyBulkAction() {
+            const selectVal = document.getElementById('actionsBulkFilter').value;
+            alert("Bulk action selected: " + selectVal.toUpperCase());
+            document.getElementById('actionsBulkFilter').value = "actions"; 
+        }
+    </script>
+</body>
+</html>

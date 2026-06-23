@@ -1,4 +1,6 @@
-/* --- Base Styles & Resets --- */
+/* ==========================================
+   1. BASE STYLES & RESETS
+   ========================================== */
 * {
     margin: 0;
     padding: 0;
@@ -12,19 +14,20 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    color: #333;
+    color: #333333;
 }
 
-/* --- Layout Container --- */
+/* ==========================================
+   2. AUTH PANEL (LOGIN & REGISTRATION)
+   ========================================== */
 .auth-container {
     display: flex;
     width: 950px;
-    height: 650px; /* Slightly taller to fit registration fields */
+    height: 650px;
     background-color: #FFFFFF;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-/* --- Modular Panels --- */
 .brand-panel {
     flex: 0.9;
     background-color: #FBEFEF;
@@ -43,7 +46,6 @@ body {
     justify-content: center;
 }
 
-/* --- Brand Side Elements --- */
 .brand-header {
     margin-top: 10px;
 }
@@ -52,13 +54,13 @@ body {
     font-family: 'Laila', serif;
     font-size: 48px;
     font-weight: 700;
-    color: #000;
+    color: #000000;
     margin-bottom: 4px;
 }
 
 .brand-subtitle {
     font-size: 11px;
-    color: #555;
+    color: #555555;
     font-style: italic;
     line-height: 1.3;
 }
@@ -75,7 +77,6 @@ body {
     height: auto;
 }
 
-/* Registration specific brand footer */
 .brand-footer-centered {
     text-align: center;
     margin-bottom: 10px;
@@ -85,16 +86,15 @@ body {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;
-    color: #000;
+    color: #000000;
 }
 
 .brand-footer-centered p {
     font-size: 12px;
-    color: #444;
+    color: #444444;
     line-height: 1.4;
 }
 
-/* --- Form Header Elements --- */
 .form-header-left {
     text-align: left;
     margin-bottom: 30px;
@@ -104,16 +104,15 @@ body {
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 6px;
-    color: #000;
+    color: #000000;
 }
 
 .form-header-left p {
     font-size: 13px;
     font-style: italic;
-    color: #666;
+    color: #666666;
 }
 
-/* --- Form Input Elements --- */
 .auth-form {
     display: flex;
     flex-direction: column;
@@ -130,7 +129,7 @@ body {
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 6px;
-    color: #000;
+    color: #000000;
 }
 
 .input-group {
@@ -142,14 +141,14 @@ body {
 .input-icon {
     position: absolute;
     left: 16px;
-    color: #666;
+    color: #666666;
     font-size: 14px;
 }
 
 .show-password-icon {
     position: absolute;
     right: 16px;
-    color: #666;
+    color: #666666;
     cursor: pointer;
     font-size: 14px;
 }
@@ -157,7 +156,7 @@ body {
 .input-group input {
     width: 100%;
     padding: 12px 45px;
-    border: 1px solid #CCC;
+    border: 1px solid #CCCCCC;
     border-radius: 8px;
     font-family: 'Inter', sans-serif;
     font-size: 13px;
@@ -170,10 +169,9 @@ body {
 }
 
 .input-group input::placeholder {
-    color: #888;
+    color: #888888;
 }
 
-/* --- Form Action Buttons --- */
 .auth-btn {
     margin-top: 15px;
     padding: 14px;
@@ -192,12 +190,11 @@ body {
     opacity: 0.85;
 }
 
-/* --- Footer Links --- */
 .form-footer {
     text-align: center;
     margin-top: 25px;
     font-size: 12px;
-    color: #555;
+    color: #555555;
 }
 
 .accent-link {
@@ -210,58 +207,565 @@ body {
 .accent-link:hover {
     text-decoration: underline;
 }
-/* --- Login Specific Alignments --- */
-.brand-footer-left {
-    text-align: left;
-    margin-bottom: 10px;
+
+/* ==========================================
+   3. MAIN DASHBOARD PANELS & LAYOUT
+   ========================================== */
+.dashboard-container {
+    display: flex;
+    width: 1020px;
+    height: 680px;
+    background-color: #FCF8F8;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+    overflow: hidden;
 }
 
-.brand-footer-left h2 {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: #000;
+/* --- Left Sidebar Component --- */
+.sidebar-panel {
+    width: 280px;
+    background-color: #FBEFEF;
+    padding: 35px 24px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-.brand-footer-left p {
-    font-size: 12px;
-    color: #444;
-    line-height: 1.4;
-}
-
-.form-header-center {
-    text-align: center;
-    margin-bottom: 35px;
-}
-
-.form-header-center h2 {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    color: #000;
-}
-
-.form-header-center p {
-    font-size: 13px;
-    font-style: italic;
-    color: #666;
-}
-
-/* --- Form Checkbox --- */
-.remember-me {
+.brand-wrapper {
     display: flex;
     align-items: center;
-    font-size: 12px;
-    color: #555;
-    cursor: pointer;
-    gap: 8px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding-left: 8px;
 }
 
-.remember-me input {
-    accent-color: #F5AFAF;
-    width: 13px;
-    height: 13px;
+.brand-logo-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+}
+
+.brand-title {
+    font-family: 'Laila', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 20px;
+    color: #444444;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background-color: transparent;
+    transition: all 0.2s ease;
     cursor: pointer;
+}
+
+.nav-item i {
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+}
+
+.nav-item:hover:not(.active) {
+    background-color: rgba(245, 175, 175, 0.15);
+    color: #000000;
+}
+
+.nav-item.active {
+    background-color: #F5AFAF;
+    border-color: #000000;
+    color: #000000;
+    font-weight: 600;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #000000;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 12px;
+    margin-top: auto;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================
+   4. DASHBOARD CONTENT ELEMENTS
+   ========================================== */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.welcome-text h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 4px;
+}
+
+.welcome-text p {
+    font-size: 13px;
+    color: #555555;
+}
+
+.add-task-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #F5AFAF;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.add-task-btn:hover {
+    background-color: #e39e9e;
+}
+
+.add-task-btn:active {
+    transform: scale(0.98);
+}
+
+/* --- Metrics Grid --- */
+.stats-container-row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    background-color: #FBEFEF;
+    border: 1px solid #000000;
+    border-radius: 14px;
+    padding: 16px;
+    width: 100%;
+}
+
+.stat-card {
+    background-color: #F5AFAF;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 76px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card:active {
+    transform: translateY(0);
+}
+
+.stat-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1.1;
+}
+
+.stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #000000;
+    margin-top: 2px;
+}
+
+.stat-icon-circle {
+    width: 30px;
+    height: 30px;
+    background-color: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #F5AFAF;
+    font-size: 12px;
+}
+
+/* --- Bottom Panels --- */
+.data-panels {
+    display: flex;
+    gap: 20px;
+    flex: 1;
+}
+
+.data-card {
+    background-color: #FBEFEF;
+    border: 1px solid #000000;
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.upcoming-deadlines {
+    flex: 1.1;
+}
+
+.progress-overview {
+    flex: 0.9;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.card-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.view-all-btn {
+    background-color: #FCF8F8;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.view-all-btn:hover {
+    background-color: #f2e6e6;
+}
+
+/* Table */
+.table-container {
+    border: 1px solid #000000;
+    background-color: #FCF8F8;
+    border-radius: 4px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.deadlines-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.deadlines-table th {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid #000000;
+    background-color: #F5AFAF;
+}
+
+.deadlines-table th:last-child {
+    text-align: right;
+}
+
+/* --- Enlarged SVG Multi-Segment Donut Chart Layout --- */
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    margin-bottom: 10px;
+    min-height: 180px; /* Provides steady height room for the updated size */
+}
+
+.progress-chart-wrapper {
+    position: relative;
+    width: 165px;
+    height: 165px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-ring-svg {
+    transform: rotate(-90deg); /* Starts rendering from the exact top */
+    width: 100%;
+    height: 100%;
+}
+
+.progress-ring-svg circle {
+    stroke-linecap: normal;
+}
+
+.chart-inner-label {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.chart-percentage {
+    font-size: 32px; /* Amplified inner text sizing for visual parity */
+    font-weight: 700;
+    color: #000000;
+    line-height: 1;
+}
+
+.chart-subtext {
+    font-size: 12px;
+    color: #666666;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: auto;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #000000;
+    border-radius: 2px;
+    display: inline-block;
+}
+
+.legend-color.academic { background-color: #FCF8F8; }
+.legend-color.project { background-color: #F5AFAF; }
+.legend-color.personal { background-color: #F9DFDF; }
+
+/* ==========================================
+   5. TASKS VIEW MODULE LAYOUTS (STACKED FILTERS)
+   ========================================== */
+.task-filter-stacked-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+/* Row 1: Search container alignment alignment */
+.search-row-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.search-box-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 165px; /* Slightly widened frame layout for typography space balance */
+}
+
+.search-box-wrapper .search-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 13px;
+    color: #333333;
+}
+
+.search-box-wrapper input {
+    width: 100%;
+    padding: 7px 10px 7px 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    background-color: #FFFFFF;
+    color: #333333;
+    border: 1px solid #000000;
+    border-radius: 12px;
+    outline: none;
+}
+
+/* Row 2: Filter elements row alignment alignment */
+.dropdowns-row-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+}
+
+.filter-dropdown {
+    background-color: #FBEFEF;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #000000;
+    cursor: pointer;
+    outline: none;
+    min-width: 115px;
+}
+
+.filter-dropdown:hover {
+    background-color: #F9DFDF;
+}
+
+/* Main Core Tasks Table Design Mapping wrapper */
+.tasks-table-main-container {
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    min-height: 400px;
+}
+
+.master-data-grid-table {
+    width: 100%;
+    border-collapse: collapse;
+    z-index: 2;
+    table-layout: fixed;
+}
+
+.master-data-grid-table th {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000000;
+    background-color: #F5AFAF;
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #000000;
+}
+
+.master-data-grid-table th:first-child {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.master-data-grid-table th:last-child {
+    text-align: right;
+    padding-right: 20px;
+}
+
+/* Custom Vector Empty-state container graphic layer */
+.empty-state-fallback-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #FFFFFF;
+}
+
+.fallback-graphic-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clipboard-mock-vector {
+    width: 44px;
+    height: 54px;
+    border: 3.5px solid #F5AFAF;
+    border-radius: 6px;
+    position: relative;
+    background-color: transparent;
+}
+
+.clipboard-mock-vector .clip-top {
+    position: absolute;
+    width: 18px;
+    height: 7px;
+    background-color: #F5AFAF;
+    border-radius: 2px;
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.clipboard-mock-vector .line {
+    position: absolute;
+    height: 3.5px;
+    background-color: #F5AFAF;
+    border-radius: 2px;
+    left: 6px;
+}
+
+.clipboard-mock-vector .line.short  { top: 12px; width: 12px; }
+.clipboard-mock-vector .line.long   { top: 22px; width: 24px; }
+.clipboard-mock-vector .line.medium { top: 32px; width: 18px; }
+
+.fallback-message-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+    margin: 0;
 }
