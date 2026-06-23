@@ -949,3 +949,144 @@ input[type="radio"] {
 .btn-save:hover {
     background-color: #e39e9e;
 }
+
+/* ==========================================
+   7. SHARED TASKS VIEW
+   ========================================== */
+.header-icon-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sub-nav-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.sub-nav-item {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #000000;
+    text-decoration: none;
+    padding: 8px 24px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    transition: background-color 0.2s ease;
+}
+
+/* The active button gets the pink background */
+.sub-nav-item.active {
+    background-color: #F9DFDF; 
+}
+
+/* Hover effect for inactive buttons */
+.sub-nav-item:hover:not(.active) {
+    background-color: #F5F5F5;
+}
+
+.sub-nav-divider {
+    border: none;
+    border-top: 1px solid #000000;
+    margin-bottom: 25px;
+}
+
+.shared-board-container {
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+    overflow: hidden;
+}
+
+.shared-board-header {
+    background-color: #F9DFDF;
+    border-bottom: 1px solid #000000;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 1.5fr 1fr 1fr;
+    gap: 15px;
+}
+
+.board-header-pill {
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 6px 0;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000000;
+}
+
+.shared-board-content {
+    flex-grow: 1;
+}
+
+.shared-board-footer {
+    padding: 24px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.share-action-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.share-action-row label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.share-controls {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.share-input {
+    width: 320px;
+    padding: 8px 12px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+}
+
+.share-select {
+    padding: 8px 12px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    outline: none;
+    background-color: #FFFFFF;
+    min-width: 110px;
+}
+
+.btn-share-action {
+    background-color: #F9DFDF;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #000000;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-share-action:hover {
+    background-color: #F5AFAF;
+}

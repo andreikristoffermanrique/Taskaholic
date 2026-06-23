@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Shared Tasks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
+                <h1 class="brand-title">Taskaholic</h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Workload Overview</span>
+                </a>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my_tasks.html" class="nav-item">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    <span>My Tasks</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Shared Tasks</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <a href="#" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+        <main class="main-content">
+            
+            <header class="content-header">
+                <div class="welcome-text header-icon-title">
+                    <i class="fa-solid fa-user-group fa-2x"></i>
+                    <div>
+                        <h2>Shared Task</h2>
+                        <p>Tasks you are collaborating on</p>
+                    </div>
+                </div>
+                <button class="add-task-btn" onclick="openAddTaskModal()">
+                    <i class="fa-solid fa-plus"></i> Add Tasks
+                </button>
+            </header>
+
+            <div class="sub-nav-container">
+                <a href="#" class="sub-nav-item active">Shared Task</a>
+                <a href="#" class="sub-nav-item">Invitations</a>
+            </div>
+            <hr class="sub-nav-divider">
+
+            <section class="shared-board-container">
+                
+                <div class="shared-board-header">
+                    <span class="board-header-pill">Task Name</span>
+                    <span class="board-header-pill">Project Owner</span>
+                    <span class="board-header-pill">Members</span>
+                    <span class="board-header-pill">Status</span>
+                </div>
+
+                <div class="shared-board-content"></div>
+
+                <div class="shared-board-footer">
+                    
+                    <div class="share-action-row">
+                        <label>Invite Collaborators</label>
+                        <div class="share-controls">
+                            <input type="text" class="share-input" placeholder="">
+                            <select class="share-select">
+                                <option value="edit">Can Edit</option>
+                                <option value="view">Can View</option>
+                            </select>
+                            <button type="button" class="btn-share-action">Send Invitation</button>
+                        </div>
+                    </div>
+
+                    <div class="share-action-row">
+                        <label>Share Link</label>
+                        <div class="share-controls">
+                            <input type="text" class="share-input" placeholder="">
+                            <button type="button" class="btn-share-action">Copy Link</button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="addTaskModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Create New Task</h3>
+                <button class="close-modal-btn" onclick="closeAddTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form class="modal-form">
+                <div class="modal-input-group">
+                    <label>Task Title</label>
+                    <input type="text" placeholder="Enter your task">
+                </div>
+                
+                <div class="modal-input-group">
+                    <label>Description</label>
+                    <input type="text" placeholder="Enter description">
+                </div>
+
+                <div class="modal-row-3">
+                    <div class="radio-box-group">
+                        <label class="group-title">Category</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="category" value="academic" checked> Academic</label>
+                            <label><input type="radio" name="category" value="project"> Project</label>
+                            <label><input type="radio" name="category" value="personal"> Personal</label>
+                        </div>
+                    </div>
+
+                    <div class="radio-box-group">
+                        <label class="group-title">Priority Level</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="priority" value="high" checked> High</label>
+                            <label><input type="radio" name="priority" value="medium"> Medium</label>
+                            <label><input type="radio" name="priority" value="low"> Low</label>
+                        </div>
+                    </div>
+
+                    <div class="column-group">
+                        <div class="modal-input-group">
+                            <label>Due Date</label>
+                            <input type="text" placeholder="mm/dd/yyyy">
+                        </div>
+                        <div class="visibility-group">
+                            <label class="group-title">Visibility</label>
+                            <div class="radio-inline">
+                                <label><input type="radio" name="visibility" value="private"> Private</label>
+                                <label><input type="radio" name="visibility" value="shared" checked> Shared</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer-row">
+                    <div class="status-dropdown">
+                        <label>Current Status</label>
+                        <select>
+                            <option value="pending">Pending</option>
+                            <option value="progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
+                        <button type="button" class="btn-save" onclick="closeAddTaskModal()">Save Task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openAddTaskModal() {
+            document.getElementById('addTaskModal').style.display = 'flex';
+        }
+
+        function closeAddTaskModal() {
+            document.getElementById('addTaskModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
