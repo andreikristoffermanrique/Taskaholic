@@ -11,10 +11,17 @@ body {
     font-family: 'Inter', sans-serif;
     background-color: #F5F5F5;
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     color: #333333;
+}
+
+/* Color Variables (From your appended CSS) */
+:root {
+    --sidebar-bg: #fce4e8; 
+    --active-bg: #f4b2bb;  
+    --card-bg: #fce4e8;
+    --border-color: #333;
+    --text-muted: #555;
 }
 
 /* ==========================================
@@ -26,6 +33,8 @@ body {
     height: 650px;
     background-color: #FFFFFF;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    /* Added to center the auth container if it's on its own page */
+    margin: auto; 
 }
 
 .brand-panel {
@@ -213,11 +222,9 @@ body {
    ========================================== */
 .dashboard-container {
     display: flex;
-    width: 1020px;
-    height: 680px;
+    width: 100vw;
+    height: 100vh;
     background-color: #FCF8F8;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
-    border-radius: 12px;
     overflow: hidden;
 }
 
@@ -317,9 +324,11 @@ body {
    ========================================== */
 .main-content {
     flex: 1;
-    padding: 40px;
+    padding: 40px 60px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
     overflow-y: auto;
 }
 
@@ -525,7 +534,7 @@ body {
     align-items: center;
     flex: 1;
     margin-bottom: 10px;
-    min-height: 180px; /* Provides steady height room for the updated size */
+    min-height: 180px; 
 }
 
 .progress-chart-wrapper {
@@ -538,7 +547,7 @@ body {
 }
 
 .progress-ring-svg {
-    transform: rotate(-90deg); /* Starts rendering from the exact top */
+    transform: rotate(-90deg);
     width: 100%;
     height: 100%;
 }
@@ -557,7 +566,7 @@ body {
 }
 
 .chart-percentage {
-    font-size: 32px; /* Amplified inner text sizing for visual parity */
+    font-size: 32px;
     font-weight: 700;
     color: #000000;
     line-height: 1;
@@ -609,7 +618,6 @@ body {
     width: 100%;
 }
 
-/* Row 1: Search container alignment alignment */
 .search-row-wrapper {
     display: flex;
     width: 100%;
@@ -620,7 +628,7 @@ body {
     position: relative;
     display: flex;
     align-items: center;
-    width: 165px; /* Slightly widened frame layout for typography space balance */
+    width: 165px;
 }
 
 .search-box-wrapper .search-icon {
@@ -642,7 +650,6 @@ body {
     outline: none;
 }
 
-/* Row 2: Filter elements row alignment alignment */
 .dropdowns-row-wrapper {
     display: flex;
     flex-direction: row;
@@ -669,7 +676,7 @@ body {
     background-color: #F9DFDF;
 }
 
-/* Main Core Tasks Table Design Mapping wrapper */
+/* Main Core Tasks Table Design */
 .tasks-table-main-container {
     background-color: #FFFFFF;
     border: 1px solid #000000;
@@ -769,6 +776,7 @@ body {
     color: #333333;
     margin: 0;
 }
+
 /* ==========================================
    6. ADD TASK MODAL STYLES
    ========================================== */
@@ -779,7 +787,7 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
-    display: none; /* Hidden by default */
+    display: none; 
     justify-content: center;
     align-items: center;
     z-index: 1000;
@@ -845,7 +853,6 @@ body {
     background-color: #FFFFFF;
 }
 
-/* 3-Column Grid for Radio Boxes & Date */
 .modal-row-3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -872,7 +879,6 @@ body {
     cursor: pointer;
 }
 
-/* Customizing the radio button color */
 input[type="radio"] {
     accent-color: #F5AFAF;
 }
@@ -978,12 +984,10 @@ input[type="radio"] {
     transition: background-color 0.2s ease;
 }
 
-/* The active button gets the pink background */
 .sub-nav-item.active {
     background-color: #F9DFDF; 
 }
 
-/* Hover effect for inactive buttons */
 .sub-nav-item:hover:not(.active) {
     background-color: #F5F5F5;
 }
@@ -1091,32 +1095,9 @@ input[type="radio"] {
     background-color: #F5AFAF;
 }
 
-
-/* Base Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
-}
-
-body {
-    background-color: #fdfdfd;
-    color: #111;
-    height: 100vh;
-    display: flex;
-}
-
-/* Color Variables */
-:root {
-    --sidebar-bg: #fce4e8; /* Light pink */
-    --active-bg: #f4b2bb;  /* Darker pink */
-    --card-bg: #fce4e8;
-    --border-color: #333;
-    --text-muted: #555;
-}
-
-/* --- Sidebar Styles --- */
+/* ==========================================
+   8. SETTINGS VIEW (APP-SPECIFIC)
+   ========================================== */
 .sidebar {
     width: 280px;
     background-color: var(--sidebar-bg);
@@ -1135,7 +1116,7 @@ body {
 }
 
 .logo-image {
-    height: 40px; /* Adjust this number to make the logo bigger or smaller */
+    height: 40px;
     width: auto;
     object-fit: contain;
 }
@@ -1159,54 +1140,8 @@ body {
     flex: 1;
 }
 
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    text-decoration: none;
-    color: #111;
-    font-weight: 500;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-/* The buttons in the image are mostly white, except the active one */
 .nav-item.white-bg {
     background-color: #fff;
-}
-
-.nav-item.active {
-    background-color: var(--active-bg);
-}
-
-.nav-item i {
-    font-size: 18px;
-    width: 20px;
-    text-align: center;
-}
-
-.logout-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: #111;
-    font-weight: 500;
-    font-size: 14px;
-    padding: 10px 0;
-}
-
-/* --- Main Content Styles --- */
-.main-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
 }
 
 .settings-card {
@@ -1215,6 +1150,8 @@ body {
     padding: 40px;
     width: 100%;
     max-width: 650px;
+    /* Added margin to naturally center the card inside the un-centered main-content */
+    margin: 0 auto; 
 }
 
 .settings-header {
