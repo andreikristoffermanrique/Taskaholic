@@ -1090,3 +1090,204 @@ input[type="radio"] {
 .btn-share-action:hover {
     background-color: #F5AFAF;
 }
+
+
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: #fdfdfd;
+    color: #111;
+    height: 100vh;
+    display: flex;
+}
+
+/* Color Variables */
+:root {
+    --sidebar-bg: #fce4e8; /* Light pink */
+    --active-bg: #f4b2bb;  /* Darker pink */
+    --card-bg: #fce4e8;
+    --border-color: #333;
+    --text-muted: #555;
+}
+
+/* --- Sidebar Styles --- */
+.sidebar {
+    width: 280px;
+    background-color: var(--sidebar-bg);
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.logo-image {
+    height: 40px; /* Adjust this number to make the logo bigger or smaller */
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-icon {
+    font-size: 32px;
+    font-family: serif;
+    font-weight: bold;
+    position: relative;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nav-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+/* The buttons in the image are mostly white, except the active one */
+.nav-item.white-bg {
+    background-color: #fff;
+}
+
+.nav-item.active {
+    background-color: var(--active-bg);
+}
+
+.nav-item i {
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+/* --- Main Content Styles --- */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.settings-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 650px;
+}
+
+.settings-header {
+    margin-bottom: 30px;
+}
+
+.settings-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.settings-title-wrapper i {
+    font-size: 24px;
+}
+
+.settings-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.settings-header p {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.settings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.setting-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: #111;
+    transition: transform 0.1s ease;
+}
+
+.setting-option:hover {
+    transform: translateY(-2px);
+}
+
+.setting-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.setting-info i.icon-main {
+    font-size: 24px;
+    width: 30px;
+    text-align: center;
+}
+
+.setting-text h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.setting-text p {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.chevron {
+    font-size: 16px;
+}
