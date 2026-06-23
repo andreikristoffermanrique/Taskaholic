@@ -15,7 +15,7 @@ body {
     color: #333333;
 }
 
-/* Color Variables (From your appended CSS) */
+/* Color Variables */
 :root {
     --sidebar-bg: #fce4e8; 
     --active-bg: #f4b2bb;  
@@ -29,32 +29,49 @@ body {
    ========================================== */
 .auth-container {
     display: flex;
-    width: 950px;
-    height: 650px;
+    width: 100vw;       /* Forces full screen width */
+    height: 100vh;      /* Forces full screen height */
     background-color: #FFFFFF;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    /* Added to center the auth container if it's on its own page */
-    margin: auto; 
+    margin: 0;
+    box-shadow: none;
 }
 
 .brand-panel {
-    flex: 0.9;
+    flex: 1; /* 50% width */
     background-color: #FBEFEF;
-    padding: 50px 60px;
+    padding: 50px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center; /* Prevents stretching */
     text-align: center;
 }
 
 .form-panel {
-    flex: 1.1;
-    padding: 40px 90px;
+    flex: 1; /* 50% width */
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Prevents stretching */
 }
 
+/* Content Size Constraints */
+.brand-header,
+.logo-container,
+.brand-footer-left {
+    width: 100%;
+    max-width: 450px;
+}
+
+.form-header-center,
+.auth-form,
+.form-footer {
+    width: 100%;
+    max-width: 380px;
+}
+
+/* Brand Panel Inner Styles */
 .brand-header {
     margin-top: 10px;
 }
@@ -82,41 +99,37 @@ body {
 }
 
 .main-logo {
-    max-width: 250px;
+    max-width: 370px;
     height: auto;
 }
 
-.brand-footer-centered {
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.brand-footer-centered h2 {
+.brand-footer-left h2 {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;
     color: #000000;
 }
 
-.brand-footer-centered p {
+.brand-footer-left p {
     font-size: 12px;
     color: #444444;
     line-height: 1.4;
 }
 
-.form-header-left {
+/* Form Panel Inner Styles */
+.form-header-center {
     text-align: left;
     margin-bottom: 30px;
 }
 
-.form-header-left h2 {
+.form-header-center h2 {
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 6px;
     color: #000000;
 }
 
-.form-header-left p {
+.form-header-center p {
     font-size: 13px;
     font-style: italic;
     color: #666666;
@@ -181,8 +194,17 @@ body {
     color: #888888;
 }
 
+.remember-me {
+    font-size: 13px;
+    color: #333333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
 .auth-btn {
-    margin-top: 15px;
+    margin-top: 5px;
     padding: 14px;
     background: linear-gradient(to right, #FBEFEF, #F9DFDF, #F5AFAF);
     border: none;
@@ -717,7 +739,6 @@ body {
     padding-right: 20px;
 }
 
-/* Custom Vector Empty-state container graphic layer */
 .empty-state-fallback-view {
     flex: 1;
     display: flex;
@@ -1098,87 +1119,6 @@ input[type="radio"] {
 /* ==========================================
    8. SETTINGS VIEW (APP-SPECIFIC)
    ========================================== */
-.sidebar {
-    width: 280px;
-    background-color: var(--sidebar-bg);
-    padding: 40px 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-
-.logo-section {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 40px;
-}
-
-.logo-image {
-    height: 40px;
-    width: auto;
-    object-fit: contain;
-}
-
-.logo-icon {
-    font-size: 32px;
-    font-family: serif;
-    font-weight: bold;
-    position: relative;
-}
-
-.logo-text {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.nav-menu {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1;
-}
-
-.nav-item.white-bg {
-    background-color: #fff;
-}
-
-.settings-card {
-    background-color: var(--card-bg);
-    border-radius: 16px;
-    padding: 40px;
-    width: 100%;
-    max-width: 650px;
-    /* Added margin to naturally center the card inside the un-centered main-content */
-    margin: 0 auto; 
-}
-
-.settings-header {
-    margin-bottom: 30px;
-}
-
-.settings-title-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-}
-
-.settings-title-wrapper i {
-    font-size: 24px;
-}
-
-.settings-header h1 {
-    font-size: 28px;
-    font-weight: 700;
-}
-
-.settings-header p {
-    color: var(--text-muted);
-    font-size: 14px;
-}
-
 .settings-list {
     display: flex;
     flex-direction: column;
@@ -1227,454 +1167,4 @@ input[type="radio"] {
 
 .chevron {
     font-size: 16px;
-<<<<<<< Updated upstream
-=======
-}
-
-.back-navigation {
-    margin-bottom: 24px;
-}
-
-.btn-back {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: #111;
-}
-
-.btn-back i {
-    font-size: 24px;
-}
-
-.btn-back-text {
-    background-color: var(--sidebar-bg, #fce4e8); 
-    border: 1px solid #333;
-    padding: 6px 16px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.account-settings-wrapper {
-    background-color: var(--sidebar-bg, #fce4e8);
-    border-radius: 16px;
-    padding: 40px;
-    width: 100%;
-    max-width: 800px; 
-}
-
-.account-header {
-    margin-bottom: 30px;
-}
-
-.account-title-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
-}
-
-.account-title-row i {
-    font-size: 32px;
-}
-
-.account-title-row h2 {
-    font-size: 28px;
-    font-weight: 700;
-}
-
-.account-header p {
-    color: #555;
-    font-size: 14px;
-}
-
-.personal-info-card {
-    background-color: #fdfdfd;
-    border: 1px solid #333;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.info-card-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid #333;
-}
-
-.info-card-header h3 {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.info-card-body {
-    padding: 30px 24px;
-    display: flex;
-    gap: 40px;
-    justify-content: space-between;
-}
-
-.info-form-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 400px;
-}
-
-.info-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.info-input-group label {
-    font-size: 12px;
-    color: #333;
-    font-weight: 600;
-}
-
-.info-input-group input {
-    padding: 12px 14px;
-    border: none;
-    border-radius: 8px;
-    background-color: #fff;
-    box-shadow: 0 0 0 1px #eee; 
-    outline: none;
-    font-family: inherit;
-    font-size: 14px;
-}
-
-.info-input-group input:focus {
-    box-shadow: 0 0 0 1px #ccc;
-}
-
-.btn-change-password {
-    background-color: #ff8fa3; 
-    color: #111;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    align-self: flex-start;
-    font-size: 13px;
-    transition: opacity 0.2s;
-}
-
-.btn-change-password:hover {
-    opacity: 0.85;
-}
-
-.profile-pic-column {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding-right: 20px;
-}
-
-.profile-pic-column label {
-    font-size: 12px;
-    color: #333;
-    font-weight: 600;
-}
-
-.profile-pic-box {
-    border: 1px solid #333;
-    border-radius: 16px;
-    width: 150px;
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    background-color: transparent;
-}
-
-.profile-pic-box .main-icon {
-    font-size: 80px;
-    color: #111;
-}
-
-.edit-icon-btn {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-    color: #333;
-    transition: transform 0.2s;
-}
-
-.edit-icon-btn:hover {
-    transform: scale(1.1);
-}
-
-/* =========================================
-   Notification Settings Specific Styles 
-   ========================================= */
-
-/* Reusing the container structure to align back button and card */
-.settings-detail-container {
-    width: 100%;
-    max-width: 750px; /* Slightly narrower than Account Settings based on mockup */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.settings-detail-wrapper {
-    background-color: var(--sidebar-bg, #fce4e8);
-    border-radius: 16px;
-    padding: 40px;
-    width: 100%;
-}
-
-.settings-detail-header {
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.preferences-card {
-    background-color: #fdfdfd;
-    border: 1px solid #333;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.preferences-card-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid #333;
-}
-
-.preferences-card-header h3 {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.preferences-card-body {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.preference-row {
-    background-color: #dcdcdc; /* Light gray from mockup */
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 20px;
-    border-radius: 4px;
-}
-
-.preference-label {
-    font-size: 14px;
-    color: #333;
-    font-weight: 500;
-}
-
-/* Custom CSS Toggle Switch */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-}
-
-/* Hide default HTML checkbox */
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-/* The slider */
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .3s;
-    border-radius: 34px;
-    border: 2px solid #111; /* Dark border outline */
-}
-
-/* The inner circle */
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: #111;
-    transition: .3s;
-    border-radius: 50%;
-}
-
-/* Checked state */
-.toggle-switch input:checked + .slider {
-    background-color: #111;
-}
-
-.toggle-switch input:checked + .slider:before {
-    transform: translateX(20px);
-    background-color: #fff; /* Circle turns white when active */
-}
-
-/* =========================================
-   Privacy Settings Specific Styles 
-   ========================================= */
-
-/* (Re-uses .settings-detail-container and .settings-detail-wrapper from Notifications) */
-/* If you didn't add the Notification CSS yet, make sure these are included: */
-.settings-detail-container {
-    width: 100%;
-    max-width: 750px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.settings-detail-wrapper {
-    background-color: var(--sidebar-bg, #fce4e8);
-    border-radius: 16px;
-    padding: 40px;
-    width: 100%;
-}
-
-.settings-detail-header {
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-/* Privacy Inner Card Styles */
-.privacy-card {
-    background-color: #fdfdfd;
-    border: 1px solid #333;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.privacy-card-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid #333;
-}
-
-.privacy-card-header h3 {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.privacy-card-body {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-/* Specific styling for the outlined rows in the mockup */
-.privacy-row {
-    background-color: #fff;
-    border: 1px solid #333;
-    border-radius: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 20px;
-}
-
-.privacy-info h4 {
-    font-size: 14px;
-    font-weight: 700;
-    color: #111;
-    margin-bottom: 4px;
-}
-
-.privacy-info p {
-    font-size: 11px;
-    color: #555;
-}
-
-/* Pink Dropdown Button */
-.privacy-dropdown-btn {
-    background-color: #f4b2bb; /* Darker pink from mockup */
-    border: 1px solid #333;
-    border-radius: 6px;
-    padding: 6px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #111;
-    font-family: inherit;
-    transition: opacity 0.2s;
-}
-
-.privacy-dropdown-btn:hover {
-    opacity: 0.85;
-}
-
-/* =========================================
-   Toggle Switch Styles (Reused from Notifications)
-   ========================================= */
-.toggle-switch {
-    position: relative;
-    display: inline-block;
-    width: 44px;
-    height: 24px;
-}
-
-.toggle-switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .3s;
-    border-radius: 34px;
-    border: 2px solid #111;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: #111;
-    transition: .3s;
-    border-radius: 50%;
-}
-
-.toggle-switch input:checked + .slider {
-    background-color: #111;
-}
-
-.toggle-switch input:checked + .slider:before {
-    transform: translateX(20px);
-    background-color: #fff;
->>>>>>> Stashed changes
 }
