@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Notification Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
+                <h1 class="brand-title">Taskaholic</h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Workload Overview</span>
+                </a>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my_tasks.html" class="nav-item">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    <span>My Tasks</span>
+                </a>
+                <a href="shared_task.html" class="nav-item">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Shared Tasks</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <a href="#" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+        <main class="main-content">
+            
+            <div class="settings-detail-container">
+                
+                <div class="back-navigation">
+                    <a href="settings.html" class="btn-back">
+                        <i class="fa-solid fa-caret-left"></i>
+                        <span class="btn-back-text">Back to Settings</span>
+                    </a>
+                </div>
+
+                <div class="settings-detail-wrapper">
+                    
+                    <div class="settings-detail-header">
+                        <div class="settings-title-row">
+                            <i class="fa-regular fa-bell"></i>
+                            <h2>Notification Settings</h2>
+                        </div>
+                        <p>Manage how and when you receive notifications</p>
+                    </div>
+
+                    <div class="preferences-card">
+                        <div class="preferences-card-header">
+                            <h3>Notification Preferences</h3>
+                        </div>
+                        
+                        <div class="preferences-card-body">
+                            
+                            <div class="preference-row">
+                                <span class="preference-label">Task Due Reminders</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="preference-row">
+                                <span class="preference-label">Shared Task Due Reminders</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="preference-row">
+                                <span class="preference-label">Collaborative Invites</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="preference-row">
+                                <span class="preference-label">General Announcement</span>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Account Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
+                <h1 class="brand-title">Taskaholic</h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Workload Overview</span>
+                </a>
+                <a href="dashboard.html" class="nav-item">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="my_tasks.html" class="nav-item">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    <span>My Tasks</span>
+                </a>
+                <a href="shared_task.html" class="nav-item">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Shared Tasks</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="settings.html" class="nav-item active">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <a href="#" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+        <main class="main-content">
+    
+    <div class="account-settings-container">
+        
+        <div class="back-navigation">
+            <a href="settings.html" class="btn-back">
+                <i class="fa-solid fa-caret-left"></i>
+                <span class="btn-back-text">Back to Settings</span>
+            </a>
+        </div>
+
+        <div class="account-settings-wrapper">
+            
+            <div class="account-header">
+                <div class="account-title-row">
+                    <i class="fa-regular fa-circle-user"></i>
+                    <h2>Account Settings</h2>
+                </div>
+                <p>Update your personal information and account details</p>
+            </div>
+
+            <div class="personal-info-card">
+                <div class="info-card-header">
+                    <h3>Personal Information</h3>
+                </div>
+                
+                <div class="info-card-body">
+                    <div class="info-form-column">
+                        <div class="info-input-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="">
+                        </div>
+                        
+                        <div class="info-input-group">
+                            <label>Email Address</label>
+                            <input type="email" placeholder="">
+                        </div>
+
+                        <div class="info-input-group">
+                            <label>Contact Number</label>
+                            <input type="text" placeholder="">
+                        </div>
+
+                        <div class="info-input-group">
+                            <label>Password</label>
+                            <button type="button" class="btn-change-password">Change your password</button>
+                        </div>
+                    </div>
+
+                    <div class="profile-pic-column">
+                        <label>Profile Picture</label>
+                        <div class="profile-pic-box">
+                            <i class="fa-regular fa-circle-user main-icon"></i>
+                            <button type="button" class="edit-icon-btn">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+    </div>
+
+</body>
+</html>
