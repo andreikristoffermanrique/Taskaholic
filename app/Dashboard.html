@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
+                <h1 class="brand-title">Taskaholic</h1>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item" onclick="handleNavigation('workload')">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Workload Overview</span>
+                </a>
+                <a href="#" class="nav-item active" onclick="handleNavigation('dashboard')">
+                    <i class="fa-solid fa-table-cells-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('tasks')">
+                    <i class="fa-solid fa-clapperboard"></i>
+                    <span>My Tasks</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('shared')">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Shared Tasks</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('notifications')">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('settings')">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+                <a href="#" class="nav-item" onclick="handleNavigation('profile')">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span>Profile</span>
+                </a>
+            </nav>
+
+            <a href="#" class="logout-btn" onclick="handleLogout(event)">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <div class="welcome-text">
+                    <h2>Good Day, [name] !</h2>
+                    <p>Here's what is happening with your tasks today</p>
+                </div>
+                <button class="add-task-btn" onclick="openAddTaskModal()">
+                    <i class="fa-solid fa-plus"></i> Add Tasks
+                </button>
+            </header>
+
+            <div class="stats-container-row">
+                <section class="stats-grid">
+                    <div class="stat-card" onclick="filterTasks('all')">
+                        <div class="stat-info">
+                            <span class="stat-number">10</span>
+                            <span class="stat-label">Your Tasks</span>
+                        </div>
+                        <div class="stat-icon-circle">
+                            <i class="fa-solid fa-crosshairs"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="filterTasks('today')">
+                        <div class="stat-info">
+                            <span class="stat-number">4</span>
+                            <span class="stat-label">Due Today</span>
+                        </div>
+                        <div class="stat-icon-circle">
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="filterTasks('overdue')">
+                        <div class="stat-info">
+                            <span class="stat-number">5</span>
+                            <span class="stat-label">Overdue</span>
+                        </div>
+                        <div class="stat-icon-circle">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card" onclick="filterTasks('completed')">
+                        <div class="stat-info">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Completed</span>
+                        </div>
+                        <div class="stat-icon-circle">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <section class="data-panels">
+                <div class="data-card upcoming-deadlines">
+                    <div class="card-header">
+                        <h3>Upcoming Deadlines</h3>
+                        <button class="view-all-btn" onclick="viewAllDeadlines()">View All</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="deadlines-table">
+                            <thead>
+                                <tr>
+                                    <th>Task Name</th>
+                                    <th>Deadline</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="data-card progress-overview">
+                    <div class="card-header">
+                        <h3>Progress Overview</h3>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <div class="progress-chart-wrapper">
+                            <svg class="progress-ring-svg" width="130" height="130" viewBox="0 0 42 42">
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#E6D5D5" stroke-width="5.5"></circle>
+                                
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#FCF8F8" stroke-width="5.5" 
+                                        stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
+                                        
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F5AFAF" stroke-width="5.5" 
+                                        stroke-dasharray="25 75" stroke-dashoffset="-35"></circle>
+                                        
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F9DFDF" stroke-width="5.5" 
+                                        stroke-dasharray="15 85" stroke-dashoffset="-60"></circle>
+                            </svg>
+                            <div class="chart-inner-label">
+                                <span class="chart-percentage">10</span>
+                                <span class="chart-subtext">Total</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <span class="legend-color academic"></span> Academic
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color project"></span> Project
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color personal"></span> Personal
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        function handleNavigation(pageKey) {
+            console.log("Navigating to view: " + pageKey);
+        }
+
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to logout?")) {
+                window.location.href = "login.html"; 
+            }
+        }
+
+        function openAddTaskModal() {
+            alert("Triggering 'Add Task' action overlay.");
+        }
+
+        function viewAllDeadlines() {
+            alert("Redirecting to comprehensive deadlines list.");
+        }
+
+        function filterTasks(filterCriteria) {
+            alert("Filtering task lists targeting: " + filterCriteria.toUpperCase());
+        }
+    </script>
+</body>
+</html>
