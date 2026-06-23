@@ -150,7 +150,11 @@
         }
 
         function openAddTaskModal() {
-            alert("Opening Add Task panel.");
+            document.getElementById('addTaskModal').style.display = 'flex';
+        }
+
+        function closeAddTaskModal() {
+            document.getElementById('addTaskModal').style.display = 'none';
         }
 
         function executeTaskSearch() {
@@ -168,5 +172,75 @@
             document.getElementById('actionsBulkFilter').value = "actions"; 
         }
     </script>
+
+    <div class="modal-overlay" id="addTaskModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>Create New Task</h3>
+                <button class="close-modal-btn" onclick="closeAddTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form class="modal-form">
+                <div class="modal-input-group">
+                    <label>Task Title</label>
+                    <input type="text" placeholder="Enter your task">
+                </div>
+                
+                <div class="modal-input-group">
+                    <label>Description</label>
+                    <input type="text" placeholder="Enter description">
+                </div>
+
+                <div class="modal-row-3">
+                    <div class="radio-box-group">
+                        <label class="group-title">Category</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="category" value="academic" checked> Academic</label>
+                            <label><input type="radio" name="category" value="project"> Project</label>
+                            <label><input type="radio" name="category" value="personal"> Personal</label>
+                        </div>
+                    </div>
+
+                    <div class="radio-box-group">
+                        <label class="group-title">Priority Level</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="priority" value="high" checked> High</label>
+                            <label><input type="radio" name="priority" value="medium"> Medium</label>
+                            <label><input type="radio" name="priority" value="low"> Low</label>
+                        </div>
+                    </div>
+
+                    <div class="column-group">
+                        <div class="modal-input-group">
+                            <label>Due Date</label>
+                            <input type="text" placeholder="mm/dd/yyyy">
+                        </div>
+                        <div class="visibility-group">
+                            <label class="group-title">Visibility</label>
+                            <div class="radio-inline">
+                                <label><input type="radio" name="visibility" value="private" checked> Private</label>
+                                <label><input type="radio" name="visibility" value="shared"> Shared</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer-row">
+                    <div class="status-dropdown">
+                        <label>Current Status</label>
+                        <select>
+                            <option value="pending">Pending</option>
+                            <option value="progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
+                        <button type="button" class="btn-save" onclick="closeAddTaskModal()">Save Task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 </body>
 </html>

@@ -769,3 +769,183 @@ body {
     color: #333333;
     margin: 0;
 }
+/* ==========================================
+   6. ADD TASK MODAL STYLES
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-container {
+    background-color: #FBEFEF;
+    width: 520px;
+    border-radius: 12px;
+    border: 1px solid #000000;
+    padding: 24px 32px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000000;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #000000;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.modal-input-group label, .group-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #333333;
+}
+
+.modal-input-group input {
+    padding: 10px 12px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+/* 3-Column Grid for Radio Boxes & Date */
+.modal-row-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+}
+
+.radio-box {
+    background-color: #FFFFFF;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 95px;
+}
+
+.radio-box label, .radio-inline label {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333333;
+    cursor: pointer;
+}
+
+/* Customizing the radio button color */
+input[type="radio"] {
+    accent-color: #F5AFAF;
+}
+
+.column-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.radio-inline {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.modal-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.status-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-dropdown select {
+    padding: 6px 12px;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.btn-cancel {
+    background-color: transparent;
+    border: 1px solid #000000;
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #F9DFDF;
+}
+
+.btn-save {
+    background-color: #F5AFAF;
+    border: 1px solid #000000;
+    padding: 8px 24px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-save:hover {
+    background-color: #e39e9e;
+}
