@@ -1,1 +1,2 @@
 # Taskaholic
+Taskaholic is a Smart Campus web-based application that is designed for supporting students in the management of their academic-related responsibilities. It falls under the Student Academic Management System category since it is a system used for organizing tasks, monitoring progress, and receiving notifications to improve time management and student productivity in a university setting.
