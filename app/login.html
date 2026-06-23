@@ -10,13 +10,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="login-container">
-        <div class="left-panel">
+    <div class="auth-container">
+        <div class="brand-panel">
             <div class="brand-header">
                 <h1 class="logo-title">Taskaholic</h1>
                 <p class="brand-subtitle">Smart Campus<br>Student Task Management</p>
@@ -26,19 +25,19 @@
                 <img src="LOGO 2.png" alt="Taskaholic Ribbon Logo" class="main-logo">
             </div>
 
-            <div class="brand-footer">
+            <div class="brand-footer-left">
                 <h2>Login to your account</h2>
                 <p>Access your tasks, notes, and projects anytime, anywhere</p>
             </div>
         </div>
 
-        <div class="right-panel">
-            <div class="form-header">
+        <div class="form-panel">
+            <div class="form-header-center">
                 <h2>Welcome Back, Andrei!</h2>
                 <p>We're happy to see you again!</p>
             </div>
 
-            <form action="#" class="login-form">
+            <form action="#" class="auth-form">
                 <div class="input-group">
                     <i class="fa-regular fa-envelope input-icon"></i>
                     <input type="email" placeholder="Gbox account" required>
@@ -50,19 +49,16 @@
                     <i class="fa-regular fa-eye show-password-icon"></i>
                 </div>
 
-                <div class="form-options">
-                    <label class="remember-me">
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                        Remember Me
-                    </label>
-                </div>
+                <label class="remember-me">
+                    <input type="checkbox">
+                    Remember Me
+                </label>
 
-                <button type="submit" class="login-btn">Log In</button>
+                <button type="submit" class="auth-btn">Log In</button>
             </form>
 
             <div class="form-footer">
-                <p>Don't have an account? <a href="#" class="create-account-link">Create an account</a></p>
+                <p>Don't have an account? <a href="create_account.html" class="accent-link">Create an account</a></p>
             </div>
         </div>
     </div>
