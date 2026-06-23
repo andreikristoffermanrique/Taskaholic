@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taskaholic - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -26,7 +26,7 @@
                     <i class="fa-solid fa-table-cells-large"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="nav-item" onclick="handleNavigation('tasks')">
+                <a href="mytask.html" class="nav-item" onclick="handleNavigation('tasks')">
                     <i class="fa-solid fa-clapperboard"></i>
                     <span>My Tasks</span>
                 </a>
@@ -57,7 +57,7 @@
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
-                    <h2>Good Day, [name] !</h2>
+                    <h2>Good Day, Bernadette !</h2>
                     <p>Here's what is happening with your tasks today</p>
                 </div>
                 <button class="add-task-btn" onclick="openAddTaskModal()">
@@ -69,7 +69,7 @@
                 <section class="stats-grid">
                     <div class="stat-card" onclick="filterTasks('all')">
                         <div class="stat-info">
-                            <span class="stat-number">10</span>
+                            <span class="stat-number" id="statTotal">0</span>
                             <span class="stat-label">Your Tasks</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="stat-card" onclick="filterTasks('today')">
                         <div class="stat-info">
-                            <span class="stat-number">4</span>
+                            <span class="stat-number" id="statToday">0</span>
                             <span class="stat-label">Due Today</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -87,7 +87,7 @@
                     </div>
                     <div class="stat-card" onclick="filterTasks('overdue')">
                         <div class="stat-info">
-                            <span class="stat-number">5</span>
+                            <span class="stat-number" id="statOverdue">0</span>
                             <span class="stat-label">Overdue</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -96,7 +96,7 @@
                     </div>
                     <div class="stat-card" onclick="filterTasks('completed')">
                         <div class="stat-info">
-                            <span class="stat-number">3</span>
+                            <span class="stat-number" id="statCompleted">0</span>
                             <span class="stat-label">Completed</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -130,44 +130,31 @@
                     <div class="card-header">
                         <h3>Progress Overview</h3>
                     </div>
-                    
                     <div class="chart-container">
                         <div class="progress-chart-wrapper">
                             <svg class="progress-ring-svg" width="130" height="130" viewBox="0 0 42 42">
                                 <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#E6D5D5" stroke-width="5.5"></circle>
-                                
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#FCF8F8" stroke-width="5.5" 
-                                        stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
-                                        
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F5AFAF" stroke-width="5.5" 
-                                        stroke-dasharray="25 75" stroke-dashoffset="-35"></circle>
-                                        
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F9DFDF" stroke-width="5.5" 
-                                        stroke-dasharray="15 85" stroke-dashoffset="-60"></circle>
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#FCF8F8" stroke-width="5.5" stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F5AFAF" stroke-width="5.5" stroke-dasharray="25 75" stroke-dashoffset="-35"></circle>
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F9DFDF" stroke-width="5.5" stroke-dasharray="15 85" stroke-dashoffset="-60"></circle>
                             </svg>
                             <div class="chart-inner-label">
-                                <span class="chart-percentage">10</span>
+                                <span class="chart-percentage" id="chartTotalText">0</span>
                                 <span class="chart-subtext">Total</span>
                             </div>
                         </div>
                     </div>
-
                     <div class="chart-legend">
-                        <div class="legend-item">
-                            <span class="legend-color academic"></span> Academic
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color project"></span> Project
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color personal"></span> Personal
-                        </div>
+                        <div class="legend-item"><span class="legend-color academic"></span> Academic</div>
+                        <div class="legend-item"><span class="legend-color project"></span> Project</div>
+                        <div class="legend-item"><span class="legend-color personal"></span> Personal</div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
+<<<<<<< Updated upstream
     <script>
         function handleNavigation(pageKey) {
             console.log("Navigating to view: " + pageKey);
@@ -191,6 +178,152 @@
         function filterTasks(filterCriteria) {
             alert("Filtering task lists targeting: " + filterCriteria.toUpperCase());
         }
+=======
+    <div class="modal-overlay" id="addTaskModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalFormTitle">Create New Task</h3>
+                <button class="close-modal-btn" onclick="closeAddTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form class="modal-form" id="taskForm">
+                <input type="hidden" id="editTaskId">
+                <div class="modal-input-group">
+                    <label>Task Title</label>
+                    <input type="text" id="taskTitle" placeholder="Enter your task" required>
+                </div>
+                
+                <div class="modal-input-group">
+                    <label>Description</label>
+                    <input type="text" id="taskDesc" placeholder="Enter description">
+                </div>
+
+                <div class="modal-row-3">
+                    <div class="radio-box-group">
+                        <label class="group-title">Category</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="category" value="academic" checked> Academic</label>
+                            <label><input type="radio" name="category" value="project"> Project</label>
+                            <label><input type="radio" name="category" value="personal"> Personal</label>
+                        </div>
+                    </div>
+
+                    <div class="radio-box-group">
+                        <label class="group-title">Priority Level</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="priority" value="high" checked> High</label>
+                            <label><input type="radio" name="priority" value="medium"> Medium</label>
+                            <label><input type="radio" name="priority" value="low"> Low</label>
+                        </div>
+                    </div>
+
+                    <div class="column-group">
+                        <div class="modal-input-group">
+                            <label>Due Date</label>
+                            <input type="date" id="taskDueDate" required>
+                        </div>
+                        <div class="visibility-group">
+                            <label class="group-title">Visibility</label>
+                            <div class="radio-inline">
+                                <label><input type="radio" name="visibility" value="private" checked> Private</label>
+                                <label><input type="radio" name="visibility" value="shared"> Shared</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer-row">
+                    <div class="status-dropdown">
+                        <label>Current Status</label>
+                        <select id="taskStatus">
+                            <option value="pending">Pending</option>
+                            <option value="progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
+                        <button type="submit" class="btn-save" id="btnSaveSubmit">Save Task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleNavigation(pageKey) { console.log("Navigating to view: " + pageKey); }
+        function handleLogout(event) { event.preventDefault(); if (confirm("Are you sure you want to logout?")) { window.location.href = "login.html"; } }
+        
+        function openAddTaskModal() {
+            document.getElementById('modalFormTitle').innerText = "Create New Task";
+            document.getElementById('editTaskId').value = "";
+            document.getElementById('taskForm').reset();
+            document.getElementById('addTaskModal').style.display = 'flex';
+        }
+
+        function closeAddTaskModal() { document.getElementById('addTaskModal').style.display = 'none'; }
+        function viewAllDeadlines() { alert("Redirecting to comprehensive deadlines list."); }
+        function filterTasks(criteria) { console.log("Filtering: " + criteria); }
+
+        function getTasks() { return JSON.parse(localStorage.getItem('tasks')) || []; }
+        function saveTasks(tasks) { localStorage.setItem('tasks', JSON.stringify(tasks)); }
+
+        function updateDashboardUI() {
+            const tasks = getTasks();
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            document.getElementById('statTotal').innerText = tasks.length;
+            document.getElementById('statCompleted').innerText = tasks.filter(t => t.status === 'completed').length;
+            document.getElementById('statToday').innerText = tasks.filter(t => t.dueDate === todayStr && t.status !== 'completed').length;
+            document.getElementById('statOverdue').innerText = tasks.filter(t => t.dueDate < todayStr && t.status !== 'completed').length;
+            document.getElementById('chartTotalText').innerText = tasks.length;
+
+            const tbody = document.querySelector('.deadlines-table tbody');
+            tbody.innerHTML = '';
+
+            const activeDeadlines = tasks.filter(t => t.status !== 'completed');
+            if (activeDeadlines.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding:15px; color:#888;">No active deadlines</td></tr>`;
+                return;
+            }
+
+            activeDeadlines.forEach(task => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td><strong>${task.title}</strong></td><td><span>${task.dueDate}</span></td>`;
+                tbody.appendChild(row);
+            });
+        }
+
+        document.getElementById('taskForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const tasks = getTasks();
+            const editId = document.getElementById('editTaskId').value;
+
+            const taskData = {
+                title: document.getElementById('taskTitle').value,
+                description: document.getElementById('taskDesc').value,
+                category: document.querySelector('input[name="category"]:checked').value,
+                priority: document.querySelector('input[name="priority"]:checked').value,
+                dueDate: document.getElementById('taskDueDate').value,
+                visibility: document.querySelector('input[name="visibility"]:checked').value,
+                status: document.getElementById('taskStatus').value
+            };
+
+            if (editId) {
+                const index = tasks.findIndex(t => t.id == editId);
+                if(index !== -1) tasks[index] = { ...tasks[index], ...taskData };
+            } else {
+                taskData.id = Date.now();
+                tasks.push(taskData);
+            }
+
+            saveTasks(tasks);
+            this.reset();
+            closeAddTaskModal();
+            updateDashboardUI();
+        });
+
+        window.addEventListener('DOMContentLoaded', updateDashboardUI);
+>>>>>>> Stashed changes
     </script>
 </body>
 </html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taskaholic - My Tasks</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -57,7 +57,7 @@
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
-                    <h2>Good Day, [name] !</h2>
+                    <h2>Good Day, Bernadette !</h2>
                     <p>Manage and organize all your tasks</p>
                 </div>
                 <button class="add-task-btn" onclick="openAddTaskModal()">
@@ -90,20 +90,18 @@
 
                     <select class="filter-dropdown" id="statusFilter" onchange="applyFilters()">
                         <option value="all">All statuses</option>
-                        <option value="todo">To Do</option>
+                        <option value="pending">Pending</option>
                         <option value="progress">In Progress</option>
                         <option value="completed">Completed</option>
                     </select>
 
                     <select class="filter-dropdown" id="dateSortFilter" onchange="applyFilters()">
                         <option value="duedate">Due Date</option>
-                        <option value="created">Date Created</option>
                     </select>
 
                     <select class="filter-dropdown" id="actionsBulkFilter" onchange="applyBulkAction()">
                         <option value="actions" selected disabled>Actions</option>
                         <option value="delete">Delete Selected</option>
-                        <option value="mark-complete">Mark Completed</option>
                     </select>
                 </div>
             </section>
@@ -117,9 +115,11 @@
                             <th>Priority</th>
                             <th>Due Date</th>
                             <th>Statuses</th>
-                            <th>Actions</th>
+                            <th style="text-align: center;">Actions</th>
                         </tr>
                     </thead>
+                    <tbody id="taskGridBody">
+                        </tbody>
                 </table>
 
                 <div class="empty-state-fallback-view" id="emptyStateContainer">
@@ -137,6 +137,7 @@
         </main>
     </div>
 
+<<<<<<< Updated upstream
     <script>
         function handleNavigation(pageKey) {
             console.log("Navigating to: " + pageKey);
@@ -167,6 +168,208 @@
             alert("Bulk action selected: " + selectVal.toUpperCase());
             document.getElementById('actionsBulkFilter').value = "actions"; 
         }
+=======
+    <div class="modal-overlay" id="addTaskModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalFormTitle">Create New Task</h3>
+                <button class="close-modal-btn" onclick="closeAddTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form class="modal-form" id="taskForm">
+                <input type="hidden" id="editTaskId">
+                <div class="modal-input-group">
+                    <label>Task Title</label>
+                    <input type="text" id="taskTitle" placeholder="Enter your task" required>
+                </div>
+                
+                <div class="modal-input-group">
+                    <label>Description</label>
+                    <input type="text" id="taskDesc" placeholder="Enter description">
+                </div>
+
+                <div class="modal-row-3">
+                    <div class="radio-box-group">
+                        <label class="group-title">Category</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="category" value="academic" checked> Academic</label>
+                            <label><input type="radio" name="category" value="project"> Project</label>
+                            <label><input type="radio" name="category" value="personal"> Personal</label>
+                        </div>
+                    </div>
+
+                    <div class="radio-box-group">
+                        <label class="group-title">Priority Level</label>
+                        <div class="radio-box">
+                            <label><input type="radio" name="priority" value="high" checked> High</label>
+                            <label><input type="radio" name="priority" value="medium"> Medium</label>
+                            <label><input type="radio" name="priority" value="low"> Low</label>
+                        </div>
+                    </div>
+
+                    <div class="column-group">
+                        <div class="modal-input-group">
+                            <label>Due Date</label>
+                            <input type="date" id="taskDueDate" required>
+                        </div>
+                        <div class="visibility-group">
+                            <label class="group-title">Visibility</label>
+                            <div class="radio-inline">
+                                <label><input type="radio" name="visibility" value="private" checked> Private</label>
+                                <label><input type="radio" name="visibility" value="shared"> Shared</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer-row">
+                    <div class="status-dropdown">
+                        <label>Current Status</label>
+                        <select id="taskStatus">
+                            <option value="pending">Pending</option>
+                            <option value="progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
+                        <button type="submit" class="btn-save" id="btnSaveSubmit">Save Task</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function handleNavigation(pageKey) { console.log("Navigating to: " + pageKey); }
+        function handleLogout(event) { event.preventDefault(); if (confirm("Are you sure you want to logout?")) { window.location.href = "login.html"; } }
+        
+        function openAddTaskModal() {
+            document.getElementById('modalFormTitle').innerText = "Create New Task";
+            document.getElementById('editTaskId').value = "";
+            document.getElementById('taskForm').reset();
+            document.getElementById('addTaskModal').style.display = 'flex';
+        }
+
+        function closeAddTaskModal() { document.getElementById('addTaskModal').style.display = 'none'; }
+        function applyBulkAction() { alert("Bulk Action Registered."); }
+
+        function getTasks() { return JSON.parse(localStorage.getItem('tasks')) || []; }
+        function saveTasks(tasks) { localStorage.setItem('tasks', JSON.stringify(tasks)); }
+
+        function renderMasterGrid(filteredTasks = null) {
+            const tasks = filteredTasks || getTasks();
+            const tbody = document.getElementById('taskGridBody');
+            const emptyState = document.getElementById('emptyStateContainer');
+            
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            if (tasks.length === 0) {
+                emptyState.style.display = 'flex';
+                return;
+            } else {
+                emptyState.style.display = 'none';
+            }
+
+            tasks.forEach(task => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${task.title}</strong><br><small style="color:#777">${task.description || ''}</small></td>
+                    <td style="text-transform: capitalize;">${task.category}</td>
+                    <td><span class="priority-badge ${task.priority}">${task.priority}</span></td>
+                    <td>${task.dueDate}</td>
+                    <td><span class="status-pill ${task.status}">${task.status}</span></td>
+                    <td>
+                        <div class="action-buttons-container">
+                            <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function openEditModal(id) {
+            const tasks = getTasks();
+            const task = tasks.find(t => t.id === id);
+            if (!task) return;
+
+            document.getElementById('modalFormTitle').innerText = "Edit Task Parameters";
+            document.getElementById('editTaskId').value = task.id;
+            document.getElementById('taskTitle').value = task.title;
+            document.getElementById('taskDesc').value = task.description;
+            
+            document.querySelector(`input[name="category"][value="${task.category}"]`).checked = true;
+            document.querySelector(`input[name="priority"][value="${task.priority}"]`).checked = true;
+            document.getElementById('taskDueDate').value = task.dueDate;
+            document.querySelector(`input[name="visibility"][value="${task.visibility}"]`).checked = true;
+            document.getElementById('taskStatus').value = task.status;
+
+            document.getElementById('addTaskModal').style.display = 'flex';
+        }
+
+        function deleteTask(id) {
+            if(confirm("Are you sure you want to delete this task?")) {
+                let tasks = getTasks();
+                tasks = tasks.filter(task => task.id !== id);
+                saveTasks(tasks);
+                applyFilters();
+            }
+        }
+
+        function applyFilters() {
+            let tasks = getTasks();
+            const cat = document.getElementById('categoryFilter').value;
+            const pri = document.getElementById('priorityFilter').value;
+            const stat = document.getElementById('statusFilter').value;
+            const search = document.getElementById('taskSearchInput').value.toLowerCase();
+
+            if (cat !== 'all') tasks = tasks.filter(t => t.category === cat);
+            if (pri !== 'all') tasks = tasks.filter(t => t.priority === pri);
+            if (stat !== 'all') tasks = tasks.filter(t => t.status === stat);
+            if (search) tasks = tasks.filter(t => t.title.toLowerCase().includes(search) || t.description.toLowerCase().includes(search));
+
+            renderMasterGrid(tasks);
+        }
+
+        function executeTaskSearch() { applyFilters(); }
+
+        document.getElementById('taskForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const tasks = getTasks();
+            const editId = document.getElementById('editTaskId').value;
+
+            const taskData = {
+                title: document.getElementById('taskTitle').value,
+                description: document.getElementById('taskDesc').value,
+                category: document.querySelector('input[name="category"]:checked').value,
+                priority: document.querySelector('input[name="priority"]:checked').value,
+                dueDate: document.getElementById('taskDueDate').value,
+                visibility: document.querySelector('input[name="visibility"]:checked').value,
+                status: document.getElementById('taskStatus').value
+            };
+
+            if (editId) {
+                const index = tasks.findIndex(t => t.id == editId);
+                if(index !== -1) tasks[index] = { ...tasks[index], ...taskData };
+            } else {
+                taskData.id = Date.now();
+                tasks.push(taskData);
+            }
+
+            saveTasks(tasks);
+            this.reset();
+            closeAddTaskModal();
+            applyFilters();
+        });
+
+        window.addEventListener('DOMContentLoaded', () => renderMasterGrid());
+>>>>>>> Stashed changes
     </script>
 </body>
 </html>
