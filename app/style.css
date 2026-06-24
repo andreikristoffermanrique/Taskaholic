@@ -29,34 +29,34 @@ body {
    ========================================== */
 .auth-container {
     display: flex;
-    width: 100vw;       /* Forces full screen width */
-    height: 100vh;      /* Forces full screen height */
+    width: 100vw;       
+    height: 100vh;      
     background-color: #FFFFFF;
     margin: 0;
     box-shadow: none;
 }
 
 .brand-panel {
-    flex: 1; /* 50% width */
+    flex: 1; 
     background-color: #FBEFEF;
     padding: 50px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center; /* Prevents stretching */
+    align-items: center; 
     text-align: center;
 }
 
 .form-panel {
-    flex: 1; /* 50% width */
+    flex: 1; 
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Prevents stretching */
+    align-items: center; 
 }
 
-/* Content Size Constraints */
+
 .brand-header,
 .logo-container,
 .brand-footer-left {
@@ -398,7 +398,7 @@ body {
     transform: scale(0.98);
 }
 
-/* --- Metrics Grid --- */
+
 .stats-container-row {
     display: flex;
     width: 100%;
@@ -549,7 +549,7 @@ body {
     text-align: right;
 }
 
-/* --- Enlarged SVG Multi-Segment Donut Chart Layout --- */
+
 .chart-container {
     display: flex;
     justify-content: center;
