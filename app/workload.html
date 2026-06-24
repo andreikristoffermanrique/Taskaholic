@@ -12,15 +12,15 @@
 </head>
 <body>
 
-    <div class="app-container">
-        <aside class="sidebar">
-            <div class="logo-container">
-                <div class="logo-icon">T</div>
-                <span class="logo-text title-laila">Taskaholic</span>
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
+                <span class="brand-title">Taskaholic</span>
             </div>
             
-            <nav class="nav-menu">
-                <a href="#" class="nav-item active"><i class="fa-solid fa-book"></i> Workload Overview</a>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
@@ -32,50 +32,56 @@
             <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </aside>
 
-        <main class="main-content">
-            <header class="content-header-group">
-                <h1 class="title-inter">Workload Overview</h1>
-                <p class="subtitle">Visual Overview of your schedules and weekly workload</p>
+        <main class="main-content" style="background-color: #FCF8F8;">
+            <header class="content-header">
+                <div class="welcome-text">
+                    <h2>Workload Overview</h2>
+                    <p style="font-size: 13px; color: #555555; margin-top: 4px;">Visual Overview of your schedules and weekly workload</p>
+                </div>
             </header>
 
-            <section class="task-summary-wrapper">
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">10</span>
-                            <i class="fa-solid fa-bullseye"></i>
+            <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 25px; margin-bottom: 25px; width: 100%;">
+                <div style="font-size: 14px; font-weight: 500; color: #555555; margin-bottom: 15px;">Task Summary</div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%;">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">Your Tasks</div>
                         </div>
-                        <span class="label">Your Tasks</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-bullseye"></i></div>
                     </div>
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">4</span>
-                            <i class="fa-solid fa-calendar-days"></i>
+                    
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">4</div>
+                            <div class="stat-label">Due Today</div>
                         </div>
-                        <span class="label">Due Today</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-calendar-days"></i></div>
                     </div>
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">5</span>
-                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Overdue</div>
                         </div>
-                        <span class="label">Overdue</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
                     </div>
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">3</span>
-                            <i class="fa-solid fa-circle-check"></i>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Completed</div>
                         </div>
-                        <span class="label">Completed</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-circle-check"></i></div>
                     </div>
                 </div>
-            </section>
+            </div>
 
             <div class="dashboard-analytics-layout">
                 
                 <div class="analytics-left-col">
-                    <div class="chart-card">
-                        <h3>Pending vs. Completed Tasks (This Week)</h3>
+                    <div class="chart-card" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 25px;">
+                        <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 20px;">Pending vs. Completed Tasks (This Week)</h3>
                         <div class="chart-content-box">
                             <div class="pie-chart chart-pending-completed"></div>
                             <div class="chart-legend">
@@ -91,8 +97,8 @@
                         </div>
                     </div>
 
-                    <div class="chart-card">
-                        <h3>Tasks by Category (This Week)</h3>
+                    <div class="chart-card" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 25px;">
+                        <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 20px;">Tasks by Category (This Week)</h3>
                         <div class="chart-content-box">
                             <div class="pie-chart chart-category"></div>
                             <div class="chart-legend">
@@ -114,8 +120,8 @@
                 </div>
 
                 <div class="analytics-right-col">
-                    <div class="chart-card tall-chart-card">
-                        <h3 class="center-title">Workload Overview</h3>
+                    <div class="chart-card tall-chart-card" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 25px; height: 100%;">
+                        <h3 class="center-title" style="font-size: 15px; font-weight: 700; margin-bottom: 20px; text-align: center;">Workload Overview</h3>
                         <div class="chart-content-vertical">
                             <div class="donut-chart chart-total-workload">
                                 <div class="donut-center-hole">
