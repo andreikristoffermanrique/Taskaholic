@@ -12,15 +12,15 @@
 </head>
 <body>
 
-    <div class="app-container">
-        <aside class="sidebar">
-            <div class="logo-container">
-                <div class="logo-icon">T</div>
-                <span class="logo-text title-laila">Taskaholic</span>
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
+                <span class="brand-title">Taskaholic</span>
             </div>
             
-            <nav class="nav-menu">
-                <a href="#" class="nav-item"><i class="fa-solid fa-book"></i> Workload Overview</a>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
@@ -32,61 +32,63 @@
             <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content" style="background-color: #FCF8F8;">
             <header class="content-header">
-                <h1>My Profile</h1>
-                <button class="btn-edit" id="openModalBtn">Edit Profile</button>
+                <div class="welcome-text">
+                    <h2>My Profile</h2>
+                </div>
+                <button class="edit-profile-btn" id="openModalBtn">Edit Profile</button>
             </header>
 
-            <div class="profile-grid">
-                <div class="profile-card user-identity-card">
-                    <div class="profile-picture-container">
-                        <i class="fa-solid fa-user-gear default-avatar"></i>
-                        <img src="" id="profile-img-preview" alt="Profile Picture" class="hidden-img">
-                    </div>
-                    <h2 class="user-name" id="display-name">test4</h2>
-                    <p class="user-gbox" id="display-gbox">test4@gbox.adnu.edu.ph</p>
+            <div class="profile-layout-grid">
+                <div class="profile-card-box profile-card-center">
+                    <i class="fa-solid fa-circle-user profile-icon-large"></i>
+                    <div class="profile-name" id="display-name">test4</div>
+                    <div class="profile-email" id="display-gbox">test4@gbox.adnu.edu.ph</div>
                 </div>
 
-                <div class="profile-card about-card">
-                    <h3>About Me</h3>
-                    <p class="bio-text" id="display-bio">Passionate full-stack developer focusing on elegant UI/UX design and efficient database architecture.</p>
+                <div class="profile-card-box">
+                    <div class="about-title">About Me</div>
+                    <div class="about-text" id="display-bio">Passionate full-stack developer focusing on elegant UI/UX design and efficient database architecture.</div>
                 </div>
             </div>
 
-            <section class="task-summary-section">
-                <h3>Task Summary</h3>
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">10</span>
-                            <i class="fa-solid fa-bullseye"></i>
+            <div class="task-summary-box">
+                <div class="task-summary-title">Task Summary</div>
+                <div class="stats-grid-clean">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">10</div>
+                            <div class="stat-label">Your Tasks</div>
                         </div>
-                        <span class="label">Your Tasks</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-bullseye"></i></div>
                     </div>
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">4</span>
-                            <i class="fa-solid fa-calendar-days"></i>
+                    
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">4</div>
+                            <div class="stat-label">Due Today</div>
                         </div>
-                        <span class="label">Due Today</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-calendar-days"></i></div>
                     </div>
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">5</span>
-                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Overdue</div>
                         </div>
-                        <span class="label">Overdue</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
                     </div>
-                    <div class="summary-card">
-                        <div class="card-row">
-                            <span class="count">3</span>
-                            <i class="fa-solid fa-circle-check"></i>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Completed</div>
                         </div>
-                        <span class="label">Completed</span>
+                        <div class="stat-icon-circle"><i class="fa-solid fa-circle-check"></i></div>
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
 
