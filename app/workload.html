@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Workload Overview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-icon">T</div>
+                <span class="logo-text title-laila">Taskaholic</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active"><i class="fa-solid fa-book"></i> Workload Overview</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
+            </nav>
+
+            <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header-group">
+                <h1 class="title-inter">Workload Overview</h1>
+                <p class="subtitle">Visual Overview of your schedules and weekly workload</p>
+            </header>
+
+            <section class="task-summary-wrapper">
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">10</span>
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <span class="label">Your Tasks</span>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">4</span>
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+                        <span class="label">Due Today</span>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">5</span>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <span class="label">Overdue</span>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">3</span>
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <span class="label">Completed</span>
+                    </div>
+                </div>
+            </section>
+
+            <div class="dashboard-analytics-layout">
+                
+                <div class="analytics-left-col">
+                    <div class="chart-card">
+                        <h3>Pending vs. Completed Tasks (This Week)</h3>
+                        <div class="chart-content-box">
+                            <div class="pie-chart chart-pending-completed"></div>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color color-pending"></span>
+                                    <span class="legend-label">Pending</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color color-completed"></span>
+                                    <span class="legend-label">Completed</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Tasks by Category (This Week)</h3>
+                        <div class="chart-content-box">
+                            <div class="pie-chart chart-category"></div>
+                            <div class="chart-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color color-academic"></span>
+                                    <span class="legend-label">Academic</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color color-project"></span>
+                                    <span class="legend-label">Project</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color color-personal"></span>
+                                    <span class="legend-label">Personal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analytics-right-col">
+                    <div class="chart-card tall-chart-card">
+                        <h3 class="center-title">Workload Overview</h3>
+                        <div class="chart-content-vertical">
+                            <div class="donut-chart chart-total-workload">
+                                <div class="donut-center-hole">
+                                    <span class="donut-count">10</span>
+                                    <span class="donut-label">Total</span>
+                                </div>
+                            </div>
+                            <div class="chart-legend dynamic-gap">
+                                <div class="legend-item">
+                                    <span class="legend-color color-pending"></span>
+                                    <span class="legend-label">Pending</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color color-completed"></span>
+                                    <span class="legend-label">Completed</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color color-duetoday"></span>
+                                    <span class="legend-label">Due Today</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color color-overdue"></span>
+                                    <span class="legend-label">Overdue</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Profile</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-icon">T</div>
+                <span class="logo-text title-laila">Taskaholic</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item"><i class="fa-solid fa-book"></i> Workload Overview</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="#" class="nav-item active"><i class="fa-solid fa-circle-user"></i> Profile</a>
+            </nav>
+
+            <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>My Profile</h1>
+                <button class="btn-edit" id="openModalBtn">Edit Profile</button>
+            </header>
+
+            <div class="profile-grid">
+                <div class="profile-card user-identity-card">
+                    <div class="profile-picture-container">
+                        <i class="fa-solid fa-user-gear default-avatar"></i>
+                        <img src="" id="profile-img-preview" alt="Profile Picture" class="hidden-img">
+                    </div>
+                    <h2 class="user-name" id="display-name">test4</h2>
+                    <p class="user-gbox" id="display-gbox">test4@gbox.adnu.edu.ph</p>
+                </div>
+
+                <div class="profile-card about-card">
+                    <h3>About Me</h3>
+                    <p class="bio-text" id="display-bio">Passionate full-stack developer focusing on elegant UI/UX design and efficient database architecture.</p>
+                </div>
+            </div>
+
+            <section class="task-summary-section">
+                <h3>Task Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">10</span>
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <span class="label">Your Tasks</span>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">4</span>
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+                        <span class="label">Due Today</span>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">5</span>
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <span class="label">Overdue</span>
+                    </div>
+                    <div class="summary-card">
+                        <div class="card-row">
+                            <span class="count">3</span>
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                        <span class="label">Completed</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="editModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h2>Edit Profile</h2>
+                <button class="close-modal-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="editProfileForm">
+                <div class="form-row">
+                    <label class="row-label">Profile photo</label>
+                    <div class="row-content">
+                        <div class="modal-avatar-wrapper">
+                            <i class="fa-solid fa-circle-user modal-avatar-icon"></i>
+                            <div class="avatar-edit-badge">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="input-name" class="row-label">Full Name</label>
+                    <div class="row-content">
+                        <input type="text" id="input-name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="input-gbox" class="row-label">Gbox Account</label>
+                    <div class="row-content">
+                        <input type="email" id="input-gbox" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="input-bio" class="row-label">Bio</label>
+                    <div class="row-content">
+                        <textarea id="input-bio" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" id="cancelModalBtn">CANCEL</button>
+                    <button type="submit" class="btn-save">SAVE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('editModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelModalBtn');
+        const form = document.getElementById('editProfileForm');
+
+        const displayName = document.getElementById('display-name');
+        const displayGbox = document.getElementById('display-gbox');
+        const displayBio = document.getElementById('display-bio');
+
+        const inputName = document.getElementById('input-name');
+        const inputGbox = document.getElementById('input-gbox');
+        const inputBio = document.getElementById('input-bio');
+
+        openBtn.addEventListener('click', () => {
+            inputName.value = displayName.textContent;
+            inputGbox.value = displayGbox.textContent;
+            inputBio.value = displayBio.textContent;
+            modal.classList.add('active');
+        });
+
+        const closeModal = () => modal.classList.remove('active');
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            displayName.textContent = inputName.value;
+            displayGbox.textContent = inputGbox.value;
+            displayBio.textContent = inputBio.value;
+            closeModal();
+        });
+    </script>
+</body>
+</html>
