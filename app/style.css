@@ -738,6 +738,58 @@ body {
     text-align: right;
     padding-right: 20px;
 }
+/* 1. Define distinct column widths so the title gets more room */
+.master-data-grid-table th:nth-child(1) { width: 28%; }
+.master-data-grid-table th:nth-child(2) { width: 15%; }
+.master-data-grid-table th:nth-child(3) { width: 12%; }
+.master-data-grid-table th:nth-child(4) { width: 15%; }
+.master-data-grid-table th:nth-child(5) { width: 15%; }
+.master-data-grid-table th:nth-child(6) { width: 15%; }
+
+/* 2. Style Data Cells to mirror Header alignments */
+.master-data-grid-table td {
+    padding: 12px 15px;
+    text-align: center; /* Match default center of headers */
+    vertical-align: middle;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(0,0,0,0.08); /* Clean row separation */
+}
+
+/* 3. Force first column (Title) to left-align to match header */
+.master-data-grid-table td:first-child {
+    text-align: left;
+    padding-left: 20px;
+}
+
+/* 4. Center Action column */
+.master-data-grid-table td:last-child {
+    text-align: center;
+    padding-right: 20px;
+}
+
+/* 5. Center the action buttons smoothly */
+.action-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.action-btn {
+    background: none;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    color: #555555;
+    transition: color 0.2s ease;
+}
+
+.action-btn.edit:hover { 
+    color: #000000; 
+}
+
+.action-btn.delete:hover { 
+    color: #FA6B6B; 
+}
 
 .empty-state-fallback-view {
     flex: 1;
