@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Notifications</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
+                <span class="brand-title">Taskaholic</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
+                <a href="#" class="nav-item active"><i class="fa-regular fa-bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
+            </nav>
+
+            <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+
+        <main class="main-content" style="background-color: #FCF8F8;">
+            <header class="content-header" style="margin-bottom: 25px;">
+                <div class="welcome-text">
+                    <h2 style="display: flex; align-items: center; gap: 10px; color: #000000;">
+                        <i class="fa-regular fa-bell"></i> Notifications
+                    </h2>
+                    <p style="font-size: 13px; color: #555555; margin-top: 4px;">Stay connected with your tasks and activities</p>
+                </div>
+            </header>
+
+            <div style="max-width: 800px; width: 100%;">
+                
+                <div style="background-color: #FBEFEF; border-radius: 8px; padding: 12px 20px; display: flex; gap: 20px; margin-bottom: 20px;">
+                    <button style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 20px; padding: 6px 28px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #000000; cursor: pointer;">All</button>
+                    <button style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 20px; padding: 6px 28px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #000000; cursor: pointer;">Reminders</button>
+                    <button style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 20px; padding: 6px 28px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #000000; cursor: pointer;">Updates</button>
+                    <button style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 20px; padding: 6px 28px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: #000000; cursor: pointer;">Invitations</button>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                    <div style="border: 1px solid #F4B2BB; border-radius: 12px; height: 55px; background-color: transparent;"></div>
+                    <div style="border: 1px solid #F4B2BB; border-radius: 12px; height: 55px; background-color: transparent;"></div>
+                    <div style="border: 1px solid #F4B2BB; border-radius: 12px; height: 55px; background-color: transparent;"></div>
+                    <div style="border: 1px solid #F4B2BB; border-radius: 12px; height: 55px; background-color: transparent;"></div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
