@@ -92,7 +92,7 @@
                     <select class="filter-dropdown" id="statusFilter" onchange="applyFilters()">
                         <option value="all">All statuses</option>
                         <option value="pending">Pending</option>
-                        <option value="progress">In Progress</option>
+                        <option value="in progress">In Progress</option>
                         <option value="completed">Completed</option>
                     </select>
 
@@ -195,7 +195,7 @@
                         <label>Current Status</label>
                         <select id="taskStatus">
                             <option value="pending">Pending</option>
-                            <option value="progress">In Progress</option>
+                            <option value="in progress">In Progress</option>
                             <option value="completed">Completed</option>
                         </select>
                     </div>
@@ -242,23 +242,30 @@
 
             tasks.forEach(task => {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${task.title}</strong><br><small style="color:#777">${task.description || ''}</small></td>
-                    <td style="text-transform: capitalize;">${task.category}</td>
-                    <td><span class="priority-badge ${task.priority}">${task.priority}</span></td>
-                    <td>${task.dueDate}</td>
-                    <td><span class="status-pill ${task.status}">${task.status}</span></td>
-                    <td>
-                        <div class="action-buttons-container">
-                            <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
-                        </div>
-                    </td>
-                `;
+                // Replace the existing row.innerHTML inside renderMasterGrid with this:
+            row.innerHTML = `
+                <td>
+                    <a href="task_details.html?id=${task.id}" style="color: #000000; text-decoration: none;">
+                    <strong style="text-decoration: underline; cursor: pointer;">${task.title}</strong>
+                    </a>
+                    <br>
+                <small style="color:#777">${task.description || ''}</small>
+                </td>
+                <td style="text-transform: capitalize;">${task.category}</td>
+                <td><span class="priority-badge ${task.priority}">${task.priority}</span></td>
+                <td>${task.dueDate}</td>
+                <td><span class="status-pill ${task.status}">${task.status}</span></td>
+                <td>
+                    <div class="action-buttons-container">
+                        <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            `;
                 tbody.appendChild(row);
             });
         }

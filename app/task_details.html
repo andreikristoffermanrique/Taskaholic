@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taskaholic - Task Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar-panel">
+            <div class="brand-wrapper">
+                <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
+                <span class="brand-title">Taskaholic</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
+                <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+                <a href="my_tasks.html" class="nav-item active"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
+                <a href="#" class="nav-item"><i class="fa-regular fa-bell"></i> Notifications</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
+            </nav>
+
+            <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+        </aside>
+
+        <main class="main-content" style="background-color: #FCF8F8;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+                <a href="my_tasks.html" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; color: #000000; text-decoration: none; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-caret-left"></i> Back to Tasks
+                </a>
+                
+                <div style="display: flex; gap: 12px;">
+                    <button style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">EDIT</button>
+                    <button id="delete-task-btn" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">DELETE</button>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding: 0 10px;">
+                <div>
+                    <h1 id="detail-title" style="font-size: 32px; font-weight: 800; color: #000000; margin-bottom: 12px;">Loading Task...</h1>
+                    <div style="display: flex; gap: 24px; color: #333333; font-size: 13px; font-weight: 500;">
+                        <span id="detail-category" style="display: flex; align-items: center; gap: 6px; text-transform: capitalize;"><i class="fa-solid fa-layer-group"></i> Category</span>
+                        <span id="detail-date" style="display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> Due Date</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+                    <span id="detail-priority" style="border: 1px solid #000000; background-color: #FFFFFF; padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; min-width: 110px; text-align: center; text-transform: capitalize;">Priority Level</span>
+                    <span id="detail-status" style="border: 1px solid #000000; background-color: #FFFFFF; padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; min-width: 110px; text-align: center; text-transform: capitalize;">Status</span>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 160px; position: relative;">
+                        <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Collaborators</h3>
+                        <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
+                        <p style="margin-top: 15px; font-size: 13px; color: #666;">No collaborators assigned.</p>
+                    </div>
+
+                    <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 220px; position: relative;">
+                        <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Sub Tasks</h3>
+                        <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
+                        <p style="margin-top: 15px; font-size: 13px; color: #666;">No sub-tasks available.</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 24px;">
+                    <div style="background-color: #FBEFEF; border: 1px solid #000000; border-radius: 12px; padding: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Progress</h3>
+                            <span id="detail-progress-text" style="font-size: 14px; font-weight: 700; color: #000000;">0%</span>
+                        </div>
+                        <div style="width: 100%; height: 12px; background-color: #FFFFFF; border: 1px solid #000000; border-radius: 8px; overflow: hidden;">
+                            <div id="detail-progress-bar" style="width: 0%; height: 100%; background-color: #54CBB2; border-radius: 8px; transition: width 0.3s ease;"></div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; flex-grow: 1; min-height: 250px; position: relative;">
+                        <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Description</h3>
+                        <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
+                        <p id="detail-description" style="margin-top: 15px; font-size: 14px; color: #444444; line-height: 1.6;"></p>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Get the Task ID from the URL parameters (e.g., ?id=1719283912)
+            const params = new URLSearchParams(window.location.search);
+            const taskId = params.get('id');
+
+            if (taskId) {
+                // 2. Fetch all tasks from LocalStorage
+                const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+                
+                // 3. Find the specific task that matches the ID
+                const currentTask = tasks.find(t => t.id == taskId);
+
+                if (currentTask) {
+                    // 4. Inject the data into the HTML elements
+                    document.getElementById('detail-title').textContent = currentTask.title;
+                    document.getElementById('detail-category').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentTask.category}`;
+                    document.getElementById('detail-date').innerHTML = `<i class="fa-regular fa-calendar"></i> Due: ${currentTask.dueDate}`;
+                    document.getElementById('detail-priority').textContent = `${currentTask.priority} Priority`;
+                    document.getElementById('detail-status').textContent = `Status: ${currentTask.status}`;
+                    document.getElementById('detail-description').textContent = currentTask.description || "No description provided for this task.";
+
+                    // Logic to visualize progress based on status
+                    let progressPercent = 0;
+                    if (currentTask.status === 'in progress') progressPercent = 50;
+                    if (currentTask.status === 'completed') progressPercent = 100;
+                    
+                    document.getElementById('detail-progress-text').textContent = `${progressPercent}%`;
+                    document.getElementById('detail-progress-bar').style.width = `${progressPercent}%`;
+
+                    // Simple Delete Task function for this page
+                    document.getElementById('delete-task-btn').addEventListener('click', () => {
+                        if(confirm("Are you sure you want to delete this task?")) {
+                            const updatedTasks = tasks.filter(t => t.id != taskId);
+                            localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+                            window.location.href = "my_tasks.html";
+                        }
+                    });
+
+                } else {
+                    document.getElementById('detail-title').textContent = "Task Not Found";
+                    document.getElementById('detail-description').textContent = "We couldn't find the data for this task. It may have been deleted.";
+                }
+            } else {
+                document.getElementById('detail-title').textContent = "No Task Selected";
+            }
+        });
+    </script>
+</body>
+</html>
