@@ -11,6 +11,7 @@
 <body>
 
     <div class="dashboard-container">
+        <!-- Sidebar Navigation Panel -->
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -26,7 +27,7 @@
                     <i class="fa-solid fa-table-cells-large"></i>
                     <span>Dashboard</span>
                 </a>
-                <a href="#" class="nav-item" onclick="handleNavigation('tasks')">
+                <a href="my_tasks.html" class="nav-item" onclick="handleNavigation('tasks')">
                     <i class="fa-solid fa-clapperboard"></i>
                     <span>My Tasks</span>
                 </a>
@@ -54,6 +55,7 @@
             </a>
         </aside>
 
+        <!-- Main Dashboard View Contents -->
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
@@ -65,11 +67,12 @@
                 </button>
             </header>
 
+            <!-- Numeric Metric Stats Section -->
             <div class="stats-container-row">
                 <section class="stats-grid">
                     <div class="stat-card" onclick="filterTasks('all')">
                         <div class="stat-info">
-                            <span class="stat-number">10</span>
+                            <span class="stat-number" id="total-tasks">0</span>
                             <span class="stat-label">Your Tasks</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -78,7 +81,7 @@
                     </div>
                     <div class="stat-card" onclick="filterTasks('today')">
                         <div class="stat-info">
-                            <span class="stat-number">4</span>
+                            <span class="stat-number" id="due-today-tasks">0</span>
                             <span class="stat-label">Due Today</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -87,7 +90,7 @@
                     </div>
                     <div class="stat-card" onclick="filterTasks('overdue')">
                         <div class="stat-info">
-                            <span class="stat-number">5</span>
+                            <span class="stat-number" id="overdue-tasks">0</span>
                             <span class="stat-label">Overdue</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -96,7 +99,7 @@
                     </div>
                     <div class="stat-card" onclick="filterTasks('completed')">
                         <div class="stat-info">
-                            <span class="stat-number">3</span>
+                            <span class="stat-number" id="completed-tasks">0</span>
                             <span class="stat-label">Completed</span>
                         </div>
                         <div class="stat-icon-circle">
@@ -106,7 +109,9 @@
                 </section>
             </div>
 
+            <!-- Lower Layout Grid: Tables and Progress Rings -->
             <section class="data-panels">
+                <!-- Upcoming Deadlines Table Card Component -->
                 <div class="data-card upcoming-deadlines">
                     <div class="card-header">
                         <h3>Upcoming Deadlines</h3>
@@ -120,12 +125,14 @@
                                     <th>Deadline</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                </tbody>
+                            <tbody id="deadlines-tbody">
+                                <!-- Dynamic content loaded via JavaScript -->
+                            </tbody>
                         </table>
                     </div>
                 </div>
 
+                <!-- Category Chart Metrics Component -->
                 <div class="data-card progress-overview">
                     <div class="card-header">
                         <h3>Progress Overview</h3>
@@ -135,136 +142,262 @@
                         <div class="progress-chart-wrapper">
                             <svg class="progress-ring-svg" width="130" height="130" viewBox="0 0 42 42">
                                 <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#E6D5D5" stroke-width="5.5"></circle>
-                                
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#FCF8F8" stroke-width="5.5" 
-                                        stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
-                                        
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F5AFAF" stroke-width="5.5" 
-                                        stroke-dasharray="25 75" stroke-dashoffset="-35"></circle>
-                                        
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F9DFDF" stroke-width="5.5" 
-                                        stroke-dasharray="15 85" stroke-dashoffset="-60"></circle>
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#FCF8F8" stroke-width="5.5" stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F5AFAF" stroke-width="5.5" stroke-dasharray="25 75" stroke-dashoffset="-35"></circle>
+                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F9DFDF" stroke-width="5.5" stroke-dasharray="15 85" stroke-dashoffset="-60"></circle>
                             </svg>
                             <div class="chart-inner-label">
-                                <span class="chart-percentage">10</span>
+                                <span class="chart-percentage" id="chart-total-tasks">0</span>
                                 <span class="chart-subtext">Total</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="chart-legend">
-                        <div class="legend-item">
-                            <span class="legend-color academic"></span> Academic
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color project"></span> Project
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color personal"></span> Personal
-                        </div>
+                        <div class="legend-item"><span class="legend-color academic"></span> Academic</div>
+                        <div class="legend-item"><span class="legend-color project"></span> Project</div>
+                        <div class="legend-item"><span class="legend-color personal"></span> Personal</div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <script>
-        function handleNavigation(pageKey) {
-            console.log("Navigating to view: " + pageKey);
-        }
-
-        function handleLogout(event) {
-            event.preventDefault();
-            if (confirm("Are you sure you want to logout?")) {
-                window.location.href = "login.html"; 
-            }
-        }
-
-        function openAddTaskModal() {
-            document.getElementById('addTaskModal').style.display = 'flex';
-        }
-
-        function closeAddTaskModal() {
-            document.getElementById('addTaskModal').style.display = 'none';
-        }
-
-        function viewAllDeadlines() {
-            alert("Redirecting to comprehensive deadlines list.");
-        }
-
-        function filterTasks(filterCriteria) {
-            alert("Filtering task lists targeting: " + filterCriteria.toUpperCase());
-        }
-    </script>
-
-    <div class="modal-overlay" id="addTaskModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>Create New Task</h3>
-                <button class="close-modal-btn" onclick="closeAddTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+    <!-- HIGH-PRIORITY APP-BODY LEVEL MODAL (Bypasses external CSS layout restrictions) -->
+    <div id="uniqueTaskFormModal" style="display: none !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
+        <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
+            
+            <!-- Modal Header -->
+            <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
+                <h3 style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Create New Task</h3>
+                <button type="button" onclick="closeAddTaskModal()" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form class="modal-form">
-                <div class="modal-input-group">
-                    <label>Task Title</label>
-                    <input type="text" placeholder="Enter your task">
+
+            <!-- Modal Form -->
+            <form style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
+                <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
+                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Task Title</label>
+                    <input type="text" id="modalTaskTitle" placeholder="Enter your task" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
                 
-                <div class="modal-input-group">
-                    <label>Description</label>
-                    <input type="text" placeholder="Enter description">
+                <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
+                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Description</label>
+                    <input type="text" id="modalTaskDesc" placeholder="Enter description" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
 
-                <div class="modal-row-3">
-                    <div class="radio-box-group">
-                        <label class="group-title">Category</label>
-                        <div class="radio-box">
-                            <label><input type="radio" name="category" value="academic" checked> Academic</label>
-                            <label><input type="radio" name="category" value="project"> Project</label>
-                            <label><input type="radio" name="category" value="personal"> Personal</label>
+                <!-- 3-Column Fields -->
+                <div style="display: grid !important; grid-template-columns: 1.2fr 1.2fr 1fr !important; gap: 12px !important;">
+                    <!-- Category Radio Selection -->
+                    <div>
+                        <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Category</label>
+                        <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="academic" checked style="accent-color: #e57373 !important;"> Academic</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="project" style="accent-color: #e57373 !important;"> Project</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="personal" style="accent-color: #e57373 !important;"> Personal</label>
                         </div>
                     </div>
 
-                    <div class="radio-box-group">
-                        <label class="group-title">Priority Level</label>
-                        <div class="radio-box">
-                            <label><input type="radio" name="priority" value="high" checked> High</label>
-                            <label><input type="radio" name="priority" value="medium"> Medium</label>
-                            <label><input type="radio" name="priority" value="low"> Low</label>
+                    <!-- Priority Radio Selection -->
+                    <div>
+                        <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Priority Level</label>
+                        <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="high" checked style="accent-color: #e57373 !important;"> High</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="medium" style="accent-color: #e57373 !important;"> Medium</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="low" style="accent-color: #e57373 !important;"> Low</label>
                         </div>
                     </div>
 
-                    <div class="column-group">
-                        <div class="modal-input-group">
-                            <label>Due Date</label>
-                            <input type="text" placeholder="mm/dd/yyyy">
+                    <!-- Due Date and Visibility Form Fields -->
+                    <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
+                        <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
+                            <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Due Date</label>
+                            <input type="date" id="modalTaskDate" style="padding: 6px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; text-align: center !important; font-size: 12px !important; background: #fff !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                         </div>
-                        <div class="visibility-group">
-                            <label class="group-title">Visibility</label>
-                            <div class="radio-inline">
-                                <label><input type="radio" name="visibility" value="private" checked> Private</label>
-                                <label><input type="radio" name="visibility" value="shared"> Shared</label>
+                        <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
+                            <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Visibility</label>
+                            <div style="display: flex !important; gap: 10px !important;">
+                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="private" checked style="accent-color: #e57373 !important;"> Private</label>
+                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="shared" style="accent-color: #e57373 !important;"> Shared</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="modal-footer-row">
-                    <div class="status-dropdown">
-                        <label>Current Status</label>
-                        <select>
+                <!-- Footer Dropdown and Save Actions -->
+                <div style="display: flex !important; justify-content: space-between !important; align-items: flex-end !important; margin-top: 10px !important;">
+                    <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                        <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important; white-space: nowrap !important;">Current Status</label>
+                        <select id="modalTaskStatus" style="padding: 6px 12px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 13px !important; outline: none !important; cursor: pointer !important;">
                             <option value="pending">Pending</option>
-                            <option value="progress">In Progress</option>
+                            <option value="in progress">In Progress</option>
                             <option value="completed">Completed</option>
                         </select>
                     </div>
-                    <div class="modal-actions">
-                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
-                        <button type="button" class="btn-save" onclick="closeAddTaskModal()">Save Task</button>
+                    <div style="display: flex !important; gap: 10px !important;">
+                        <button type="button" onclick="closeAddTaskModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
+                        <button type="button" onclick="saveNewTask()" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    <!-- Centralized Storage Script Layer -->
+    <script>
+        // Core fallbacks to keep UI layout active if storage starts blank
+        const fallbackTasks = [
+            { id: 1, title: 'test2', description: 'dmdndeje', category: 'academic', priority: 'high', dueDate: '2026-06-28', visibility: 'private', status: 'pending' },
+            { id: 2, title: 'Database ERD Diagram', description: 'Finish relationships mapping', category: 'project', priority: 'high', dueDate: '2026-07-03', visibility: 'private', status: 'in progress' },
+            { id: 3, title: 'Buy Groceries', description: 'Milk and eggs', category: 'personal', priority: 'low', dueDate: '2026-06-15', visibility: 'private', status: 'pending' },
+            { id: 4, title: 'Ethics Reflection Paper', description: 'Utilitarianism framework cases', category: 'academic', priority: 'medium', dueDate: '2026-07-10', visibility: 'private', status: 'completed' }
+        ];
+
+        // Read dynamically from localStorage shared warehouse
+        function getTasks() {
+            let stored = localStorage.getItem('tasks');
+            if (!stored) {
+                localStorage.setItem('tasks', JSON.stringify(fallbackTasks));
+                return fallbackTasks;
+            }
+            return JSON.parse(stored);
+        }
+
+        function saveTasks(tasks) {
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+        }
+
+        // Renders tracking state records out onto template display nodes
+        function loadDashboardData() {
+            const tasks = getTasks();
+            const todayStr = new Date().toISOString().split('T')[0];
+            
+            let totalCount = tasks.length;
+            let dueTodayCount = 0;
+            let overdueCount = 0;
+            let completedCount = 0;
+
+            const tbody = document.getElementById('deadlines-tbody');
+            if (tbody) {
+                tbody.innerHTML = '';
+                
+                // Track metric scopes cleanly
+                const activeTasks = tasks.filter(task => {
+                    const statusClean = task.status.toLowerCase().trim();
+                    if (statusClean === 'completed') {
+                        completedCount++;
+                        return false; // exclude completed items from upcoming deadlines table
+                    }
+                    if (task.dueDate === todayStr) {
+                        dueTodayCount++;
+                    } else if (task.dueDate < todayStr) {
+                        overdueCount++;
+                    }
+                    return true;
+                });
+
+                // Arrange columns logically chronologically 
+                activeTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
+
+                // Append up to 5 primary deadlines onto target tables row cells
+                activeTasks.slice(0, 5).forEach(task => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>
+                            <div style="font-weight: 600; color: #1a1a1a;">${task.title}</div>
+                            <div style="font-size: 12px; color: #707070;">${task.description || ''}</div>
+                        </td>
+                        <td style="vertical-align: middle; white-space: nowrap;">${task.dueDate}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            // Keep numeric element totals synchronous
+            if(document.getElementById('total-tasks')) document.getElementById('total-tasks').textContent = totalCount;
+            if(document.getElementById('due-today-tasks')) document.getElementById('due-today-tasks').textContent = dueTodayCount;
+            if(document.getElementById('overdue-tasks')) document.getElementById('overdue-tasks').textContent = overdueCount;
+            if(document.getElementById('completed-tasks')) document.getElementById('completed-tasks').textContent = completedCount;
+            if(document.getElementById('chart-total-tasks')) document.getElementById('chart-total-tasks').textContent = totalCount;
+        }
+
+        // COMPILES FORM SELECTIONS INTO SHARED LOCALSTORAGE WAREHOUSE
+        function saveNewTask() {
+            const titleInput = document.getElementById('modalTaskTitle');
+            const descInput = document.getElementById('modalTaskDesc');
+            const dateInput = document.getElementById('modalTaskDate');
+            const statusSelect = document.getElementById('modalTaskStatus');
+
+            if (!titleInput || titleInput.value.trim() === "") {
+                alert("Please input a Task Title before saving!");
+                return;
+            }
+
+            const categorySelected = document.querySelector('input[name="category"]:checked')?.value || 'academic';
+            const prioritySelected = document.querySelector('input[name="priority"]:checked')?.value || 'medium';
+            const visibilitySelected = document.querySelector('input[name="visibility"]:checked')?.value || 'private';
+
+            let tasksList = getTasks();
+
+            const newTask = {
+                id: Date.now(), // Secure timestamps identifier matching my_tasks setup
+                title: titleInput.value.trim(),
+                description: descInput ? descInput.value.trim() : '',
+                category: categorySelected,
+                priority: prioritySelected,
+                dueDate: (dateInput && dateInput.value) ? dateInput.value : new Date().toISOString().split('T')[0],
+                visibility: visibilitySelected,
+                status: statusSelect ? statusSelect.value : 'pending'
+            };
+
+            tasksList.push(newTask);
+            saveTasks(tasksList);
+
+            // Re-render dashboard dashboard components instantly
+            loadDashboardData();
+
+            // Clear inputs reset
+            titleInput.value = '';
+            if(descInput) descInput.value = '';
+            if(dateInput) dateInput.value = '';
+
+            closeAddTaskModal();
+        }
+
+        // Modal View Controls Management 
+        function openAddTaskModal() {
+            const modal = document.getElementById('uniqueTaskFormModal');
+            if (modal) {
+                modal.style.setProperty('display', 'flex', 'important');
+            }
+        }
+
+        function closeAddTaskModal() {
+            const modal = document.getElementById('uniqueTaskFormModal');
+            if (modal) {
+                modal.style.setProperty('display', 'none', 'important');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+
+            // Modal backdrop close logic wireup
+            const modalEl = document.getElementById('uniqueTaskFormModal');
+            if(modalEl) {
+                modalEl.addEventListener('click', function(e) {
+                    if (e.target === this) closeAddTaskModal();
+                });
+            }
+        });
+
+        function handleNavigation(pageKey) { console.log("Navigating to view: " + pageKey); }
+        function handleLogout(event) {
+            event.preventDefault();
+            if (confirm("Are you sure you want to logout?")) { window.location.href = "login.html"; }
+        }
+        function viewAllDeadlines() { window.location.href = "my_tasks.html"; }
+        function filterTasks(filterCriteria) { alert("Filtering task lists targeting: " + filterCriteria.toUpperCase()); }
+    </script>
 
 </body>
 </html>

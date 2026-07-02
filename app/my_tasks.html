@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taskaholic - My Tasks</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Laila:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Links to your separate stylesheets -->
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
 
-   <div class="dashboard-container">
+    <div class="dashboard-container">
+        <!-- Sidebar Panel -->
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -57,6 +56,7 @@
             </a>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
@@ -68,6 +68,7 @@
                 </button>
             </header>
 
+            <!-- Filters Toolbar -->
             <section class="task-filter-stacked-container">
                 <div class="search-row-wrapper">
                     <div class="search-box-wrapper">
@@ -109,6 +110,7 @@
                 </div>
             </section>
 
+            <!-- Grid/Table Area -->
             <section class="tasks-table-main-container">
                 <table class="master-data-grid-table">
                     <thead>
@@ -139,87 +141,115 @@
         </main>
     </div>
 
-    <!-- Modal Form overlay -->
-    <div class="modal-overlay" id="addTaskModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 id="modalFormTitle">Create New Task</h3>
-                <button class="close-modal-btn" onclick="closeAddTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+    <!-- HIGH-PRIORITY APP-BODY LEVEL MODAL (Matches Dashboard Structure flawlessly) -->
+    <div id="addTaskModal" style="display: none !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
+        <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
+            
+            <!-- Modal Header -->
+            <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
+                <h3 id="modalFormTitle" style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Create New Task</h3>
+                <button type="button" onclick="closeAddTaskModal()" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form class="modal-form" id="taskForm">
+
+            <!-- Modal Form -->
+            <form id="taskForm" style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
                 <input type="hidden" id="editTaskId">
-                <div class="modal-input-group">
-                    <label>Task Title</label>
-                    <input type="text" id="taskTitle" placeholder="Enter your task" required>
+                
+                <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
+                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Task Title</label>
+                    <input type="text" id="taskTitle" placeholder="Enter your task" required style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
                 
-                <div class="modal-input-group">
-                    <label>Description</label>
-                    <input type="text" id="taskDesc" placeholder="Enter description">
+                <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
+                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Description</label>
+                    <input type="text" id="taskDesc" placeholder="Enter description" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
 
-                <div class="modal-row-3">
-                    <div class="radio-box-group">
-                        <label class="group-title">Category</label>
-                        <div class="radio-box">
-                            <label><input type="radio" name="category" value="academic" checked> Academic</label>
-                            <label><input type="radio" name="category" value="project"> Project</label>
-                            <label><input type="radio" name="category" value="personal"> Personal</label>
+                <!-- 3-Column Settings -->
+                <div style="display: grid !important; grid-template-columns: 1.2fr 1.2fr 1fr !important; gap: 12px !important;">
+                    <!-- Category Radio Selection -->
+                    <div>
+                        <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Category</label>
+                        <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="academic" checked style="accent-color: #e57373 !important;"> Academic</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="project" style="accent-color: #e57373 !important;"> Project</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="personal" style="accent-color: #e57373 !important;"> Personal</label>
                         </div>
                     </div>
 
-                    <div class="radio-box-group">
-                        <label class="group-title">Priority Level</label>
-                        <div class="radio-box">
-                            <label><input type="radio" name="priority" value="high" checked> High</label>
-                            <label><input type="radio" name="priority" value="medium"> Medium</label>
-                            <label><input type="radio" name="priority" value="low"> Low</label>
+                    <!-- Priority Radio Selection -->
+                    <div>
+                        <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Priority Level</label>
+                        <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="high" checked style="accent-color: #e57373 !important;"> High</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="medium" style="accent-color: #e57373 !important;"> Medium</label>
+                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="low" style="accent-color: #e57373 !important;"> Low</label>
                         </div>
                     </div>
 
-                    <div class="column-group">
-                        <div class="modal-input-group">
-                            <label>Due Date</label>
-                            <input type="date" id="taskDueDate" required>
+                    <!-- Due Date and Visibility Form Fields -->
+                    <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
+                        <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
+                            <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Due Date</label>
+                            <input type="date" id="taskDueDate" required style="padding: 6px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; text-align: center !important; font-size: 12px !important; background: #fff !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                         </div>
-                        <div class="visibility-group">
-                            <label class="group-title">Visibility</label>
-                            <div class="radio-inline">
-                                <label><input type="radio" name="visibility" value="private" checked> Private</label>
-                                <label><input type="radio" name="visibility" value="shared"> Shared</label>
+                        <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
+                            <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Visibility</label>
+                            <div style="display: flex !important; gap: 10px !important;">
+                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="private" checked style="accent-color: #e57373 !important;"> Private</label>
+                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="shared" style="accent-color: #e57373 !important;"> Shared</label>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="modal-footer-row">
-                    <div class="status-dropdown">
-                        <label>Current Status</label>
-                        <select id="taskStatus">
+                <!-- Dropdown & Form Submit controls -->
+                <div style="display: flex !important; justify-content: space-between !important; align-items: flex-end !important; margin-top: 10px !important;">
+                    <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
+                        <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important; white-space: nowrap !important;">Current Status</label>
+                        <select id="taskStatus" style="padding: 6px 12px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 13px !important; outline: none !important; cursor: pointer !important;">
                             <option value="pending">Pending</option>
                             <option value="in progress">In Progress</option>
                             <option value="completed">Completed</option>
                         </select>
                     </div>
-                    <div class="modal-actions">
-                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
-                        <button type="submit" class="btn-save" id="btnSaveSubmit">Save Task</button>
+                    <div style="display: flex !important; gap: 10px !important;">
+                        <button type="button" onclick="closeAddTaskModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
+                        <button type="submit" id="btnSaveSubmit" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Business Logic JavaScript Overlay -->
     <script>
         function handleNavigation(pageKey) { console.log("Navigating to: " + pageKey); }
         function handleLogout(event) { event.preventDefault(); if (confirm("Are you sure you want to logout?")) { window.location.href = "login.html"; } }
         
+        // Initial setup for Sample Data if LocalStorage is totally bare
+        const defaultSampleTasks = [
+            { id: 1, title: 'test2', description: 'dmdndeje', category: 'academic', priority: 'high', dueDate: '2026-06-28', visibility: 'private', status: 'pending' },
+            { id: 2, title: 'Database ERD Diagram', description: 'Finish relationships mapping', category: 'project', priority: 'high', dueDate: '2026-07-03', visibility: 'private', status: 'in progress' },
+            { id: 3, title: 'Buy Groceries', description: 'Milk and eggs', category: 'personal', priority: 'low', dueDate: '2026-06-15', visibility: 'private', status: 'pending' },
+            { id: 4, title: 'Ethics Reflection Paper', description: 'Utilitarianism framework cases', category: 'academic', priority: 'medium', dueDate: '2026-07-10', visibility: 'private', status: 'completed' }
+        ];
+
+        function getTasks() { 
+            let stored = localStorage.getItem('tasks');
+            if (!stored) {
+                localStorage.setItem('tasks', JSON.stringify(defaultSampleTasks));
+                return defaultSampleTasks;
+            }
+            return JSON.parse(stored); 
+        }
+        
+        function saveTasks(tasks) { localStorage.setItem('tasks', JSON.stringify(tasks)); }
+
         function openAddTaskModal() {
             document.getElementById('modalFormTitle').innerText = "Create New Task";
             document.getElementById('editTaskId').value = "";
             document.getElementById('taskForm').reset();
-            
-            // Forces display flex status to bypass external theme layouts
             document.getElementById('addTaskModal').style.setProperty('display', 'flex', 'important');
         }
 
@@ -228,9 +258,6 @@
         }
         
         function applyBulkAction() { alert("Bulk Action Registered."); }
-
-        function getTasks() { return JSON.parse(localStorage.getItem('tasks')) || []; }
-        function saveTasks(tasks) { localStorage.setItem('tasks', JSON.stringify(tasks)); }
 
         function renderMasterGrid(filteredTasks = null) {
             const tasks = filteredTasks || getTasks();
@@ -260,15 +287,11 @@
                     <td style="text-transform: capitalize;">${task.category}</td>
                     <td><span class="priority-badge ${task.priority}">${task.priority}</span></td>
                     <td>${task.dueDate}</td>
-                    <td><span class="status-pill ${task.status}">${task.status}</span></td>
+                    <td><span class="status-pill ${task.status.replace(' ', '-')}">${task.status}</span></td>
                     <td>
-                        <div class="action-buttons-container">
-                            <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </button>
-                            <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task">
-                                <i class="fa-solid fa-trash"></i>
-                            </button>
+                        <div class="action-buttons-container" style="display: flex; gap: 8px; justify-content: center;">
+                            <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task" style="background: none; border: none; cursor: pointer; color: #555;"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task" style="background: none; border: none; cursor: pointer; color: #e57373;"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </td>
                 `;
@@ -286,10 +309,10 @@
             document.getElementById('taskTitle').value = task.title;
             document.getElementById('taskDesc').value = task.description;
             
-            document.querySelector(`input[name="category"][value="${task.category}"]`).checked = true;
-            document.querySelector(`input[name="priority"][value="${task.priority}"]`).checked = true;
+            document.querySelector(`input[name="category"][value="${task.category.toLowerCase()}"]`).checked = true;
+            document.querySelector(`input[name="priority"][value="${task.priority.toLowerCase()}"]`).checked = true;
             document.getElementById('taskDueDate').value = task.dueDate;
-            document.querySelector(`input[name="visibility"][value="${task.visibility}"]`).checked = true;
+            document.querySelector(`input[name="visibility"][value="${task.visibility.toLowerCase()}"]`).checked = true;
             document.getElementById('taskStatus').value = task.status;
 
             document.getElementById('addTaskModal').style.setProperty('display', 'flex', 'important');
@@ -311,9 +334,9 @@
             const stat = document.getElementById('statusFilter').value;
             const search = document.getElementById('taskSearchInput').value.toLowerCase();
 
-            if (cat !== 'all') tasks = tasks.filter(t => t.category === cat);
-            if (pri !== 'all') tasks = tasks.filter(t => t.priority === pri);
-            if (stat !== 'all') tasks = tasks.filter(t => t.status === stat);
+            if (cat !== 'all') tasks = tasks.filter(t => t.category.toLowerCase() === cat.toLowerCase());
+            if (pri !== 'all') tasks = tasks.filter(t => t.priority.toLowerCase() === pri.toLowerCase());
+            if (stat !== 'all') tasks = tasks.filter(t => t.status.toLowerCase() === stat.toLowerCase());
             if (search) tasks = tasks.filter(t => t.title.toLowerCase().includes(search) || t.description.toLowerCase().includes(search));
 
             renderMasterGrid(tasks);
@@ -350,6 +373,7 @@
             applyFilters();
         });
 
+        // Initialize display wireframes smoothly
         window.addEventListener('DOMContentLoaded', () => renderMasterGrid());
     </script>
 </body>
