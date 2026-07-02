@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taskaholic - My Tasks</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Laila:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Links to your separate stylesheets -->
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
 
-    <div class="dashboard-container">
+   <div class="dashboard-container">
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -58,7 +60,7 @@
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
-                    <h2>Good Day, Bernadette !</h2>
+                    <h2>Good Day, [name] !</h2>
                     <p>Manage and organize all your tasks</p>
                 </div>
                 <button class="add-task-btn" onclick="openAddTaskModal()">
@@ -119,8 +121,7 @@
                             <th style="text-align: center;">Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="taskGridBody">
-                        </tbody>
+                    <tbody id="taskGridBody"></tbody>
                 </table>
 
                 <div class="empty-state-fallback-view" id="emptyStateContainer">
@@ -138,6 +139,7 @@
         </main>
     </div>
 
+    <!-- Modal Form overlay -->
     <div class="modal-overlay" id="addTaskModal">
         <div class="modal-container">
             <div class="modal-header">
@@ -216,10 +218,15 @@
             document.getElementById('modalFormTitle').innerText = "Create New Task";
             document.getElementById('editTaskId').value = "";
             document.getElementById('taskForm').reset();
-            document.getElementById('addTaskModal').style.display = 'flex';
+            
+            // Forces display flex status to bypass external theme layouts
+            document.getElementById('addTaskModal').style.setProperty('display', 'flex', 'important');
         }
 
-        function closeAddTaskModal() { document.getElementById('addTaskModal').style.display = 'none'; }
+        function closeAddTaskModal() { 
+            document.getElementById('addTaskModal').style.setProperty('display', 'none', 'important'); 
+        }
+        
         function applyBulkAction() { alert("Bulk Action Registered."); }
 
         function getTasks() { return JSON.parse(localStorage.getItem('tasks')) || []; }
@@ -234,38 +241,37 @@
             tbody.innerHTML = '';
 
             if (tasks.length === 0) {
-                emptyState.style.display = 'flex';
+                if (emptyState) emptyState.style.setProperty('display', 'flex', 'important');
                 return;
             } else {
-                emptyState.style.display = 'none';
+                if (emptyState) emptyState.style.setProperty('display', 'none', 'important');
             }
 
             tasks.forEach(task => {
                 const row = document.createElement('tr');
-                // Replace the existing row.innerHTML inside renderMasterGrid with this:
-            row.innerHTML = `
-                <td>
-                    <a href="task_details.html?id=${task.id}" style="color: #000000; text-decoration: none;">
-                    <strong style="text-decoration: underline; cursor: pointer;">${task.title}</strong>
-                    </a>
-                    <br>
-                <small style="color:#777">${task.description || ''}</small>
-                </td>
-                <td style="text-transform: capitalize;">${task.category}</td>
-                <td><span class="priority-badge ${task.priority}">${task.priority}</span></td>
-                <td>${task.dueDate}</td>
-                <td><span class="status-pill ${task.status}">${task.status}</span></td>
-                <td>
-                    <div class="action-buttons-container">
-                        <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </button>
-                        <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                </td>
-            `;
+                row.innerHTML = `
+                    <td>
+                        <a href="task_details.html?id=${task.id}" style="color: #000000; text-decoration: none;">
+                            <strong style="text-decoration: underline; cursor: pointer;">${task.title}</strong>
+                        </a>
+                        <br>
+                        <small style="color:#777">${task.description || ''}</small>
+                    </td>
+                    <td style="text-transform: capitalize;">${task.category}</td>
+                    <td><span class="priority-badge ${task.priority}">${task.priority}</span></td>
+                    <td>${task.dueDate}</td>
+                    <td><span class="status-pill ${task.status}">${task.status}</span></td>
+                    <td>
+                        <div class="action-buttons-container">
+                            <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
                 tbody.appendChild(row);
             });
         }
@@ -286,7 +292,7 @@
             document.querySelector(`input[name="visibility"][value="${task.visibility}"]`).checked = true;
             document.getElementById('taskStatus').value = task.status;
 
-            document.getElementById('addTaskModal').style.display = 'flex';
+            document.getElementById('addTaskModal').style.setProperty('display', 'flex', 'important');
         }
 
         function deleteTask(id) {

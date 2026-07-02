@@ -7,6 +7,7 @@
     box-sizing: border-box;
 }
 
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #F5F5F5;
@@ -15,46 +16,52 @@ body {
     color: #333333;
 }
 
+
 /* Color Variables */
 :root {
-    --sidebar-bg: #fce4e8; 
+    --sidebar-bg: #fce4e8;
     --active-bg: #f4b2bb;  
     --card-bg: #fce4e8;
     --border-color: #333;
     --text-muted: #555;
 }
 
+
 /* ==========================================
    2. AUTH PANEL (LOGIN & REGISTRATION)
    ========================================== */
 .auth-container {
     display: flex;
-    width: 100vw;       
+    width: 100vw;      
     height: 100vh;      
     background-color: #FFFFFF;
     margin: 0;
     box-shadow: none;
 }
 
+
 .brand-panel {
-    flex: 1; 
+    flex: 1;
     background-color: #FBEFEF;
     padding: 50px 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     text-align: center;
 }
 
+
 .form-panel {
-    flex: 1; 
+    flex: 1;
     padding: 40px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; 
+    align-items: center;
 }
+
+
 
 
 .brand-header,
@@ -64,6 +71,7 @@ body {
     max-width: 450px;
 }
 
+
 .form-header-center,
 .auth-form,
 .form-footer {
@@ -71,10 +79,12 @@ body {
     max-width: 380px;
 }
 
+
 /* Brand Panel Inner Styles */
 .brand-header {
     margin-top: 10px;
 }
+
 
 .logo-title {
     font-family: 'Laila', serif;
@@ -84,12 +94,14 @@ body {
     margin-bottom: 4px;
 }
 
+
 .brand-subtitle {
     font-size: 11px;
     color: #555555;
     font-style: italic;
     line-height: 1.3;
 }
+
 
 .logo-container {
     flex-grow: 1;
@@ -98,10 +110,12 @@ body {
     align-items: center;
 }
 
+
 .main-logo {
     max-width: 370px;
     height: auto;
 }
+
 
 .brand-footer-left h2 {
     font-size: 18px;
@@ -110,17 +124,20 @@ body {
     color: #000000;
 }
 
+
 .brand-footer-left p {
     font-size: 12px;
     color: #444444;
     line-height: 1.4;
 }
 
+
 /* Form Panel Inner Styles */
 .form-header-center {
     text-align: left;
     margin-bottom: 30px;
 }
+
 
 .form-header-center h2 {
     font-size: 26px;
@@ -129,11 +146,13 @@ body {
     color: #000000;
 }
 
+
 .form-header-center p {
     font-size: 13px;
     font-style: italic;
     color: #666666;
 }
+
 
 .auth-form {
     display: flex;
@@ -141,11 +160,13 @@ body {
     gap: 16px;
 }
 
+
 .input-wrapper {
     display: flex;
     flex-direction: column;
     text-align: left;
 }
+
 
 .input-wrapper label {
     font-size: 12px;
@@ -154,11 +175,13 @@ body {
     color: #000000;
 }
 
+
 .input-group {
     position: relative;
     display: flex;
     align-items: center;
 }
+
 
 .input-icon {
     position: absolute;
@@ -167,6 +190,7 @@ body {
     font-size: 14px;
 }
 
+
 .show-password-icon {
     position: absolute;
     right: 16px;
@@ -174,6 +198,7 @@ body {
     cursor: pointer;
     font-size: 14px;
 }
+
 
 .input-group input {
     width: 100%;
@@ -186,13 +211,16 @@ body {
     transition: border-color 0.3s;
 }
 
+
 .input-group input:focus {
     border-color: #F5AFAF;
 }
 
+
 .input-group input::placeholder {
     color: #888888;
 }
+
 
 .remember-me {
     font-size: 13px;
@@ -202,6 +230,7 @@ body {
     gap: 8px;
     cursor: pointer;
 }
+
 
 .auth-btn {
     margin-top: 5px;
@@ -217,9 +246,11 @@ body {
     transition: opacity 0.3s;
 }
 
+
 .auth-btn:hover {
     opacity: 0.85;
 }
+
 
 .form-footer {
     text-align: center;
@@ -228,6 +259,7 @@ body {
     color: #555555;
 }
 
+
 .accent-link {
     color: #C24275;
     text-decoration: none;
@@ -235,9 +267,11 @@ body {
     margin-left: 4px;
 }
 
+
 .accent-link:hover {
     text-decoration: underline;
 }
+
 
 /* ==========================================
    3. MAIN DASHBOARD PANELS & LAYOUT
@@ -250,6 +284,7 @@ body {
     overflow: hidden;
 }
 
+
 /* --- Left Sidebar Component --- */
 .sidebar-panel {
     width: 280px;
@@ -260,6 +295,7 @@ body {
     border-right: 1px solid rgba(0, 0, 0, 0.03);
 }
 
+
 .brand-wrapper {
     display: flex;
     align-items: center;
@@ -268,11 +304,13 @@ body {
     padding-left: 8px;
 }
 
+
 .brand-logo-img {
     height: 42px;
     width: auto;
     object-fit: contain;
 }
+
 
 .brand-title {
     font-family: 'Laila', serif;
@@ -281,12 +319,14 @@ body {
     color: #000000;
 }
 
+
 .sidebar-nav {
     display: flex;
     flex-direction: column;
     gap: 10px;
     flex-grow: 1;
 }
+
 
 .nav-item {
     display: flex;
@@ -304,16 +344,19 @@ body {
     cursor: pointer;
 }
 
+
 .nav-item i {
     font-size: 16px;
     width: 20px;
     text-align: center;
 }
 
+
 .nav-item:hover:not(.active) {
     background-color: rgba(245, 175, 175, 0.15);
     color: #000000;
 }
+
 
 .nav-item.active {
     background-color: #F5AFAF;
@@ -321,6 +364,7 @@ body {
     color: #000000;
     font-weight: 600;
 }
+
 
 .logout-btn {
     display: flex;
@@ -337,9 +381,11 @@ body {
     cursor: pointer;
 }
 
+
 .logout-btn:hover {
     background-color: rgba(0, 0, 0, 0.05);
 }
+
 
 /* ==========================================
    4. DASHBOARD CONTENT ELEMENTS
@@ -354,12 +400,14 @@ body {
     overflow-y: auto;
 }
 
+
 .content-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 25px;
 }
+
 
 .welcome-text h2 {
     font-size: 28px;
@@ -368,10 +416,12 @@ body {
     margin-bottom: 4px;
 }
 
+
 .welcome-text p {
     font-size: 13px;
     color: #555555;
 }
+
 
 .add-task-btn {
     display: flex;
@@ -390,13 +440,17 @@ body {
     transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
+
 .add-task-btn:hover {
     background-color: #e39e9e;
 }
 
+
 .add-task-btn:active {
     transform: scale(0.98);
 }
+
+
 
 
 .stats-container-row {
@@ -404,6 +458,7 @@ body {
     width: 100%;
     margin-bottom: 25px;
 }
+
 
 .stats-grid {
     display: grid;
@@ -415,6 +470,7 @@ body {
     padding: 16px;
     width: 100%;
 }
+
 
 .stat-card {
     background-color: #F5AFAF;
@@ -429,20 +485,24 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+
 .stat-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
+
 .stat-card:active {
     transform: translateY(0);
 }
+
 
 .stat-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
+
 
 .stat-number {
     font-size: 24px;
@@ -451,12 +511,14 @@ body {
     line-height: 1.1;
 }
 
+
 .stat-label {
     font-size: 12px;
     font-weight: 500;
     color: #000000;
     margin-top: 2px;
 }
+
 
 .stat-icon-circle {
     width: 30px;
@@ -470,12 +532,14 @@ body {
     font-size: 12px;
 }
 
+
 /* --- Bottom Panels --- */
 .data-panels {
     display: flex;
     gap: 20px;
     flex: 1;
 }
+
 
 .data-card {
     background-color: #FBEFEF;
@@ -486,13 +550,16 @@ body {
     flex-direction: column;
 }
 
+
 .upcoming-deadlines {
     flex: 1.1;
 }
 
+
 .progress-overview {
     flex: 0.9;
 }
+
 
 .card-header {
     display: flex;
@@ -501,11 +568,13 @@ body {
     margin-bottom: 15px;
 }
 
+
 .card-header h3 {
     font-size: 16px;
     font-weight: 600;
     color: #000000;
 }
+
 
 .view-all-btn {
     background-color: #FCF8F8;
@@ -518,9 +587,11 @@ body {
     transition: background-color 0.2s ease;
 }
 
+
 .view-all-btn:hover {
     background-color: #f2e6e6;
 }
+
 
 /* Table */
 .table-container {
@@ -531,10 +602,12 @@ body {
     overflow: hidden;
 }
 
+
 .deadlines-table {
     width: 100%;
     border-collapse: collapse;
 }
+
 
 .deadlines-table th {
     font-size: 12px;
@@ -545,9 +618,12 @@ body {
     background-color: #F5AFAF;
 }
 
+
 .deadlines-table th:last-child {
     text-align: right;
 }
+
+
 
 
 .chart-container {
@@ -556,8 +632,9 @@ body {
     align-items: center;
     flex: 1;
     margin-bottom: 10px;
-    min-height: 180px; 
+    min-height: 180px;
 }
+
 
 .progress-chart-wrapper {
     position: relative;
@@ -568,15 +645,18 @@ body {
     justify-content: center;
 }
 
+
 .progress-ring-svg {
     transform: rotate(-90deg);
     width: 100%;
     height: 100%;
 }
 
+
 .progress-ring-svg circle {
     stroke-linecap: normal;
 }
+
 
 .chart-inner-label {
     position: absolute;
@@ -587,12 +667,14 @@ body {
     text-align: center;
 }
 
+
 .chart-percentage {
     font-size: 32px;
     font-weight: 700;
     color: #000000;
     line-height: 1;
 }
+
 
 .chart-subtext {
     font-size: 12px;
@@ -601,12 +683,14 @@ body {
     margin-top: 4px;
 }
 
+
 .chart-legend {
     display: flex;
     justify-content: center;
     gap: 12px;
     margin-top: auto;
 }
+
 
 .legend-item {
     display: flex;
@@ -617,6 +701,7 @@ body {
     color: #000000;
 }
 
+
 .legend-color {
     width: 12px;
     height: 12px;
@@ -625,9 +710,11 @@ body {
     display: inline-block;
 }
 
+
 .legend-color.academic { background-color: #FCF8F8; }
 .legend-color.project { background-color: #F5AFAF; }
 .legend-color.personal { background-color: #F9DFDF; }
+
 
 /* ==========================================
    5. TASKS VIEW MODULE LAYOUTS (STACKED FILTERS)
@@ -640,11 +727,13 @@ body {
     width: 100%;
 }
 
+
 .search-row-wrapper {
     display: flex;
     width: 100%;
     justify-content: flex-start;
 }
+
 
 .search-box-wrapper {
     position: relative;
@@ -653,12 +742,14 @@ body {
     width: 165px;
 }
 
+
 .search-box-wrapper .search-icon {
     position: absolute;
     left: 12px;
     font-size: 13px;
     color: #333333;
 }
+
 
 .search-box-wrapper input {
     width: 100%;
@@ -672,6 +763,7 @@ body {
     outline: none;
 }
 
+
 .dropdowns-row-wrapper {
     display: flex;
     flex-direction: row;
@@ -680,6 +772,7 @@ body {
     gap: 10px;
     width: 100%;
 }
+
 
 .filter-dropdown {
     background-color: #FBEFEF;
@@ -694,9 +787,11 @@ body {
     min-width: 115px;
 }
 
+
 .filter-dropdown:hover {
     background-color: #F9DFDF;
 }
+
 
 /* Main Core Tasks Table Design */
 .tasks-table-main-container {
@@ -711,12 +806,14 @@ body {
     min-height: 400px;
 }
 
+
 .master-data-grid-table {
     width: 100%;
     border-collapse: collapse;
     z-index: 2;
     table-layout: fixed;
 }
+
 
 .master-data-grid-table th {
     font-family: 'Inter', sans-serif;
@@ -729,10 +826,12 @@ body {
     border-bottom: 1px solid #000000;
 }
 
+
 .master-data-grid-table th:first-child {
     text-align: left;
     padding-left: 20px;
 }
+
 
 .master-data-grid-table th:last-child {
     text-align: right;
@@ -746,6 +845,7 @@ body {
 .master-data-grid-table th:nth-child(5) { width: 15%; }
 .master-data-grid-table th:nth-child(6) { width: 15%; }
 
+
 /* 2. Style Data Cells to mirror Header alignments */
 .master-data-grid-table td {
     padding: 12px 15px;
@@ -755,11 +855,13 @@ body {
     border-bottom: 1px solid rgba(0,0,0,0.08); /* Clean row separation */
 }
 
+
 /* 3. Force first column (Title) to left-align to match header */
 .master-data-grid-table td:first-child {
     text-align: left;
     padding-left: 20px;
 }
+
 
 /* 4. Center Action column */
 .master-data-grid-table td:last-child {
@@ -767,12 +869,14 @@ body {
     padding-right: 20px;
 }
 
+
 /* 5. Center the action buttons smoothly */
 .action-buttons-container {
     display: flex;
     justify-content: center;
     gap: 12px;
 }
+
 
 .action-btn {
     background: none;
@@ -783,13 +887,16 @@ body {
     transition: color 0.2s ease;
 }
 
-.action-btn.edit:hover { 
-    color: #000000; 
+
+.action-btn.edit:hover {
+    color: #000000;
 }
 
-.action-btn.delete:hover { 
-    color: #FA6B6B; 
+
+.action-btn.delete:hover {
+    color: #FA6B6B;
 }
+
 
 .empty-state-fallback-view {
     flex: 1;
@@ -801,6 +908,7 @@ body {
     background-color: #FFFFFF;
 }
 
+
 .fallback-graphic-icon {
     width: 80px;
     height: 80px;
@@ -810,6 +918,7 @@ body {
     justify-content: center;
 }
 
+
 .clipboard-mock-vector {
     width: 44px;
     height: 54px;
@@ -818,6 +927,7 @@ body {
     position: relative;
     background-color: transparent;
 }
+
 
 .clipboard-mock-vector .clip-top {
     position: absolute;
@@ -830,6 +940,7 @@ body {
     transform: translateX(-50%);
 }
 
+
 .clipboard-mock-vector .line {
     position: absolute;
     height: 3.5px;
@@ -838,9 +949,11 @@ body {
     left: 6px;
 }
 
+
 .clipboard-mock-vector .line.short  { top: 12px; width: 12px; }
 .clipboard-mock-vector .line.long   { top: 22px; width: 24px; }
 .clipboard-mock-vector .line.medium { top: 32px; width: 18px; }
+
 
 .fallback-message-text {
     font-family: 'Inter', sans-serif;
@@ -849,6 +962,7 @@ body {
     color: #333333;
     margin: 0;
 }
+
 
 /* ==========================================
    6. ADD TASK MODAL STYLES
@@ -860,11 +974,12 @@ body {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
-    display: none; 
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
+
 
 .modal-container {
     background-color: #FBEFEF;
@@ -877,6 +992,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -884,11 +1000,13 @@ body {
     margin-bottom: 20px;
 }
 
+
 .modal-header h3 {
     font-size: 18px;
     font-weight: 600;
     color: #000000;
 }
+
 
 .close-modal-btn {
     background: none;
@@ -898,11 +1016,13 @@ body {
     color: #000000;
 }
 
+
 .modal-form {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
+
 
 .modal-input-group {
     display: flex;
@@ -910,11 +1030,13 @@ body {
     gap: 6px;
 }
 
+
 .modal-input-group label, .group-title {
     font-size: 12px;
     font-weight: 500;
     color: #333333;
 }
+
 
 .modal-input-group input {
     padding: 10px 12px;
@@ -926,11 +1048,13 @@ body {
     background-color: #FFFFFF;
 }
 
+
 .modal-row-3 {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
 }
+
 
 .radio-box {
     background-color: #FFFFFF;
@@ -943,6 +1067,7 @@ body {
     height: 95px;
 }
 
+
 .radio-box label, .radio-inline label {
     font-size: 12px;
     display: flex;
@@ -952,9 +1077,11 @@ body {
     cursor: pointer;
 }
 
+
 input[type="radio"] {
     accent-color: #F5AFAF;
 }
+
 
 .column-group {
     display: flex;
@@ -963,11 +1090,13 @@ input[type="radio"] {
     height: 100%;
 }
 
+
 .radio-inline {
     display: flex;
     gap: 12px;
     margin-top: 6px;
 }
+
 
 .modal-footer-row {
     display: flex;
@@ -976,11 +1105,13 @@ input[type="radio"] {
     margin-top: 10px;
 }
 
+
 .status-dropdown {
     display: flex;
     align-items: center;
     gap: 10px;
 }
+
 
 .status-dropdown select {
     padding: 6px 12px;
@@ -992,10 +1123,12 @@ input[type="radio"] {
     background-color: #FFFFFF;
 }
 
+
 .modal-actions {
     display: flex;
     gap: 12px;
 }
+
 
 .btn-cancel {
     background-color: transparent;
@@ -1009,9 +1142,11 @@ input[type="radio"] {
     transition: background-color 0.2s;
 }
 
+
 .btn-cancel:hover {
     background-color: #F9DFDF;
 }
+
 
 .btn-save {
     background-color: #F5AFAF;
@@ -1025,9 +1160,11 @@ input[type="radio"] {
     transition: background-color 0.2s;
 }
 
+
 .btn-save:hover {
     background-color: #e39e9e;
 }
+
 
 /* ==========================================
    7. SHARED TASKS VIEW
@@ -1038,11 +1175,13 @@ input[type="radio"] {
     gap: 12px;
 }
 
+
 .sub-nav-container {
     display: flex;
     gap: 16px;
     margin-bottom: 20px;
 }
+
 
 .sub-nav-item {
     font-family: 'Inter', sans-serif;
@@ -1057,19 +1196,23 @@ input[type="radio"] {
     transition: background-color 0.2s ease;
 }
 
+
 .sub-nav-item.active {
-    background-color: #F9DFDF; 
+    background-color: #F9DFDF;
 }
+
 
 .sub-nav-item:hover:not(.active) {
     background-color: #F5F5F5;
 }
+
 
 .sub-nav-divider {
     border: none;
     border-top: 1px solid #000000;
     margin-bottom: 25px;
 }
+
 
 .shared-board-container {
     border: 1px solid #000000;
@@ -1081,6 +1224,7 @@ input[type="radio"] {
     overflow: hidden;
 }
 
+
 .shared-board-header {
     background-color: #F9DFDF;
     border-bottom: 1px solid #000000;
@@ -1089,6 +1233,7 @@ input[type="radio"] {
     grid-template-columns: 1.5fr 1.5fr 1fr 1fr;
     gap: 15px;
 }
+
 
 .board-header-pill {
     background-color: #FFFFFF;
@@ -1101,9 +1246,11 @@ input[type="radio"] {
     color: #000000;
 }
 
+
 .shared-board-content {
     flex-grow: 1;
 }
+
 
 .shared-board-footer {
     padding: 24px 30px;
@@ -1112,11 +1259,13 @@ input[type="radio"] {
     gap: 20px;
 }
 
+
 .share-action-row {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
+
 
 .share-action-row label {
     font-size: 13px;
@@ -1124,11 +1273,13 @@ input[type="radio"] {
     color: #333333;
 }
 
+
 .share-controls {
     display: flex;
     gap: 12px;
     align-items: center;
 }
+
 
 .share-input {
     width: 320px;
@@ -1140,6 +1291,7 @@ input[type="radio"] {
     outline: none;
 }
 
+
 .share-select {
     padding: 8px 12px;
     border: 1px solid #000000;
@@ -1150,6 +1302,7 @@ input[type="radio"] {
     background-color: #FFFFFF;
     min-width: 110px;
 }
+
 
 .btn-share-action {
     background-color: #F9DFDF;
@@ -1164,9 +1317,11 @@ input[type="radio"] {
     transition: background-color 0.2s;
 }
 
+
 .btn-share-action:hover {
     background-color: #F5AFAF;
 }
+
 
 /* ==========================================
    8. SETTINGS VIEW (APP-SPECIFIC)
@@ -1176,6 +1331,7 @@ input[type="radio"] {
     flex-direction: column;
     gap: 16px;
 }
+
 
 .setting-option {
     display: flex;
@@ -1190,9 +1346,11 @@ input[type="radio"] {
     transition: transform 0.1s ease;
 }
 
+
 .setting-option:hover {
     transform: translateY(-2px);
 }
+
 
 .setting-info {
     display: flex;
@@ -1200,11 +1358,13 @@ input[type="radio"] {
     gap: 16px;
 }
 
+
 .setting-info i.icon-main {
     font-size: 24px;
     width: 30px;
     text-align: center;
 }
+
 
 .setting-text h3 {
     font-size: 16px;
@@ -1212,19 +1372,24 @@ input[type="radio"] {
     margin-bottom: 4px;
 }
 
+
 .setting-text p {
     font-size: 12px;
     color: var(--text-muted);
 }
+
 
 .chevron {
     font-size: 16px;
 }
 
 
+
+
 .back-navigation {
     margin-bottom: 24px;
 }
+
 
 .btn-back {
     display: inline-flex;
@@ -1234,9 +1399,11 @@ input[type="radio"] {
     color: #111;
 }
 
+
 .btn-back i {
     font-size: 24px;
 }
+
 
 .btn-back-text {
     background-color: var(--sidebar-bg, #fce4e8);
@@ -1247,6 +1414,7 @@ input[type="radio"] {
     font-weight: 500;
 }
 
+
 .account-settings-wrapper {
     background-color: var(--sidebar-bg, #fce4e8);
     border-radius: 16px;
@@ -1255,9 +1423,11 @@ input[type="radio"] {
     max-width: 800px;
 }
 
+
 .account-header {
     margin-bottom: 30px;
 }
+
 
 .account-title-row {
     display: flex;
@@ -1266,19 +1436,23 @@ input[type="radio"] {
     margin-bottom: 8px;
 }
 
+
 .account-title-row i {
     font-size: 32px;
 }
+
 
 .account-title-row h2 {
     font-size: 28px;
     font-weight: 700;
 }
 
+
 .account-header p {
     color: #555;
     font-size: 14px;
 }
+
 
 .personal-info-card {
     background-color: #fdfdfd;
@@ -1287,15 +1461,18 @@ input[type="radio"] {
     overflow: hidden;
 }
 
+
 .info-card-header {
     padding: 16px 24px;
     border-bottom: 1px solid #333;
 }
 
+
 .info-card-header h3 {
     font-size: 18px;
     font-weight: 700;
 }
+
 
 .info-card-body {
     padding: 30px 24px;
@@ -1303,6 +1480,7 @@ input[type="radio"] {
     gap: 40px;
     justify-content: space-between;
 }
+
 
 .info-form-column {
     flex: 1;
@@ -1312,17 +1490,20 @@ input[type="radio"] {
     max-width: 400px;
 }
 
+
 .info-input-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
+
 .info-input-group label {
     font-size: 12px;
     color: #333;
     font-weight: 600;
 }
+
 
 .info-input-group input {
     padding: 12px 14px;
@@ -1335,9 +1516,11 @@ input[type="radio"] {
     font-size: 14px;
 }
 
+
 .info-input-group input:focus {
     box-shadow: 0 0 0 1px #ccc;
 }
+
 
 .btn-change-password {
     background-color: #ff8fa3;
@@ -1352,9 +1535,11 @@ input[type="radio"] {
     transition: opacity 0.2s;
 }
 
+
 .btn-change-password:hover {
     opacity: 0.85;
 }
+
 
 .profile-pic-column {
     display: flex;
@@ -1363,11 +1548,13 @@ input[type="radio"] {
     padding-right: 20px;
 }
 
+
 .profile-pic-column label {
     font-size: 12px;
     color: #333;
     font-weight: 600;
 }
+
 
 .profile-pic-box {
     border: 1px solid #333;
@@ -1381,10 +1568,12 @@ input[type="radio"] {
     background-color: transparent;
 }
 
+
 .profile-pic-box .main-icon {
     font-size: 80px;
     color: #111;
 }
+
 
 .edit-icon-btn {
     position: absolute;
@@ -1398,9 +1587,11 @@ input[type="radio"] {
     transition: transform 0.2s;
 }
 
+
 .edit-icon-btn:hover {
     transform: scale(1.1);
 }
+
 
 .settings-detail-container {
     width: 100%;
@@ -1410,12 +1601,14 @@ input[type="radio"] {
     align-items: flex-start;
 }
 
+
 .settings-detail-wrapper {
     background-color: var(--sidebar-bg, #fce4e8);
     border-radius: 16px;
     padding: 40px;
     width: 100%;
 }
+
 
 .settings-detail-header {
     margin-bottom: 30px;
@@ -1425,6 +1618,7 @@ input[type="radio"] {
     text-align: center;
 }
 
+
 .preferences-card {
     background-color: #fdfdfd;
     border: 1px solid #333;
@@ -1432,15 +1626,18 @@ input[type="radio"] {
     overflow: hidden;
 }
 
+
 .preferences-card-header {
     padding: 16px 24px;
     border-bottom: 1px solid #333;
 }
 
+
 .preferences-card-header h3 {
     font-size: 18px;
     font-weight: 700;
 }
+
 
 .preferences-card-body {
     padding: 24px;
@@ -1448,6 +1645,7 @@ input[type="radio"] {
     flex-direction: column;
     gap: 16px;
 }
+
 
 .preference-row {
     background-color: #dcdcdc; /* Light gray from mockup */
@@ -1458,11 +1656,13 @@ input[type="radio"] {
     border-radius: 4px;
 }
 
+
 .preference-label {
     font-size: 14px;
     color: #333;
     font-weight: 500;
 }
+
 
 /* Custom CSS Toggle Switch */
 .toggle-switch {
@@ -1472,12 +1672,14 @@ input[type="radio"] {
     height: 24px;
 }
 
+
 /* Hide default HTML checkbox */
 .toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
+
 
 /* The slider */
 .slider {
@@ -1493,6 +1695,7 @@ input[type="radio"] {
     border: 2px solid #111; /* Dark border outline */
 }
 
+
 /* The inner circle */
 .slider:before {
     position: absolute;
@@ -1506,19 +1709,23 @@ input[type="radio"] {
     border-radius: 50%;
 }
 
+
 /* Checked state */
 .toggle-switch input:checked + .slider {
     background-color: #111;
 }
+
 
 .toggle-switch input:checked + .slider:before {
     transform: translateX(20px);
     background-color: #fff; /* Circle turns white when active */
 }
 
+
 /* =========================================
-   Privacy Settings Specific Styles 
+   Privacy Settings Specific Styles
    ========================================= */
+
 
 /* (Re-uses .settings-detail-container and .settings-detail-wrapper from Notifications) */
 /* If you didn't add the Notification CSS yet, make sure these are included: */
@@ -1530,12 +1737,14 @@ input[type="radio"] {
     align-items: flex-start;
 }
 
+
 .settings-detail-wrapper {
     background-color: var(--sidebar-bg, #fce4e8);
     border-radius: 16px;
     padding: 40px;
     width: 100%;
 }
+
 
 .settings-detail-header {
     margin-bottom: 30px;
@@ -1545,6 +1754,7 @@ input[type="radio"] {
     text-align: center;
 }
 
+
 /* Privacy Inner Card Styles */
 .privacy-card {
     background-color: #fdfdfd;
@@ -1553,15 +1763,18 @@ input[type="radio"] {
     overflow: hidden;
 }
 
+
 .privacy-card-header {
     padding: 16px 24px;
     border-bottom: 1px solid #333;
 }
 
+
 .privacy-card-header h3 {
     font-size: 18px;
     font-weight: 700;
 }
+
 
 .privacy-card-body {
     padding: 24px;
@@ -1569,6 +1782,7 @@ input[type="radio"] {
     flex-direction: column;
     gap: 16px;
 }
+
 
 /* Specific styling for the outlined rows in the mockup */
 .privacy-row {
@@ -1581,6 +1795,7 @@ input[type="radio"] {
     padding: 14px 20px;
 }
 
+
 .privacy-info h4 {
     font-size: 14px;
     font-weight: 700;
@@ -1588,10 +1803,12 @@ input[type="radio"] {
     margin-bottom: 4px;
 }
 
+
 .privacy-info p {
     font-size: 11px;
     color: #555;
 }
+
 
 /* Pink Dropdown Button */
 .privacy-dropdown-btn {
@@ -1610,9 +1827,11 @@ input[type="radio"] {
     transition: opacity 0.2s;
 }
 
+
 .privacy-dropdown-btn:hover {
     opacity: 0.85;
 }
+
 
 /* =========================================
    Toggle Switch Styles (Reused from Notifications)
@@ -1624,11 +1843,13 @@ input[type="radio"] {
     height: 24px;
 }
 
+
 .toggle-switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
+
 
 .slider {
     position: absolute;
@@ -1643,6 +1864,7 @@ input[type="radio"] {
     border: 2px solid #111;
 }
 
+
 .slider:before {
     position: absolute;
     content: "";
@@ -1655,9 +1877,11 @@ input[type="radio"] {
     border-radius: 50%;
 }
 
+
 .toggle-switch input:checked + .slider {
     background-color: #111;
 }
+
 
 .toggle-switch input:checked + .slider:before {
     transform: translateX(20px);
@@ -1675,11 +1899,13 @@ input[type="radio"] {
     --border-dark: #000000;
 }
 
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
 
 body {
     font-family: 'Inter', sans-serif;
@@ -1690,6 +1916,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 
 /* Master Layout Container */
 .app-container {
@@ -1703,6 +1930,7 @@ body {
     overflow: hidden;
 }
 
+
 /* Sidebar Navigation Layout styling */
 .sidebar {
     width: 290px;
@@ -1712,6 +1940,7 @@ body {
     flex-direction: column;
 }
 
+
 .logo-container {
     display: flex;
     align-items: center;
@@ -1719,6 +1948,7 @@ body {
     margin-bottom: 54px;
     padding-left: 12px;
 }
+
 
 .logo-icon {
     font-size: 24px;
@@ -1732,10 +1962,12 @@ body {
     font-weight: 700;
 }
 
+
 .logo-text {
     font-size: 24px;
     font-weight: 700;
 }
+
 
 .nav-menu {
     display: flex;
@@ -1743,6 +1975,7 @@ body {
     gap: 12px;
     flex-grow: 1;
 }
+
 
 .nav-item {
     display: flex;
@@ -1758,20 +1991,24 @@ body {
     border: 1.5px solid transparent;
 }
 
+
 .nav-item i {
     font-size: 16px;
     width: 20px;
 }
 
+
 .nav-item:hover {
     background-color: rgba(245, 175, 175, 0.2);
 }
+
 
 /* Crisp Outline format matching the screenshot active indicator */
 .nav-item.active {
     background-color: var(--accent-dark);
     border: 1.5px solid var(--border-dark);
 }
+
 
 .logout-btn {
     display: flex;
@@ -1785,12 +2022,14 @@ body {
     margin-top: auto;
 }
 
+
 /* Main Content Layout styling */
 .main-content {
     flex-grow: 1;
     padding: 54px 64px;
     overflow-y: auto;
 }
+
 
 .content-header {
     display: flex;
@@ -1799,10 +2038,12 @@ body {
     margin-bottom: 36px;
 }
 
+
 .content-header h1 {
     font-size: 32px;
     font-weight: 700;
 }
+
 
 .btn-edit {
     background-color: var(--accent-dark);
@@ -1815,6 +2056,7 @@ body {
     cursor: pointer;
 }
 
+
 /* Profile Grid Design */
 .profile-grid {
     display: grid;
@@ -1823,11 +2065,13 @@ body {
     margin-bottom: 36px;
 }
 
+
 .profile-card {
     background: #FDF6F6;
     border-radius: 24px;
     padding: 40px 32px;
 }
+
 
 .user-identity-card {
     display: flex;
@@ -1835,6 +2079,7 @@ body {
     align-items: center;
     text-align: center;
 }
+
 
 .profile-picture-container {
     width: 110px;
@@ -1848,10 +2093,12 @@ body {
     overflow: hidden;
 }
 
+
 .profile-picture-container i.default-avatar {
     font-size: 64px;
     color: var(--text-primary);
 }
+
 
 .profile-picture-container img {
     width: 100%;
@@ -1859,16 +2106,19 @@ body {
     object-fit: cover;
 }
 
+
 .user-name {
     font-size: 22px;
     font-weight: 700;
     margin-bottom: 6px;
 }
 
+
 .user-gbox {
     font-size: 14px;
     color: var(--text-muted);
 }
+
 
 .about-card h3 {
     font-size: 15px;
@@ -1877,10 +2127,12 @@ body {
     margin-bottom: 18px;
 }
 
+
 .bio-text {
     font-size: 15px;
     line-height: 1.7;
 }
+
 
 /* Task Summary Card section styles */
 .task-summary-section {
@@ -1889,17 +2141,20 @@ body {
     padding: 32px;
 }
 
+
 .task-summary-section h3 {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 24px;
 }
 
+
 .summary-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
 }
+
 
 .summary-card {
     background-color: var(--accent-dark);
@@ -1910,25 +2165,30 @@ body {
     gap: 14px;
 }
 
+
 .card-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+
 .summary-card .count {
     font-size: 32px;
     font-weight: 700;
 }
 
+
 .summary-card i {
     font-size: 22px;
 }
+
 
 .summary-card .label {
     font-size: 14px;
     font-weight: 600;
 }
+
 
 /* New Edit Profile Modal Window Styles */
 .modal-overlay {
@@ -1947,10 +2207,12 @@ body {
     z-index: 2000;
 }
 
+
 .modal-overlay.active {
     opacity: 1;
     pointer-events: auto;
 }
+
 
 .modal-box {
     background: #FBEFEF; /* Matching pink pop-up container background */
@@ -1962,6 +2224,7 @@ body {
     overflow: hidden;
 }
 
+
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -1970,10 +2233,12 @@ body {
     border-bottom: 1.5px solid var(--border-dark);
 }
 
+
 .modal-header h2 {
     font-size: 18px;
     font-weight: 600;
 }
+
 
 .close-modal-btn {
     background: none;
@@ -1983,6 +2248,7 @@ body {
     color: var(--text-primary);
 }
 
+
 /* Row-by-Row Divider Alignment layout matching the design reference */
 .form-row {
     display: flex;
@@ -1990,6 +2256,7 @@ body {
     padding: 20px 24px;
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.15);
 }
+
 
 .row-label {
     width: 130px;
@@ -1999,11 +2266,13 @@ body {
     padding-top: 8px;
 }
 
+
 .row-content {
     flex-grow: 1;
     display: flex;
     align-items: center;
 }
+
 
 /* Row input sizing definitions */
 .row-content input {
@@ -2017,6 +2286,7 @@ body {
     outline: none;
 }
 
+
 .row-content textarea {
     width: 100%;
     padding: 12px 18px;
@@ -2029,6 +2299,7 @@ body {
     resize: none;
 }
 
+
 /* Avatar layout variant inside the edit modal */
 .modal-avatar-wrapper {
     position: relative;
@@ -2037,11 +2308,13 @@ body {
     margin: 0 auto;
 }
 
+
 .modal-avatar-icon {
     font-size: 90px;
     color: var(--text-primary);
     line-height: 1;
 }
+
 
 .avatar-edit-badge {
     position: absolute;
@@ -2059,6 +2332,7 @@ body {
     cursor: pointer;
 }
 
+
 /* Modal Actions and structured Button layouts */
 .modal-actions {
     display: flex;
@@ -2067,6 +2341,7 @@ body {
     padding: 16px 24px;
     background-color: #FBEFEF;
 }
+
 
 .modal-actions button {
     padding: 10px 28px;
@@ -2079,15 +2354,18 @@ body {
     border-radius: 6px;
 }
 
+
 .btn-cancel {
     background-color: var(--btn-cancel-bg); /* Bright coral cancel action button */
     color: var(--text-primary);
 }
 
+
 .btn-save {
     background-color: var(--accent-dark); /* Accent save action button */
     color: var(--text-primary);
 }
+
 
 .hidden-img {
     display: none !important;
@@ -2104,6 +2382,7 @@ body {
     --text-primary: #000000;
     --text-muted: #555555;
 
+
     /* Graph Color Specs mapped perfectly from screenshot */
     --graph-yellow: #EED663;
     --graph-teal: #54CBB2;
@@ -2113,11 +2392,13 @@ body {
     --graph-donut-bg: #FFF5F5;  /* Soft red/pink tint background for donut segments */
 }
 
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
+
 
 body {
     font-family: 'Inter', sans-serif;
@@ -2128,6 +2409,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 
 /* Base Viewport Box Layout */
 .app-container {
@@ -2141,6 +2423,7 @@ body {
     overflow: hidden;
 }
 
+
 /* Sidebar Styling Configuration */
 .sidebar {
     width: 290px;
@@ -2151,6 +2434,7 @@ body {
     border-right: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+
 .logo-container {
     display: flex;
     align-items: center;
@@ -2158,6 +2442,7 @@ body {
     margin-bottom: 54px;
     padding-left: 12px;
 }
+
 
 .logo-icon {
     font-size: 24px;
@@ -2171,6 +2456,7 @@ body {
     font-weight: 700;
 }
 
+
 /* Typography changes applied here */
 .logo-text.title-laila {
     font-family: 'Laila', serif;
@@ -2178,12 +2464,14 @@ body {
     font-weight: 700;
 }
 
+
 .nav-menu {
     display: flex;
     flex-direction: column;
     gap: 12px;
     flex-grow: 1;
 }
+
 
 .nav-item {
     display: flex;
@@ -2199,19 +2487,23 @@ body {
     border: 1.5px solid transparent;
 }
 
+
 .nav-item i {
     font-size: 16px;
     width: 20px;
 }
 
+
 .nav-item:hover {
     background-color: rgba(234, 161, 150, 0.2);
 }
+
 
 .nav-item.active {
     background-color: var(--accent-dark);
     border: 1.5px solid var(--border-dark);
 }
+
 
 .logout-btn {
     display: flex;
@@ -2225,6 +2517,7 @@ body {
     margin-top: auto;
 }
 
+
 /* Main Dashboard Architecture workspace */
 .main-content {
     flex-grow: 1;
@@ -2234,9 +2527,11 @@ body {
     flex-direction: column;
 }
 
+
 .content-header-group {
     margin-bottom: 28px;
 }
+
 
 /* Changed main dashboard header to Inter */
 .content-header-group h1.title-inter {
@@ -2247,11 +2542,13 @@ body {
     letter-spacing: -0.5px;
 }
 
+
 .content-header-group .subtitle {
     font-size: 14px;
     color: var(--text-muted);
     font-weight: 500;
 }
+
 
 /* Summary Card Segment Layout block */
 .task-summary-wrapper {
@@ -2262,11 +2559,13 @@ body {
     margin-bottom: 28px;
 }
 
+
 .summary-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 18px;
 }
+
 
 .summary-card {
     background-color: var(--accent-dark);
@@ -2278,25 +2577,30 @@ body {
     gap: 12px;
 }
 
+
 .card-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+
 .summary-card .count {
     font-size: 28px;
     font-weight: 700;
 }
 
+
 .summary-card i {
     font-size: 20px;
 }
+
 
 .summary-card .label {
     font-size: 14px;
     font-weight: 600;
 }
+
 
 /* Analytics Chart Flex Grids system layout */
 .dashboard-analytics-layout {
@@ -2306,11 +2610,13 @@ body {
     flex-grow: 1;
 }
 
+
 .analytics-left-col {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
+
 
 .chart-card {
     background: #FDF9F9;
@@ -2319,15 +2625,18 @@ body {
     padding: 24px;
 }
 
+
 .chart-card h3 {
     font-size: 15px;
     font-weight: 700;
     margin-bottom: 20px;
 }
 
+
 .chart-card h3.center-title {
     text-align: center;
 }
+
 
 .chart-content-box {
     display: flex;
@@ -2336,6 +2645,7 @@ body {
     gap: 60px;
     padding-left: 20px;
 }
+
 
 .chart-content-vertical {
     display: flex;
@@ -2346,6 +2656,7 @@ body {
     padding-top: 10px;
 }
 
+
 /* --- Fixed Realistic Pie Charts --- */
 .pie-chart {
     width: 140px;
@@ -2354,6 +2665,7 @@ body {
     border: 1.5px solid var(--border-dark);
     position: relative;
 }
+
 
 /* Small dark dot in the absolute center of standard pie charts */
 .pie-chart::after {
@@ -2368,23 +2680,26 @@ body {
     transform: translate(-50%, -50%);
 }
 
+
 /* 70% Pending (Yellow), 30% Completed (Teal) aligned to your screenshot design */
 .chart-pending-completed {
     background: conic-gradient(
-        var(--graph-yellow) 0deg 260deg, 
+        var(--graph-yellow) 0deg 260deg,
         var(--graph-teal) 260deg 360deg
     );
 }
 
+
 /* Category chart split representation accurately mapped */
 .chart-category {
     background: conic-gradient(
-        var(--graph-salmon) 0deg 200deg, 
-        var(--graph-purple) 200deg 300deg, 
+        var(--graph-salmon) 0deg 200deg,
+        var(--graph-purple) 200deg 300deg,
         var(--graph-peach) 300deg 360deg
     );
     border: 1.5px solid var(--border-dark);
 }
+
 
 /* --- Fixed Donut Workload Chart --- */
 .donut-chart {
@@ -2397,23 +2712,25 @@ body {
     justify-content: center;
     /* Features a bottom accent track slice using a precise color segment gradient mapping */
     background: conic-gradient(
-        var(--graph-donut-bg) 0deg 130deg, 
-        var(--graph-salmon) 130deg 250deg, 
+        var(--graph-donut-bg) 0deg 130deg,
+        var(--graph-salmon) 130deg 250deg,
         var(--graph-donut-bg) 250deg 360deg
     );
 }
+
 
 /* Inner cutout logic keeping the aesthetic matching the outer block container background */
 .donut-center-hole {
     width: 130px;
     height: 130px;
-    background-color: #FDF9F9; 
+    background-color: #FDF9F9;
     border-radius: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
+
 
 .donut-count {
     font-size: 48px;
@@ -2422,12 +2739,14 @@ body {
     line-height: 1;
 }
 
+
 .donut-label {
     font-size: 14px;
     font-weight: 500;
     color: #888888;
     margin-top: 2px;
 }
+
 
 /* Graphic Legends Layout Configuration blocks */
 .chart-legend {
@@ -2436,16 +2755,19 @@ body {
     gap: 12px;
 }
 
+
 .chart-legend.dynamic-gap {
     gap: 10px;
     width: 50%;
 }
+
 
 .legend-item {
     display: flex;
     align-items: center;
     gap: 12px;
 }
+
 
 .legend-color {
     width: 18px;
@@ -2456,10 +2778,12 @@ body {
     border-radius: 2px;
 }
 
+
 .legend-label {
     font-size: 14px;
     font-weight: 600;
 }
+
 
 /* Color Legend Mappings */
 .color-pending { background-color: var(--graph-yellow); }
@@ -2468,9 +2792,11 @@ body {
 .color-project { background-color: var(--graph-salmon); }
 .color-personal { background-color: var(--graph-purple); }
 
+
 /* Right donut segment individual references */
 .color-duetoday { background-color: var(--graph-donut-bg); }
 .color-overdue { background-color: var(--graph-salmon); }
+
 
 /* 11. */
 .profile-layout-grid {
@@ -2480,6 +2806,7 @@ body {
             width: 100%;
         }
 
+
         .profile-card-box {
             flex: 1;
             background-color: #FFFFFF;
@@ -2488,6 +2815,7 @@ body {
             padding: 30px;
         }
 
+
         .profile-card-center {
             display: flex;
             flex-direction: column;
@@ -2495,11 +2823,13 @@ body {
             justify-content: center;
         }
 
+
         .profile-icon-large {
             font-size: 85px;
             color: #000000;
             margin-bottom: 15px;
         }
+
 
         .profile-name {
             font-size: 22px;
@@ -2508,10 +2838,12 @@ body {
             margin-bottom: 4px;
         }
 
+
         .profile-email {
             font-size: 13px;
             color: #666666;
         }
+
 
         .about-title {
             font-size: 20px;
@@ -2520,11 +2852,13 @@ body {
             margin-bottom: 15px;
         }
 
+
         .about-text {
             font-size: 13px;
             color: #444444;
             line-height: 1.6;
         }
+
 
         .task-summary-box {
             background-color: #FFFFFF;
@@ -2534,12 +2868,14 @@ body {
             width: 100%;
         }
 
+
         .task-summary-title {
             font-size: 14px;
             font-weight: 500;
             color: #555555;
             margin-bottom: 15px;
         }
+
 
         .edit-profile-btn {
             background-color: #FBEFEF;
@@ -2554,9 +2890,11 @@ body {
             transition: background-color 0.2s;
         }
 
+
         .edit-profile-btn:hover {
             background-color: #F5AFAF;
         }
+
 
         /* Removing the inner border/background on the stats grid to match the clean white container look */
         .stats-grid-clean {
