@@ -9,6 +9,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ensuring standard image placeholder wrappers maintain their circle styling */
+        .profile-image-container, .modal-image-container {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            position: relative;
+        }
+        .profile-image-container img, .modal-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-icon-large, .modal-avatar-icon {
+            font-size: 110px;
+            color: #ccc;
+        }
+    </style>
 </head>
 <body>
 
@@ -42,7 +66,11 @@
 
             <div class="profile-layout-grid">
                 <div class="profile-card-box profile-card-center">
-                    <i class="fa-solid fa-circle-user profile-icon-large"></i>
+                    <!-- Profile Picture Target Trigger -->
+                    <div class="profile-image-container" id="main-avatar-trigger">
+                        <i class="fa-solid fa-circle-user profile-icon-large" id="main-avatar-icon"></i>
+                        <img id="main-avatar-img" style="display: none;" alt="Profile Picture">
+                    </div>
                     <div class="profile-name" id="display-name">test4</div>
                     <div class="profile-email" id="display-gbox">test4@gbox.adnu.edu.ph</div>
                 </div>
@@ -92,6 +120,9 @@
         </main>
     </div>
 
+    <!-- Hidden File Input for Explorer Trigger -->
+    <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
+
     <div class="modal-overlay" id="editModal">
         <div class="modal-box">
             <div class="modal-header">
@@ -102,8 +133,12 @@
                 <div class="form-row">
                     <label class="row-label">Profile photo</label>
                     <div class="row-content">
-                        <div class="modal-avatar-wrapper">
-                            <i class="fa-solid fa-circle-user modal-avatar-icon"></i>
+                        <!-- Modal Image Trigger Area -->
+                        <div class="modal-avatar-wrapper" id="modal-avatar-trigger" style="cursor: pointer;">
+                            <div class="modal-image-container">
+                                <i class="fa-solid fa-circle-user modal-avatar-icon" id="modal-avatar-icon"></i>
+                                <img id="modal-avatar-img" style="display: none;" alt="Modal Profile Preview">
+                            </div>
                             <div class="avatar-edit-badge">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </div>
@@ -155,10 +190,65 @@
         const inputGbox = document.getElementById('input-gbox');
         const inputBio = document.getElementById('input-bio');
 
+        // Photo Upload Elements
+        const fileInput = document.getElementById('avatar-file-input');
+        const mainAvatarTrigger = document.getElementById('main-avatar-trigger');
+        const modalAvatarTrigger = document.getElementById('modal-avatar-trigger');
+        
+        const mainAvatarIcon = document.getElementById('main-avatar-icon');
+        const mainAvatarImg = document.getElementById('main-avatar-img');
+        const modalAvatarIcon = document.getElementById('modal-avatar-icon');
+        const modalAvatarImg = document.getElementById('modal-avatar-img');
+
+        // Track selected file stream locally
+        let pendingImgDataUrl = null;
+
+        // Redirect clicking actions straight to file browser
+        mainAvatarTrigger.addEventListener('click', () => fileInput.click());
+        modalAvatarTrigger.addEventListener('click', () => fileInput.click());
+
+        // Process picture selection
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    pendingImgDataUrl = event.target.result;
+                    
+                    // Show immediate preview in modal view frame
+                    modalAvatarIcon.style.display = 'none';
+                    modalAvatarImg.src = pendingImgDataUrl;
+                    modalAvatarImg.style.display = 'block';
+
+                    // Optional: If changes happen outside open modal, match main display too
+                    if(!modal.classList.contains('active')) {
+                        commitImageChange();
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function commitImageChange() {
+            if (pendingImgDataUrl) {
+                mainAvatarIcon.style.display = 'none';
+                mainAvatarImg.src = pendingImgDataUrl;
+                mainAvatarImg.style.display = 'block';
+            }
+        }
+
         openBtn.addEventListener('click', () => {
             inputName.value = displayName.textContent;
             inputGbox.value = displayGbox.textContent;
             inputBio.value = displayBio.textContent;
+            
+            // Sync modal preview with current display avatar state
+            if (mainAvatarImg.style.display === 'block') {
+                modalAvatarIcon.style.display = 'none';
+                modalAvatarImg.src = mainAvatarImg.src;
+                modalAvatarImg.style.display = 'block';
+            }
+
             modal.classList.add('active');
         });
 
@@ -175,6 +265,9 @@
             displayName.textContent = inputName.value;
             displayGbox.textContent = inputGbox.value;
             displayBio.textContent = inputBio.value;
+            
+            // Commit image changes on Save click
+            commitImageChange();
             closeModal();
         });
     </script>
