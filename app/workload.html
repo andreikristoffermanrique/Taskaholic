@@ -20,9 +20,9 @@
             </div>
             
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item active"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+                <a href="workload.html" class="nav-item active"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
+                <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+                <a href="my_tasks.html" class="nav-item"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
                 <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
@@ -45,7 +45,7 @@
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%;">
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">10</div>
+                            <div class="stat-number" id="count-total">0</div>
                             <div class="stat-label">Your Tasks</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-bullseye"></i></div>
@@ -53,7 +53,7 @@
                     
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">4</div>
+                            <div class="stat-number" id="count-today">0</div>
                             <div class="stat-label">Due Today</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-calendar-days"></i></div>
@@ -61,7 +61,7 @@
 
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">5</div>
+                            <div class="stat-number" id="count-overdue">0</div>
                             <div class="stat-label">Overdue</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -69,7 +69,7 @@
 
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">3</div>
+                            <div class="stat-number" id="count-completed">0</div>
                             <div class="stat-label">Completed</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-circle-check"></i></div>
@@ -83,15 +83,15 @@
                     <div class="chart-card" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 25px;">
                         <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 20px;">Pending vs. Completed Tasks (This Week)</h3>
                         <div class="chart-content-box">
-                            <div class="pie-chart chart-pending-completed"></div>
+                            <div class="pie-chart chart-pending-completed" id="pie-pending-completed" style="width: 120px; height: 120px; border-radius: 50%; border: 1px solid #000;"></div>
                             <div class="chart-legend">
                                 <div class="legend-item">
                                     <span class="legend-color color-pending"></span>
-                                    <span class="legend-label">Pending</span>
+                                    <span class="legend-label">Pending (<span id="pct-pending">0%</span>)</span>
                                 </div>
                                 <div class="legend-item">
                                     <span class="legend-color color-completed"></span>
-                                    <span class="legend-label">Completed</span>
+                                    <span class="legend-label">Completed (<span id="pct-completed">0%</span>)</span>
                                 </div>
                             </div>
                         </div>
@@ -100,19 +100,19 @@
                     <div class="chart-card" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 25px;">
                         <h3 style="font-size: 15px; font-weight: 700; margin-bottom: 20px;">Tasks by Category (This Week)</h3>
                         <div class="chart-content-box">
-                            <div class="pie-chart chart-category"></div>
+                            <div class="pie-chart chart-category" id="pie-category" style="width: 120px; height: 120px; border-radius: 50%; border: 1px solid #000;"></div>
                             <div class="chart-legend">
                                 <div class="legend-item">
                                     <span class="legend-color color-academic"></span>
-                                    <span class="legend-label">Academic</span>
+                                    <span class="legend-label">Academic (<span id="count-academic">0</span>)</span>
                                 </div>
                                 <div class="legend-item">
                                     <span class="legend-color color-project"></span>
-                                    <span class="legend-label">Project</span>
+                                    <span class="legend-label">Project (<span id="count-project">0</span>)</span>
                                 </div>
                                 <div class="legend-item">
                                     <span class="legend-color color-personal"></span>
-                                    <span class="legend-label">Personal</span>
+                                    <span class="legend-label">Personal (<span id="count-personal">0</span>)</span>
                                 </div>
                             </div>
                         </div>
@@ -121,15 +121,15 @@
 
                 <div class="analytics-right-col">
                     <div class="chart-card tall-chart-card" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 25px; height: 100%;">
-                        <h3 class="center-title" style="font-size: 15px; font-weight: 700; margin-bottom: 20px; text-align: center;">Workload Overview</h3>
+                        <h3 class="center-title" style="font-size: 15px; font-weight: 700; margin-bottom: 20px; text-align: center;">Workload Distribution</h3>
                         <div class="chart-content-vertical">
-                            <div class="donut-chart chart-total-workload">
-                                <div class="donut-center-hole">
-                                    <span class="donut-count">10</span>
-                                    <span class="donut-label">Total</span>
+                            <div class="donut-chart chart-total-workload" id="donut-workload" style="width: 160px; height: 160px; border-radius: 50%; border: 1px solid #000; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <div class="donut-center-hole" style="width: 100px; height: 100px; background-color: #FFFFFF; border-radius: 50%; border: 1px solid #000; display: flex; flex-direction: column; align-items: center; justify-content: center; position: absolute;">
+                                    <span class="donut-count" id="donut-total-text" style="font-size: 24px; font-weight: 800;">0</span>
+                                    <span class="donut-label" style="font-size: 11px; color: #666;">Total</span>
                                 </div>
                             </div>
-                            <div class="chart-legend dynamic-gap">
+                            <div class="chart-legend dynamic-gap" style="margin-top: 20px;">
                                 <div class="legend-item">
                                     <span class="legend-color color-pending"></span>
                                     <span class="legend-label">Pending</span>
@@ -155,5 +155,76 @@
         </main>
     </div>
 
+    <!-- DATA SYNCHRONIZATION SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Load Live array data matching dashboard and my_tasks metrics
+            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+            
+            // Generate standard date string signature match validation (YYYY-MM-DD)
+            const todayStr = new Date().toISOString().split('T')[0];
+
+            // 2. Compute dynamic breakdown variables
+            let totalTasks = tasks.length;
+            let completedTasks = tasks.filter(t => t.status === 'completed').length;
+            let pendingTasks = totalTasks - completedTasks;
+            
+            let dueTodayTasks = tasks.filter(t => t.dueDate === todayStr).length;
+            let overdueTasks = tasks.filter(t => t.dueDate < todayStr && t.status !== 'completed').length;
+
+            let academicCount = tasks.filter(t => t.category === 'academic').length;
+            let projectCount = tasks.filter(t => t.category === 'project').length;
+            let personalCount = tasks.filter(t => t.category === 'personal').length;
+
+            // 3. Inject into Summary Nodes
+            document.getElementById('count-total').textContent = totalTasks;
+            document.getElementById('count-completed').textContent = completedTasks;
+            document.getElementById('count-today').textContent = dueTodayTasks;
+            document.getElementById('count-overdue').textContent = overdueTasks;
+
+            // Update details texts in label breakdowns
+            document.getElementById('count-academic').textContent = academicCount;
+            document.getElementById('count-project').textContent = projectCount;
+            document.getElementById('count-personal').textContent = personalCount;
+            document.getElementById('donut-total-text').textContent = totalTasks;
+
+            // 4. Percentage calculation safety boundaries
+            let completedPct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+            let pendingPct = totalTasks > 0 ? (100 - completedPct) : 0;
+            document.getElementById('pct-completed').textContent = `${completedPct}%`;
+            document.getElementById('pct-pending').textContent = `${pendingPct}%`;
+
+            // 5. CSS Conic Gradients Engine mapping color values matching image_97faa0.png
+            // Status Chart: Yellowish background (#EED369) and teal completed slice (#54CBB2)
+            if (totalTasks > 0) {
+                document.getElementById('pie-pending-completed').style.background = 
+                    `conic-gradient(#54CBB2 0% ${completedPct}%, #EED369 ${completedPct}% 100%)`;
+            } else {
+                document.getElementById('pie-pending-completed').style.background = '#e0e0e0';
+            }
+
+            // Category Chart: Academic (#F0B3B3), Project (#DDA3A3), Personal (#A78393)
+            if (totalTasks > 0) {
+                let acadPct = (academicCount / totalTasks) * 100;
+                let projPct = (projectCount / totalTasks) * 100;
+                document.getElementById('pie-category').style.background = 
+                    `conic-gradient(#F0B3B3 0% ${acadPct}%, #DDA3A3 ${acadPct}% ${acadPct + projPct}%, #A78393 ${acadPct + projPct}% 100%)`;
+            } else {
+                document.getElementById('pie-category').style.background = '#e0e0e0';
+            }
+
+            // Donut Distribution Vector: Pending (#EED369), Completed (#54CBB2), Due Today (#FFFFFF/Light), Overdue (#ECA1A1)
+            if (totalTasks > 0) {
+                let pPct = (pendingTasks / totalTasks) * 100;
+                let cPct = (completedTasks / totalTasks) * 100;
+                let dPct = (dueTodayTasks / totalTasks) * 100;
+                
+                document.getElementById('donut-workload').style.background = 
+                    `conic-gradient(#EED369 0% ${pPct}%, #54CBB2 ${pPct}% ${pPct + cPct}%, #FFFDF6 ${pPct + cPct}% ${pPct + cPct + dPct}%, #ECA1A1 ${pPct + cPct + dPct}% 100%)`;
+            } else {
+                document.getElementById('donut-workload').style.background = '#e0e0e0';
+            }
+        });
+    </script>
 </body>
 </html>
