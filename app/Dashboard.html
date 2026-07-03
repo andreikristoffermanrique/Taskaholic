@@ -57,7 +57,7 @@
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
-                    <h2>Good Day, [name] !</h2>
+                    <h2>Good Day, <span id="user-name"></span>!</h2>
                     <p>Here's what is happening with your tasks today</p>
                 </div>
                 <button class="add-task-btn" onclick="openAddTaskModal()">
@@ -233,169 +233,34 @@
                     </div>
                     <div style="display: flex !important; gap: 10px !important;">
                         <button type="button" onclick="closeAddTaskModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
-                        <button type="button" onclick="saveNewTask()" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
+                        <button type="button" id="save-new-task-btn" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important;">Save Task</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Centralized Storage Script Layer -->
-    <script>
-        // Core fallbacks to keep UI layout active if storage starts blank
-        const fallbackTasks = [
-            { id: 1, title: 'test2', description: 'dmdndeje', category: 'academic', priority: 'high', dueDate: '2026-06-28', visibility: 'private', status: 'pending' },
-            { id: 2, title: 'Database ERD Diagram', description: 'Finish relationships mapping', category: 'project', priority: 'high', dueDate: '2026-07-03', visibility: 'private', status: 'in progress' },
-            { id: 3, title: 'Buy Groceries', description: 'Milk and eggs', category: 'personal', priority: 'low', dueDate: '2026-06-15', visibility: 'private', status: 'pending' },
-            { id: 4, title: 'Ethics Reflection Paper', description: 'Utilitarianism framework cases', category: 'academic', priority: 'medium', dueDate: '2026-07-10', visibility: 'private', status: 'completed' }
-        ];
-
-        // Read dynamically from localStorage shared warehouse
-        function getTasks() {
-            let stored = localStorage.getItem('tasks');
-            if (!stored) {
-                localStorage.setItem('tasks', JSON.stringify(fallbackTasks));
-                return fallbackTasks;
-            }
-            return JSON.parse(stored);
+<script>
+    // This function opens your modal
+    function openAddTaskModal() {
+        // Now it looks for your EXACT modal ID!
+        const modal = document.getElementById('uniqueTaskFormModal'); 
+        if (modal) {
+            modal.style.display = 'flex'; 
         }
+    }
 
-        function saveTasks(tasks) {
-            localStorage.setItem('tasks', JSON.stringify(tasks));
+    // This function closes your modal
+    function closeAddTaskModal() {
+        const modal = document.getElementById('uniqueTaskFormModal');
+        if (modal) {
+            modal.style.display = 'none';
         }
+    }
+</script>
 
-        // Renders tracking state records out onto template display nodes
-        function loadDashboardData() {
-            const tasks = getTasks();
-            const todayStr = new Date().toISOString().split('T')[0];
-            
-            let totalCount = tasks.length;
-            let dueTodayCount = 0;
-            let overdueCount = 0;
-            let completedCount = 0;
-
-            const tbody = document.getElementById('deadlines-tbody');
-            if (tbody) {
-                tbody.innerHTML = '';
-                
-                // Track metric scopes cleanly
-                const activeTasks = tasks.filter(task => {
-                    const statusClean = task.status.toLowerCase().trim();
-                    if (statusClean === 'completed') {
-                        completedCount++;
-                        return false; // exclude completed items from upcoming deadlines table
-                    }
-                    if (task.dueDate === todayStr) {
-                        dueTodayCount++;
-                    } else if (task.dueDate < todayStr) {
-                        overdueCount++;
-                    }
-                    return true;
-                });
-
-                // Arrange columns logically chronologically 
-                activeTasks.sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
-
-                // Append up to 5 primary deadlines onto target tables row cells
-                activeTasks.slice(0, 5).forEach(task => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>
-                            <div style="font-weight: 600; color: #1a1a1a;">${task.title}</div>
-                            <div style="font-size: 12px; color: #707070;">${task.description || ''}</div>
-                        </td>
-                        <td style="vertical-align: middle; white-space: nowrap;">${task.dueDate}</td>
-                    `;
-                    tbody.appendChild(row);
-                });
-            }
-
-            // Keep numeric element totals synchronous
-            if(document.getElementById('total-tasks')) document.getElementById('total-tasks').textContent = totalCount;
-            if(document.getElementById('due-today-tasks')) document.getElementById('due-today-tasks').textContent = dueTodayCount;
-            if(document.getElementById('overdue-tasks')) document.getElementById('overdue-tasks').textContent = overdueCount;
-            if(document.getElementById('completed-tasks')) document.getElementById('completed-tasks').textContent = completedCount;
-            if(document.getElementById('chart-total-tasks')) document.getElementById('chart-total-tasks').textContent = totalCount;
-        }
-
-        // COMPILES FORM SELECTIONS INTO SHARED LOCALSTORAGE WAREHOUSE
-        function saveNewTask() {
-            const titleInput = document.getElementById('modalTaskTitle');
-            const descInput = document.getElementById('modalTaskDesc');
-            const dateInput = document.getElementById('modalTaskDate');
-            const statusSelect = document.getElementById('modalTaskStatus');
-
-            if (!titleInput || titleInput.value.trim() === "") {
-                alert("Please input a Task Title before saving!");
-                return;
-            }
-
-            const categorySelected = document.querySelector('input[name="category"]:checked')?.value || 'academic';
-            const prioritySelected = document.querySelector('input[name="priority"]:checked')?.value || 'medium';
-            const visibilitySelected = document.querySelector('input[name="visibility"]:checked')?.value || 'private';
-
-            let tasksList = getTasks();
-
-            const newTask = {
-                id: Date.now(), // Secure timestamps identifier matching my_tasks setup
-                title: titleInput.value.trim(),
-                description: descInput ? descInput.value.trim() : '',
-                category: categorySelected,
-                priority: prioritySelected,
-                dueDate: (dateInput && dateInput.value) ? dateInput.value : new Date().toISOString().split('T')[0],
-                visibility: visibilitySelected,
-                status: statusSelect ? statusSelect.value : 'pending'
-            };
-
-            tasksList.push(newTask);
-            saveTasks(tasksList);
-
-            // Re-render dashboard dashboard components instantly
-            loadDashboardData();
-
-            // Clear inputs reset
-            titleInput.value = '';
-            if(descInput) descInput.value = '';
-            if(dateInput) dateInput.value = '';
-
-            closeAddTaskModal();
-        }
-
-        // Modal View Controls Management 
-        function openAddTaskModal() {
-            const modal = document.getElementById('uniqueTaskFormModal');
-            if (modal) {
-                modal.style.setProperty('display', 'flex', 'important');
-            }
-        }
-
-        function closeAddTaskModal() {
-            const modal = document.getElementById('uniqueTaskFormModal');
-            if (modal) {
-                modal.style.setProperty('display', 'none', 'important');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDashboardData();
-
-            // Modal backdrop close logic wireup
-            const modalEl = document.getElementById('uniqueTaskFormModal');
-            if(modalEl) {
-                modalEl.addEventListener('click', function(e) {
-                    if (e.target === this) closeAddTaskModal();
-                });
-            }
-        });
-
-        function handleNavigation(pageKey) { console.log("Navigating to view: " + pageKey); }
-        function handleLogout(event) {
-            event.preventDefault();
-            if (confirm("Are you sure you want to logout?")) { window.location.href = "login.html"; }
-        }
-        function viewAllDeadlines() { window.location.href = "my_tasks.html"; }
-        function filterTasks(filterCriteria) { alert("Filtering task lists targeting: " + filterCriteria.toUpperCase()); }
-    </script>
-
+    <script type="module" src="dashboard.js"></script>
+    <script type="module" src="add_task.js"></script>
+    
 </body>
 </html>

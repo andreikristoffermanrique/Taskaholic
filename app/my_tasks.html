@@ -58,7 +58,7 @@
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
-                    <h2>Good Day, [name] !</h2>
+                    <h2>Good Day, <span id="user-name"></span>!</h2>
                     <p>Manage and organize all your tasks</p>
                 </div>
                 <button class="add-task-btn" onclick="openAddTaskModal()">
@@ -374,5 +374,8 @@
         // Initialize display wireframes smoothly
         window.addEventListener('DOMContentLoaded', () => renderMasterGrid());
     </script>
+
+    <script type="module" src="my_tasks.js"></script>
+    <script type="module" src="add_task.js"></script>
 </body>
 </html>
