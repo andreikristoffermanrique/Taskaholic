@@ -16,6 +16,8 @@ loginForm.addEventListener("submit", async (e) => {
         const userName = user.displayName || "Student";
         alert("Welcome back, " + userName + "!");
 
+        window.location.href = "Dashboard.html";
+
     } catch (error) {
         alert("Login failed: Please check your email and password.");
     }
