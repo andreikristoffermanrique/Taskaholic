@@ -84,22 +84,26 @@
                     <div class="info-form-column">
                         <div class="info-input-group">
                             <label>Full Name</label>
-                            <input type="text" placeholder="">
+                            <input type="text" id="profile-name" placeholder="Your Full Name">
                         </div>
-                        
+        
                         <div class="info-input-group">
                             <label>Email Address</label>
-                            <input type="email" placeholder="">
+                            <input type="email" id="profile-email" placeholder="Your Email Address" readonly>
                         </div>
 
                         <div class="info-input-group">
                             <label>Contact Number</label>
-                            <input type="text" placeholder="">
+                            <input type="text" id="profile-contact" placeholder="Your Contact Number">
                         </div>
 
                         <div class="info-input-group">
                             <label>Password</label>
                             <button type="button" class="btn-change-password">Change your password</button>
+                        </div>
+
+                        <div class="info-input-group" style="margin-top: 20px;">
+                            <button type="button" id="save-profile-btn" style="padding: 10px 20px; background-color: #fca5a5; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Save Changes</button>
                         </div>
                     </div>
 
@@ -120,5 +124,6 @@
 </main>
     </div>
 
+    <script type="module" src="account_settings.js"></script>
 </body>
 </html>
