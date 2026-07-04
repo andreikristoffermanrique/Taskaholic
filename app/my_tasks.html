@@ -101,6 +101,7 @@
 
             <!-- Grid/Table Area -->
             <section class="tasks-table-main-container">
+
                 <table class="master-data-grid-table">
                     <thead>
                         <tr>
@@ -124,7 +125,9 @@
                             <span class="line medium"></span>
                         </div>
                     </div>
-                    <p class="fallback-message-text">No Tasks Found</p>
+                    <div id="loading" style="text-align: center; padding: 20px; display: none;">
+                        <p>Loading your tasks...</p>
+                    </div>
                 </div>
             </section>
         </main>
@@ -211,160 +214,7 @@
         </div>
     </div>
 
-    <!-- Business Logic JavaScript Overlay -->
-    <script>
-        function handleNavigation(pageKey) { console.log("Navigating to: " + pageKey); }
-        function handleLogout(event) { event.preventDefault(); if (confirm("Are you sure you want to logout?")) { window.location.href = "login.html"; } }
-        
-        // Initial setup for Sample Data if LocalStorage is totally bare
-        const defaultSampleTasks = [
-            { id: 1, title: 'test2', description: 'dmdndeje', category: 'academic', priority: 'high', dueDate: '2026-06-28', visibility: 'private', status: 'pending' },
-            { id: 2, title: 'Database ERD Diagram', description: 'Finish relationships mapping', category: 'project', priority: 'high', dueDate: '2026-07-03', visibility: 'private', status: 'in progress' },
-            { id: 3, title: 'Buy Groceries', description: 'Milk and eggs', category: 'personal', priority: 'low', dueDate: '2026-06-15', visibility: 'private', status: 'pending' },
-            { id: 4, title: 'Ethics Reflection Paper', description: 'Utilitarianism framework cases', category: 'academic', priority: 'medium', dueDate: '2026-07-10', visibility: 'private', status: 'completed' }
-        ];
 
-        function getTasks() { 
-            let stored = localStorage.getItem('tasks');
-            if (!stored) {
-                localStorage.setItem('tasks', JSON.stringify(defaultSampleTasks));
-                return defaultSampleTasks;
-            }
-            return JSON.parse(stored); 
-        }
-        
-        function saveTasks(tasks) { localStorage.setItem('tasks', JSON.stringify(tasks)); }
-
-        function openAddTaskModal() {
-            document.getElementById('modalFormTitle').innerText = "Create New Task";
-            document.getElementById('editTaskId').value = "";
-            document.getElementById('taskForm').reset();
-            document.getElementById('addTaskModal').style.setProperty('display', 'flex', 'important');
-        }
-
-        function closeAddTaskModal() { 
-            document.getElementById('addTaskModal').style.setProperty('display', 'none', 'important'); 
-        }
-        
-        function applyBulkAction() { alert("Bulk Action Registered."); }
-
-        function renderMasterGrid(filteredTasks = null) {
-            const tasks = filteredTasks || getTasks();
-            const tbody = document.getElementById('taskGridBody');
-            const emptyState = document.getElementById('emptyStateContainer');
-            
-            if (!tbody) return;
-            tbody.innerHTML = '';
-
-            if (tasks.length === 0) {
-                if (emptyState) emptyState.style.setProperty('display', 'flex', 'important');
-                return;
-            } else {
-                if (emptyState) emptyState.style.setProperty('display', 'none', 'important');
-            }
-
-            tasks.forEach(task => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>
-                        <a href="task_details.html?id=${task.id}" style="color: #000000; text-decoration: none;">
-                            <strong style="text-decoration: underline; cursor: pointer;">${task.title}</strong>
-                        </a>
-                        <br>
-                        <small style="color:#777">${task.description || ''}</small>
-                    </td>
-                    <td style="text-transform: capitalize;">${task.category}</td>
-                    <td><span class="priority-badge ${task.priority}">${task.priority}</span></td>
-                    <td>${task.dueDate}</td>
-                    <td><span class="status-pill ${task.status.replace(' ', '-')}">${task.status}</span></td>
-                    <td>
-                        <div class="action-buttons-container" style="display: flex; gap: 8px; justify-content: center;">
-                            <button class="action-btn edit" onclick="openEditModal(${task.id})" title="Edit Task" style="background: none; border: none; cursor: pointer; color: #555;"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="action-btn delete" onclick="deleteTask(${task.id})" title="Delete Task" style="background: none; border: none; cursor: pointer; color: #e57373;"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function openEditModal(id) {
-            const tasks = getTasks();
-            const task = tasks.find(t => t.id === id);
-            if (!task) return;
-
-            document.getElementById('modalFormTitle').innerText = "Edit Task Parameters";
-            document.getElementById('editTaskId').value = task.id;
-            document.getElementById('taskTitle').value = task.title;
-            document.getElementById('taskDesc').value = task.description;
-            
-            document.querySelector(`input[name="category"][value="${task.category.toLowerCase()}"]`).checked = true;
-            document.querySelector(`input[name="priority"][value="${task.priority.toLowerCase()}"]`).checked = true;
-            document.getElementById('taskDueDate').value = task.dueDate;
-            document.querySelector(`input[name="visibility"][value="${task.visibility.toLowerCase()}"]`).checked = true;
-            document.getElementById('taskStatus').value = task.status;
-
-            document.getElementById('addTaskModal').style.setProperty('display', 'flex', 'important');
-        }
-
-        function deleteTask(id) {
-            if(confirm("Are you sure you want to delete this task?")) {
-                let tasks = getTasks();
-                tasks = tasks.filter(task => task.id !== id);
-                saveTasks(tasks);
-                applyFilters();
-            }
-        }
-
-        function applyFilters() {
-            let tasks = getTasks();
-            const cat = document.getElementById('categoryFilter').value;
-            const pri = document.getElementById('priorityFilter').value;
-            const stat = document.getElementById('statusFilter').value;
-            const search = document.getElementById('taskSearchInput').value.toLowerCase();
-
-            if (cat !== 'all') tasks = tasks.filter(t => t.category.toLowerCase() === cat.toLowerCase());
-            if (pri !== 'all') tasks = tasks.filter(t => t.priority.toLowerCase() === pri.toLowerCase());
-            if (stat !== 'all') tasks = tasks.filter(t => t.status.toLowerCase() === stat.toLowerCase());
-            if (search) tasks = tasks.filter(t => t.title.toLowerCase().includes(search) || t.description.toLowerCase().includes(search));
-
-            renderMasterGrid(tasks);
-        }
-
-        function executeTaskSearch() { applyFilters(); }
-
-        document.getElementById('taskForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const tasks = getTasks();
-            const editId = document.getElementById('editTaskId').value;
-
-            const taskData = {
-                title: document.getElementById('taskTitle').value,
-                description: document.getElementById('taskDesc').value,
-                category: document.querySelector('input[name="category"]:checked').value,
-                priority: document.querySelector('input[name="priority"]:checked').value,
-                dueDate: document.getElementById('taskDueDate').value,
-                visibility: document.querySelector('input[name="visibility"]:checked').value,
-                status: document.getElementById('taskStatus').value
-            };
-
-            if (editId) {
-                const index = tasks.findIndex(t => t.id == editId);
-                if(index !== -1) tasks[index] = { ...tasks[index], ...taskData };
-            } else {
-                taskData.id = Date.now();
-                tasks.push(taskData);
-            }
-
-            saveTasks(tasks);
-            this.reset();
-            closeAddTaskModal();
-            applyFilters();
-        });
-
-        // Initialize display wireframes smoothly
-        window.addEventListener('DOMContentLoaded', () => renderMasterGrid());
-    </script>
 
     <script type="module" src="my_tasks.js"></script>
     <script type="module" src="add_task.js"></script>
