@@ -11,7 +11,6 @@
 <body>
 
     <div class="dashboard-container">
-        <!-- Sidebar Navigation Panel -->
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -53,11 +52,10 @@
             </a>
         </aside>
 
-        <!-- Main Dashboard View Contents -->
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
-                    <h2>Good Day, <span id="user-name"></span>!</h2>
+                    <h2>Good Day, <span id="user-name">User</span>!</h2>
                     <p>Here's what is happening with your tasks today</p>
                 </div>
                 <button class="add-task-btn" onclick="openAddTaskModal()">
@@ -65,7 +63,6 @@
                 </button>
             </header>
 
-            <!-- Numeric Metric Stats Section -->
             <div class="stats-container-row">
                 <section class="stats-grid">
                     <div class="stat-card" onclick="filterTasks('all')">
@@ -107,31 +104,27 @@
                 </section>
             </div>
 
-            <!-- Lower Layout Grid: Tables and Progress Rings -->
             <section class="data-panels">
-                <!-- Upcoming Deadlines Table Card Component -->
-                <div class="data-card upcoming-deadlines">
+                <div class="data-card upcoming-deadlines" style="background-color: #FFFFFF;">
                     <div class="card-header">
                         <h3>Upcoming Deadlines</h3>
-                        <button class="view-all-btn" onclick="viewAllDeadlines()">View All</button>
+                        <button class="view-all-btn" onclick="window.location.href='my_tasks.html'">View All</button>
                     </div>
-                    <div class="table-container">
-                        <table class="deadlines-table">
+                    <div class="table-container" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 8px;">
+                        <table class="deadlines-table" style="width: 100%; border-collapse: collapse;">
                             <thead>
                                 <tr>
-                                    <th>Task Name</th>
-                                    <th>Deadline</th>
+                                    <th style="text-align: left; background-color: #F5AFAF; border-bottom: 1px solid #000000; padding: 10px 14px; font-weight: 600;">Task Name</th>
+                                    <th style="text-align: right; background-color: #F5AFAF; border-bottom: 1px solid #000000; padding: 10px 14px; font-weight: 600;">Deadline</th>
                                 </tr>
                             </thead>
                             <tbody id="deadlines-tbody">
-                                <!-- Dynamic content loaded via JavaScript -->
-                            </tbody>
+                                </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- Category Chart Metrics Component -->
-                <div class="data-card progress-overview">
+                <div class="data-card progress-overview" style="background-color: #FFFFFF;">
                     <div class="card-header">
                         <h3>Progress Overview</h3>
                     </div>
@@ -139,10 +132,10 @@
                     <div class="chart-container">
                         <div class="progress-chart-wrapper">
                             <svg class="progress-ring-svg" width="130" height="130" viewBox="0 0 42 42">
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#E6D5D5" stroke-width="5.5"></circle>
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#FCF8F8" stroke-width="5.5" stroke-dasharray="60 40" stroke-dashoffset="25"></circle>
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F5AFAF" stroke-width="5.5" stroke-dasharray="25 75" stroke-dashoffset="-35"></circle>
-                                <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#F9DFDF" stroke-width="5.5" stroke-dasharray="15 85" stroke-dashoffset="-60"></circle>
+                                <circle id="ring-base" cx="21" cy="21" r="15.915" fill="transparent" stroke="#E6D5D5" stroke-width="5.5"></circle>
+                                <circle id="ring-academic" cx="21" cy="21" r="15.915" fill="transparent" stroke="#FCF8F8" stroke-width="5.5" stroke-dasharray="0 100" stroke-dashoffset="25"></circle>
+                                <circle id="ring-project" cx="21" cy="21" r="15.915" fill="transparent" stroke="#F5AFAF" stroke-width="5.5" stroke-dasharray="0 100" stroke-dashoffset="25"></circle>
+                                <circle id="ring-personal" cx="21" cy="21" r="15.915" fill="transparent" stroke="#F9DFDF" stroke-width="5.5" stroke-dasharray="0 100" stroke-dashoffset="25"></circle>
                             </svg>
                             <div class="chart-inner-label">
                                 <span class="chart-percentage" id="chart-total-tasks">0</span>
@@ -161,17 +154,14 @@
         </main>
     </div>
 
-    <!-- HIGH-PRIORITY APP-BODY LEVEL MODAL (Bypasses external CSS layout restrictions) -->
     <div id="uniqueTaskFormModal" style="display: none !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
         <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
             
-            <!-- Modal Header -->
             <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
                 <h3 style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Create New Task</h3>
                 <button type="button" onclick="closeAddTaskModal()" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Modal Form -->
             <form style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
                 <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Task Title</label>
@@ -183,9 +173,7 @@
                     <input type="text" id="modalTaskDesc" placeholder="Enter description" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
 
-                <!-- 3-Column Fields -->
                 <div style="display: grid !important; grid-template-columns: 1.2fr 1.2fr 1fr !important; gap: 12px !important;">
-                    <!-- Category Radio Selection -->
                     <div>
                         <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Category</label>
                         <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
@@ -195,7 +183,6 @@
                         </div>
                     </div>
 
-                    <!-- Priority Radio Selection -->
                     <div>
                         <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Priority Level</label>
                         <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
@@ -205,7 +192,6 @@
                         </div>
                     </div>
 
-                    <!-- Due Date and Visibility Form Fields -->
                     <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
                         <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
                             <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Due Date</label>
@@ -221,7 +207,6 @@
                     </div>
                 </div>
 
-                <!-- Footer Dropdown and Save Actions -->
                 <div style="display: flex !important; justify-content: space-between !important; align-items: flex-end !important; margin-top: 10px !important;">
                     <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
                         <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important; white-space: nowrap !important;">Current Status</label>
@@ -233,7 +218,7 @@
                     </div>
                     <div style="display: flex !important; gap: 10px !important;">
                         <button type="button" onclick="closeAddTaskModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
-                        <button type="button" id="save-new-task-btn" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important;">Save Task</button>
+                        <button type="button" id="save-new-task-btn" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #111 !important; font-size: 14px !important;">Save Task</button>
                     </div>
                 </div>
             </form>
@@ -241,22 +226,116 @@
     </div>
 
 <script>
-    // This function opens your modal
     function openAddTaskModal() {
-        // Now it looks for your EXACT modal ID!
         const modal = document.getElementById('uniqueTaskFormModal'); 
-        if (modal) {
-            modal.style.display = 'flex'; 
-        }
+        if (modal) modal.style.display = 'flex'; 
     }
 
-    // This function closes your modal
     function closeAddTaskModal() {
         const modal = document.getElementById('uniqueTaskFormModal');
-        if (modal) {
-            modal.style.display = 'none';
-        }
+        if (modal) modal.style.display = 'none';
     }
+
+    // DASHBOARD DATA SYNCHRONIZATION WITH USER FILTERING
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. Check for active logged-in user. (Change 'currentUser' to whatever key your login script uses)
+        const activeUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        
+        // Update greeting
+        if (activeUser && activeUser.name) {
+            document.getElementById('user-name').textContent = activeUser.name;
+        } else if (activeUser && activeUser.email) {
+            // Fallback to the part before the @ sign if no name is present
+            document.getElementById('user-name').textContent = activeUser.email.split('@')[0];
+        }
+
+        // 2. Fetch all globally saved tasks
+        const globalTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        
+        // 3. FILTER TASKS: Only show tasks belonging to the active user!
+        // (If a task has no owner, it might be legacy testing data, we hide it unless there is no user logged in)
+        let tasks = globalTasks;
+        if (activeUser && activeUser.email) {
+            tasks = globalTasks.filter(t => t.owner === activeUser.email);
+        }
+
+        // --- Calculate Top Metrics ---
+        const todayStr = new Date().toISOString().split('T')[0];
+        let dueToday = 0;
+        let overdue = 0;
+        let completed = 0;
+
+        tasks.forEach(t => {
+            if (t.status === 'completed') {
+                completed++;
+            } else if (t.dueDate) {
+                if (t.dueDate === todayStr) dueToday++;
+                else if (t.dueDate < todayStr) overdue++;
+            }
+        });
+
+        document.getElementById('total-tasks').textContent = tasks.length;
+        document.getElementById('due-today-tasks').textContent = dueToday;
+        document.getElementById('overdue-tasks').textContent = overdue;
+        document.getElementById('completed-tasks').textContent = completed;
+
+        // --- Populate Upcoming Deadlines ---
+        const deadlinesBody = document.getElementById('deadlines-tbody');
+        const upcomingTasks = tasks
+            .filter(t => t.status !== 'completed' && t.dueDate)
+            .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
+            .slice(0, 5); // Show top 5 upcoming
+
+        if (upcomingTasks.length === 0) {
+            deadlinesBody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding: 20px; color: #666; font-size: 14px;">No upcoming deadlines</td></tr>`;
+        } else {
+            upcomingTasks.forEach(task => {
+                deadlinesBody.innerHTML += `
+                    <tr style="border-bottom: 1px solid #CCCCCC;">
+                        <td style="text-align: left; padding: 12px 14px;">
+                            <strong style="color: #000000; font-size: 14px;">${task.title}</strong><br>
+                            <span style="color: #888888; font-size: 12px; text-transform: lowercase;">${task.category}</span>
+                        </td>
+                        <td style="text-align: right; padding: 12px 14px; font-size: 14px; color: #000000;">
+                            ${task.dueDate}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // --- Populate Progress Overview SVG Chart ---
+        const totalTasks = tasks.length;
+        document.getElementById('chart-total-tasks').textContent = totalTasks;
+
+        const ringAcademic = document.getElementById('ring-academic');
+        const ringProject = document.getElementById('ring-project');
+        const ringPersonal = document.getElementById('ring-personal');
+
+        if (totalTasks > 0) {
+            const academicCount = tasks.filter(t => t.category === 'academic').length;
+            const projectCount = tasks.filter(t => t.category === 'project').length;
+            const personalCount = tasks.filter(t => t.category === 'personal').length;
+
+            const acaPct = (academicCount / totalTasks) * 100;
+            const projPct = (projectCount / totalTasks) * 100;
+            const persPct = (personalCount / totalTasks) * 100;
+
+            ringAcademic.setAttribute('stroke-dasharray', `${acaPct} ${100 - acaPct}`);
+            ringAcademic.setAttribute('stroke-dashoffset', `25`);
+
+            ringProject.setAttribute('stroke-dasharray', `${projPct} ${100 - projPct}`);
+            ringProject.setAttribute('stroke-dashoffset', `${25 - acaPct}`);
+
+            ringPersonal.setAttribute('stroke-dasharray', `${persPct} ${100 - persPct}`);
+            ringPersonal.setAttribute('stroke-dashoffset', `${25 - acaPct - projPct}`);
+        } else {
+            ringAcademic.setAttribute('stroke-dasharray', `0 100`);
+            ringProject.setAttribute('stroke-dasharray', `0 100`);
+            ringPersonal.setAttribute('stroke-dasharray', `0 100`);
+        }
+    });
 </script>
 
     <script type="module" src="dashboard.js"></script>
