@@ -58,15 +58,52 @@ onAuthStateChanged(auth, async (user) => {
             }
 
             // 4. Update the Dashboard Cards
-            document.getElementById("total-tasks").textContent = total;
-            document.getElementById("due-today-tasks").textContent = todayCount;
-            document.getElementById("overdue-tasks").textContent = overdueCount;
-            document.getElementById("completed-tasks").textContent = completedCount;
+            if (document.getElementById("total-tasks")) document.getElementById("total-tasks").textContent = total;
+            if (document.getElementById("due-today-tasks")) document.getElementById("due-today-tasks").textContent = todayCount;
+            if (document.getElementById("overdue-tasks")) document.getElementById("overdue-tasks").textContent = overdueCount;
+            if (document.getElementById("completed-tasks")) document.getElementById("completed-tasks").textContent = completedCount;
+
+            // 5. Update Progress Overview Chart Text
+            // Updates the central text inside your progress circle widget dynamically
+            const chartTotalText = document.querySelector(".Progress .total-num, #total-progress-text, .progress-overview-text strong"); 
+            if (chartTotalText) {
+                chartTotalText.textContent = total;
+            } else {
+                // Fallback check: If your text container uses a generic identifier, target it here
+                const textContainers = document.querySelectorAll("h1, div, span");
+                textContainers.forEach(el => {
+                    if (el.textContent.trim() === "0" && el.nextElementSibling && el.nextElementSibling.textContent.trim() === "Total") {
+                        el.textContent = total;
+                    }
+                });
+            }
 
         } catch (error) {
             console.error("Error fetching Dashboard tasks: ", error);
         }
     } else {
         window.location.href = "login.html";
+    }
+});
+
+// 6. Bind "View All" Button Redirection
+// Listens for clicks on your upcoming deadlines control header to change routing instantly
+document.addEventListener("DOMContentLoaded", () => {
+    const viewAllBtn = document.querySelector(".Upcoming .View-btn, button, #view-all-btn");
+    
+    // Fallback: search explicitly by matching button text contents from image_07ca0a.png
+    const buttons = document.querySelectorAll("button, a");
+    let targetBtn = null;
+    buttons.forEach(btn => {
+        if (btn.textContent.trim() === "View All") {
+            targetBtn = btn;
+        }
+    });
+
+    if (targetBtn) {
+        targetBtn.style.cursor = "pointer";
+        targetBtn.addEventListener("click", () => {
+            window.location.href = "my_tasks.html";
+        });
     }
 });

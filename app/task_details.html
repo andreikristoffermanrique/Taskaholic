@@ -40,7 +40,6 @@
                 </a>
                 
                 <div style="display: flex; gap: 12px;">
-                    <!-- Fixed: Added id attribute to catch click interactions dynamically -->
                     <button id="edit-task-btn" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">EDIT</button>
                     <button id="delete-task-btn" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">DELETE</button>
                 </div>
@@ -105,7 +104,7 @@
             
             <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
                 <h3 style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Edit Task Parameters</h3>
-                <button type="button" onclick="closeEditModal()" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
+                <button type="button" id="close-modal-btn" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
             <form id="editTaskForm" style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
@@ -163,7 +162,7 @@
                         </select>
                     </div>
                     <div style="display: flex !important; gap: 10px !important;">
-                        <button type="button" onclick="closeEditModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
+                        <button type="button" id="cancel-modal-btn" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
                         <button type="submit" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Changes</button>
                     </div>
                 </div>
@@ -171,93 +170,152 @@
         </div>
     </div>
 
-    <script>
+    <!-- NEW DETACHED MODULAR FIREBASE CORE CONTROLLER -->
+    <script type="module">
+        import { auth, db } from "./firebase.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
+        const params = new URLSearchParams(window.location.search);
+        const taskId = params.get('id');
+        let liveTaskData = null;
+
+        // Redirect user back to login panel if unauthenticated
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+            if (taskId) {
+                await fetchTaskDetails(taskId);
+            } else {
+                showFailureState("No Task Selected", "Please select a task from your task dashboard view grid.");
+            }
+        });
+
+        // Pull task documents from Firestore
+        async function fetchTaskDetails(id) {
+            try {
+                const docRef = doc(db, "tasks", id);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    liveTaskData = docSnap.data();
+                    renderUI(liveTaskData);
+                } else {
+                    showFailureState("Task Not Found", "We couldn't find the data for this task. It may have been deleted.");
+                }
+            } catch (error) {
+                console.error("Firestore read execution error: ", error);
+                showFailureState("Connection Error", "Failed to retrieve documents from your team's shared database.");
+            }
+        }
+
+        // Render the retrieved task information into the UI
+        function renderUI(task) {
+            document.getElementById('detail-title').textContent = task.title || "Untitled Task";
+            document.getElementById('detail-category').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${task.category || 'General'}`;
+            document.getElementById('detail-date').innerHTML = `<i class="fa-regular fa-calendar"></i> Due: ${task.deadline || task.dueDate || 'No Deadline Specified'}`;
+            document.getElementById('detail-priority').textContent = `${task.priority || 'Medium'} Priority`;
+            document.getElementById('detail-status').textContent = `Status: ${task.status || 'Pending'}`;
+            document.getElementById('detail-description').textContent = task.description || "No description provided for this task.";
+
+            // Dynamically calculate progress metrics
+            let progressPercent = 0;
+            const normalizedStatus = (task.status || '').toLowerCase();
+            if (normalizedStatus === 'in progress') progressPercent = 50;
+            if (normalizedStatus === 'completed') progressPercent = 100;
+
+            document.getElementById('detail-progress-text').textContent = `${progressPercent}%`;
+            document.getElementById('detail-progress-bar').style.width = `${progressPercent}%`;
+        }
+
+        function showFailureState(heading, bodyText) {
+            document.getElementById('detail-title').textContent = heading;
+            document.getElementById('detail-description').textContent = bodyText;
+        }
+
+        // --- INTERACTION PATTERNS (EDIT / UPDATE / DELETE) ---
+
+        // Open Edit Modal
+        document.getElementById('edit-task-btn').addEventListener('click', () => {
+            if (!liveTaskData) return;
+            
+            document.getElementById('modalTaskTitle').value = liveTaskData.title || '';
+            document.getElementById('modalTaskDesc').value = liveTaskData.description || '';
+            document.getElementById('modalTaskDate').value = liveTaskData.deadline || liveTaskData.dueDate || '';
+            document.getElementById('modalTaskStatus').value = (liveTaskData.status || 'pending').toLowerCase();
+
+            // Check matching radio fields
+            const categoryRadio = document.querySelector(`input[name="category"][value="${(liveTaskData.category || '').toLowerCase()}"]`);
+            if (categoryRadio) categoryRadio.checked = true;
+
+            const priorityRadio = document.querySelector(`input[name="priority"][value="${(liveTaskData.priority || '').toLowerCase()}"]`);
+            if (priorityRadio) priorityRadio.checked = true;
+
+            const visibilityRadio = document.querySelector(`input[name="visibility"][value="${(liveTaskData.visibility || 'private').toLowerCase()}"]`);
+            if (visibilityRadio) visibilityRadio.checked = true;
+
+            document.getElementById('editTaskModal').style.setProperty('display', 'flex', 'important');
+        });
+
+        // Submit Changes to Firebase
+        document.getElementById('editTaskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!taskId) return;
+
+            const checkedCategory = document.querySelector('input[name="category"]:checked');
+            const checkedPriority = document.querySelector('input[name="priority"]:checked');
+            const checkedVisibility = document.querySelector('input[name="visibility"]:checked');
+
+            const updatedFields = {
+                title: document.getElementById('modalTaskTitle').value,
+                description: document.getElementById('modalTaskDesc').value,
+                deadline: document.getElementById('modalTaskDate').value,
+                dueDate: document.getElementById('modalTaskDate').value, // Sets both field mappings to ensure safety
+                status: document.getElementById('modalTaskStatus').value,
+                category: checkedCategory ? checkedCategory.value : 'general',
+                priority: checkedPriority ? checkedPriority.value : 'medium',
+                visibility: checkedVisibility ? checkedVisibility.value : 'private'
+            };
+
+            try {
+                const docRef = doc(db, "tasks", taskId);
+                await updateDoc(docRef, updatedFields);
+                
+                // Refresh local tracking object and UI view nodes
+                liveTaskData = { ...liveTaskData, ...updatedFields };
+                renderUI(liveTaskData);
+                
+                closeEditModal();
+                alert("Changes saved to database successfully!");
+            } catch (err) {
+                console.error("Firestore update process exception: ", err);
+                alert("Failed to submit updates to the shared database.");
+            }
+        });
+
+        // Delete Task from Firebase
+        document.getElementById('delete-task-btn').addEventListener('click', async () => {
+            if (!taskId) return;
+            if (confirm("Are you sure you want to permanently delete this task from the shared database?")) {
+                try {
+                    await deleteDoc(doc(db, "tasks", taskId));
+                    alert("Task permanently removed!");
+                    window.location.href = "my_tasks.html";
+                } catch (error) {
+                    console.error("Firestore removal target error: ", error);
+                    alert("Failed to drop database records.");
+                }
+            }
+        });
+
+        // Modal Helpers Close Binding
         function closeEditModal() {
             document.getElementById('editTaskModal').style.setProperty('display', 'none', 'important');
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const params = new URLSearchParams(window.location.search);
-            const taskId = params.get('id');
-
-            if (taskId) {
-                let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-                let currentTask = tasks.find(t => t.id == taskId);
-
-                if (currentTask) {
-                    // Inject data to template view nodes safely
-                    function updateUI() {
-                        document.getElementById('detail-title').textContent = currentTask.title;
-                        document.getElementById('detail-category').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${currentTask.category}`;
-                        document.getElementById('detail-date').innerHTML = `<i class="fa-regular fa-calendar"></i> Due: ${currentTask.dueDate}`;
-                        document.getElementById('detail-priority').textContent = `${currentTask.priority} Priority`;
-                        document.getElementById('detail-status').textContent = `Status: ${currentTask.status}`;
-                        document.getElementById('detail-description').textContent = currentTask.description || "No description provided for this task.";
-
-                        let progressPercent = 0;
-                        if (currentTask.status === 'in progress') progressPercent = 50;
-                        if (currentTask.status === 'completed') progressPercent = 100;
-                        
-                        document.getElementById('detail-progress-text').textContent = `${progressPercent}%`;
-                        document.getElementById('detail-progress-bar').style.width = `${progressPercent}%`;
-                    }
-                    
-                    updateUI();
-
-                    // Wire up Edit Modal open configurations click events
-                    document.getElementById('edit-task-btn').addEventListener('click', () => {
-                        document.getElementById('modalTaskTitle').value = currentTask.title;
-                        document.getElementById('modalTaskDesc').value = currentTask.description || '';
-                        document.getElementById('modalTaskDate').value = currentTask.dueDate;
-                        document.getElementById('modalTaskStatus').value = currentTask.status;
-
-                        document.querySelector(`input[name="category"][value="${currentTask.category.toLowerCase()}"]`).checked = true;
-                        document.querySelector(`input[name="priority"][value="${currentTask.priority.toLowerCase()}"]`).checked = true;
-                        document.querySelector(`input[name="visibility"][value="${(currentTask.visibility || 'private').toLowerCase()}"]`).checked = true;
-
-                        document.getElementById('editTaskModal').style.setProperty('display', 'flex', 'important');
-                    });
-
-                    // Handle Changes Form Submissions
-                    document.getElementById('editTaskForm').addEventListener('submit', (e) => {
-                        e.preventDefault();
-                        
-                        currentTask.title = document.getElementById('modalTaskTitle').value;
-                        currentTask.description = document.getElementById('modalTaskDesc').value;
-                        currentTask.dueDate = document.getElementById('modalTaskDate').value;
-                        currentTask.status = document.getElementById('modalTaskStatus').value;
-                        currentTask.category = document.querySelector('input[name="category"]:checked').value;
-                        currentTask.priority = document.querySelector('input[name="priority"]:checked').value;
-                        currentTask.visibility = document.querySelector('input[name="visibility"]:checked').value;
-
-                        // Save updated object map list array state onto LocalStorage 
-                        const index = tasks.findIndex(t => t.id == taskId);
-                        if (index !== -1) {
-                            tasks[index] = currentTask;
-                            localStorage.setItem('tasks', JSON.stringify(tasks));
-                        }
-
-                        updateUI();
-                        closeEditModal();
-                    });
-
-                    // Wire up simple Delete configurations
-                    document.getElementById('delete-task-btn').addEventListener('click', () => {
-                        if(confirm("Are you sure you want to delete this task?")) {
-                            const updatedTasks = tasks.filter(t => t.id != taskId);
-                            localStorage.setItem('tasks', JSON.stringify(updatedTasks));
-                            window.location.href = "my_tasks.html";
-                        }
-                    });
-
-                } else {
-                    document.getElementById('detail-title').textContent = "Task Not Found";
-                    document.getElementById('detail-description').textContent = "We couldn't find the data for this task. It may have been deleted.";
-                }
-            } else {
-                document.getElementById('detail-title').textContent = "No Task Selected";
-            }
-        });
+        document.getElementById('close-modal-btn').addEventListener('click', closeEditModal);
+        document.getElementById('cancel-modal-btn').addEventListener('click', closeEditModal);
     </script>
 </body>
 </html>

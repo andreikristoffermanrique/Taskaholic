@@ -29,8 +29,13 @@ async function loadTasks(uid) {
                 const task = doc.data();
                 const tr = document.createElement("tr");
 
+                // Wraps the title in an anchor tag pointing to task_details.html with the document ID
                 tr.innerHTML = `
-                    <td>${task.title || "—"}</td>
+                    <td>
+                        <a href="task_details.html?id=${doc.id}" style="color: #000000; text-decoration: none;">
+                            <strong style="text-decoration: underline; cursor: pointer;">${task.title || "—"}</strong>
+                        </a>
+                    </td>
                     <td>${task.category || "—"}</td>
                     <td>${task.priority || "—"}</td>
                     <td>${task.deadline || "—"}</td>

@@ -177,74 +177,112 @@
         </main>
     </div>
 
-    <!-- DATA SYNCHRONIZATION SCRIPT -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Load Live array data matching dashboard and my_tasks metrics
-            const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-            
-            // Generate standard date string signature match validation (YYYY-MM-DD)
-            const todayStr = new Date().toISOString().split('T')[0];
+    <!-- LIVE DATA SYNCHRONIZATION MODULE -->
+    <script type="module">
+        import { auth, db } from "./firebase.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+        import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-            // 2. Compute dynamic breakdown variables
-            let totalTasks = tasks.length;
-            let completedTasks = tasks.filter(t => t.status === 'completed').length;
-            let pendingTasks = totalTasks - completedTasks;
-            
-            let dueTodayTasks = tasks.filter(t => t.dueDate === todayStr).length;
-            let overdueTasks = tasks.filter(t => t.dueDate < todayStr && t.status !== 'completed').length;
-
-            let academicCount = tasks.filter(t => t.category === 'academic').length;
-            let projectCount = tasks.filter(t => t.category === 'project').length;
-            let personalCount = tasks.filter(t => t.category === 'personal').length;
-
-            // 3. Inject into Summary Nodes
-            document.getElementById('count-total').textContent = totalTasks;
-            document.getElementById('count-completed').textContent = completedTasks;
-            document.getElementById('count-today').textContent = dueTodayTasks;
-            document.getElementById('count-overdue').textContent = overdueTasks;
-
-            // Update details texts in label breakdowns
-            document.getElementById('count-academic').textContent = academicCount;
-            document.getElementById('count-project').textContent = projectCount;
-            document.getElementById('count-personal').textContent = personalCount;
-            document.getElementById('donut-total-text').textContent = totalTasks;
-
-            // 4. Percentage calculation safety boundaries
-            let completedPct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
-            let pendingPct = totalTasks > 0 ? (100 - completedPct) : 0;
-            document.getElementById('pct-completed').textContent = `${completedPct}%`;
-            document.getElementById('pct-pending').textContent = `${pendingPct}%`;
-
-            // 5. CSS Conic Gradients Engine mapping color values matching image_97faa0.png
-            // Status Chart: Yellowish background (#EED369) and teal completed slice (#54CBB2)
-            if (totalTasks > 0) {
-                document.getElementById('pie-pending-completed').style.background = 
-                    `conic-gradient(#54CBB2 0% ${completedPct}%, #EED369 ${completedPct}% 100%)`;
-            } else {
-                document.getElementById('pie-pending-completed').style.background = '#e0e0e0';
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
             }
 
-            // Category Chart: Academic (#F0B3B3), Project (#DDA3A3), Personal (#A78393)
-            if (totalTasks > 0) {
-                let acadPct = (academicCount / totalTasks) * 100;
-                let projPct = (projectCount / totalTasks) * 100;
-                document.getElementById('pie-category').style.background = 
-                    `conic-gradient(#F0B3B3 0% ${acadPct}%, #DDA3A3 ${acadPct}% ${acadPct + projPct}%, #A78393 ${acadPct + projPct}% 100%)`;
-            } else {
-                document.getElementById('pie-category').style.background = '#e0e0e0';
-            }
+            try {
+                // Fetch user's tasks from Firestore matching current active profile context
+                const q = query(collection(db, "tasks"), where("userId", "==", user.uid));
+                const querySnapshot = await getDocs(q);
 
-            // Donut Distribution Vector: Pending (#EED369), Completed (#54CBB2), Due Today (#FFFFFF/Light), Overdue (#ECA1A1)
-            if (totalTasks > 0) {
-                let pPct = (pendingTasks / totalTasks) * 100;
-                let cPct = (completedTasks / totalTasks) * 100;
-                let dPct = (dueTodayTasks / totalTasks) * 100;
-                
-                document.getElementById('donut-workload').style.background = 
-                    `conic-gradient(#EED369 0% ${pPct}%, #54CBB2 ${pPct}% ${pPct + cPct}%, #FFFDF6 ${pPct + cPct}% ${pPct + cPct + dPct}%, #ECA1A1 ${pPct + cPct + dPct}% 100%)`;
-            } else {
-                document.getElementById('donut-workload').style.background = '#e0e0e0';
+                const todayStr = new Date().toISOString().split('T')[0];
+
+                let totalTasks = 0;
+                let completedTasks = 0;
+                let dueTodayTasks = 0;
+                let overdueTasks = 0;
+
+                let academicCount = 0;
+                let projectCount = 0;
+                let personalCount = 0;
+
+                querySnapshot.forEach((doc) => {
+                    const task = doc.data();
+                    const taskDeadline = task.deadline || task.dueDate;
+                    const normalizedStatus = (task.status || '').toLowerCase();
+                    const normalizedCategory = (task.category || '').toLowerCase();
+
+                    totalTasks++;
+
+                    // Compute Status metrics
+                    if (normalizedStatus === 'completed') {
+                        completedTasks++;
+                    } else {
+                        if (taskDeadline === todayStr) {
+                            dueTodayTasks++;
+                        } else if (taskDeadline && taskDeadline < todayStr) {
+                            overdueTasks++;
+                        }
+                    }
+
+                    // Compute Category metrics
+                    if (normalizedCategory === 'academic') academicCount++;
+                    else if (normalizedCategory === 'project') projectCount++;
+                    else if (normalizedCategory === 'personal') personalCount++;
+                });
+
+                let pendingTasks = totalTasks - completedTasks;
+
+                // Inject into Summary Nodes
+                document.getElementById('count-total').textContent = totalTasks;
+                document.getElementById('count-completed').textContent = completedTasks;
+                document.getElementById('count-today').textContent = dueTodayTasks;
+                document.getElementById('count-overdue').textContent = overdueTasks;
+
+                // Update breakdown labels
+                document.getElementById('count-academic').textContent = academicCount;
+                document.getElementById('count-project').textContent = projectCount;
+                document.getElementById('count-personal').textContent = personalCount;
+                document.getElementById('donut-total-text').textContent = totalTasks;
+
+                // Percentage calculation safety boundaries
+                let completedPct = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+                let pendingPct = totalTasks > 0 ? (100 - completedPct) : 0;
+                document.getElementById('pct-completed').textContent = `${completedPct}%`;
+                document.getElementById('pct-pending').textContent = `${pendingPct}%`;
+
+                // Render dynamic CSS Conic Gradients
+                // Status Chart: Yellowish background (#EED369) and teal completed slice (#54CBB2)
+                if (totalTasks > 0) {
+                    document.getElementById('pie-pending-completed').style.background = 
+                        `conic-gradient(#54CBB2 0% ${completedPct}%, #EED369 ${completedPct}% 100%)`;
+                } else {
+                    document.getElementById('pie-pending-completed').style.background = '#e0e0e0';
+                }
+
+                // Category Chart: Academic (#F0B3B3), Project (#DDA3A3), Personal (#A78393)
+                if (totalTasks > 0) {
+                    let acadPct = (academicCount / totalTasks) * 100;
+                    let projPct = (projectCount / totalTasks) * 100;
+                    document.getElementById('pie-category').style.background = 
+                        `conic-gradient(#F0B3B3 0% ${acadPct}%, #DDA3A3 ${acadPct}% ${acadPct + projPct}%, #A78393 ${acadPct + projPct}% 100%)`;
+                } else {
+                    document.getElementById('pie-category').style.background = '#e0e0e0';
+                }
+
+                // Donut Distribution Vector: Pending (#EED369), Completed (#54CBB2), Due Today (#FFFDF6), Overdue (#ECA1A1)
+                if (totalTasks > 0) {
+                    let pPct = (pendingTasks / totalTasks) * 100;
+                    let cPct = (completedTasks / totalTasks) * 100;
+                    let dPct = (dueTodayTasks / totalTasks) * 100;
+                    
+                    document.getElementById('donut-workload').style.background = 
+                        `conic-gradient(#EED369 0% ${pPct}%, #54CBB2 ${pPct}% ${pPct + cPct}%, #FFFDF6 ${pPct + cPct}% ${pPct + cPct + dPct}%, #ECA1A1 ${pPct + cPct + dPct}% 100%)`;
+                } else {
+                    document.getElementById('donut-workload').style.background = '#e0e0e0';
+                }
+
+            } catch (error) {
+                console.error("Firestore analytical synchronization error: ", error);
             }
         });
     </script>
