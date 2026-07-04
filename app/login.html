@@ -67,6 +67,8 @@
         </div>
     </div>
 
+    <script type="module" src="login.js"></script>
+
     <script>
         // Password Visibility Toggle
         document.querySelectorAll('.show-password-icon').forEach(icon => {
@@ -84,37 +86,7 @@
             });
         });
 
-        // Form Submission / Clean Error Display Logic
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop form submission entirely
-            
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value.trim();
-            const errorBox = document.getElementById('login-error-msg');
-            const errorText = document.getElementById('login-error-text');
-
-            // 1. Check for empty fields
-            if (!email || !password) {
-                errorText.textContent = 'Please fill in all fields.';
-                errorBox.style.display = 'block';
-                if (!email) document.getElementById('login-email').style.borderColor = '#C24275';
-                if (!password) document.getElementById('login-password').style.borderColor = '#C24275';
-                return;
-            }
-
-            // 2. Demo validation (Replace with your actual Firebase/Backend logic)
-            if (email !== "correct@gbox.adnu.edu.ph" || password !== "correctpassword") {
-                errorText.textContent = 'Invalid email or password.';
-                errorBox.style.display = 'block';
-                document.getElementById('login-email').style.borderColor = '#C24275';
-                document.getElementById('login-password').style.borderColor = '#C24275';
-            } else {
-                // Success! Redirect the user
-                window.location.href = 'Dashboard.html';
-            }
-        });
-
-        // Clear the error message smoothly when the user starts typing again
+        // Hide the pink error box smoothly when the user starts typing again
         document.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', function() {
                 document.getElementById('login-error-msg').style.display = 'none';
