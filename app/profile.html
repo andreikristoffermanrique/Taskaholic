@@ -108,7 +108,7 @@
                 <div class="stats-grid-clean">
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">10</div>
+                            <div class="stat-number" id="total-tasks-count">0</div>
                             <div class="stat-label">Your Tasks</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-bullseye"></i></div>
@@ -116,7 +116,7 @@
                     
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">4</div>
+                            <div class="stat-number" id="due-today-count">0</div>
                             <div class="stat-label">Due Today</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-calendar-days"></i></div>
@@ -124,7 +124,7 @@
 
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">5</div>
+                            <div class="stat-number" id="overdue-count">0</div>
                             <div class="stat-label">Overdue</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-triangle-exclamation"></i></div>
@@ -132,7 +132,7 @@
 
                     <div class="stat-card">
                         <div class="stat-info">
-                            <div class="stat-number">3</div>
+                            <div class="stat-number" id="completed-count">0</div>
                             <div class="stat-label">Completed</div>
                         </div>
                         <div class="stat-icon-circle"><i class="fa-solid fa-circle-check"></i></div>
@@ -204,8 +204,9 @@
         const cancelBtn = document.getElementById('cancelModalBtn');
         const form = document.getElementById('editProfileForm');
 
-        const displayName = document.getElementById('display-name');
-        const displayGbox = document.getElementById('display-gbox');
+        // Aligned layout variables to use corrected profile template DOM IDs
+        const displayName = document.getElementById('profile-name-display');
+        const displayGbox = document.getElementById('profile-email-display');
         const displayBio = document.getElementById('display-bio');
 
         const inputName = document.getElementById('input-name');
@@ -222,14 +223,11 @@
         const modalAvatarIcon = document.getElementById('modal-avatar-icon');
         const modalAvatarImg = document.getElementById('modal-avatar-img');
 
-        // Track selected file stream locally
         let pendingImgDataUrl = null;
 
-        // Redirect clicking actions straight to file browser
         mainAvatarTrigger.addEventListener('click', () => fileInput.click());
         modalAvatarTrigger.addEventListener('click', () => fileInput.click());
 
-        // Process picture selection
         fileInput.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
@@ -237,12 +235,10 @@
                 reader.onload = function(event) {
                     pendingImgDataUrl = event.target.result;
                     
-                    // Show immediate preview in modal view frame
                     modalAvatarIcon.style.display = 'none';
                     modalAvatarImg.src = pendingImgDataUrl;
                     modalAvatarImg.style.display = 'block';
 
-                    // Optional: If changes happen outside open modal, match main display too
                     if(!modal.classList.contains('active')) {
                         commitImageChange();
                     }
@@ -260,11 +256,10 @@
         }
 
         openBtn.addEventListener('click', () => {
-            inputName.value = displayName.textContent;
-            inputGbox.value = displayGbox.textContent;
-            inputBio.value = displayBio.textContent;
+            inputName.value = displayName.textContent || "";
+            inputGbox.value = displayGbox.textContent || "";
+            inputBio.value = displayBio.textContent || "";
             
-            // Sync modal preview with current display avatar state
             if (mainAvatarImg.style.display === 'block') {
                 modalAvatarIcon.style.display = 'none';
                 modalAvatarImg.src = mainAvatarImg.src;
@@ -288,7 +283,6 @@
             displayGbox.textContent = inputGbox.value;
             displayBio.textContent = inputBio.value;
             
-            // Commit image changes on Save click
             commitImageChange();
             closeModal();
         });
