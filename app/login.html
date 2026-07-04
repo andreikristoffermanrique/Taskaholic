@@ -35,17 +35,21 @@
             <div class="form-header-center">
                 <h2>Welcome Back!</h2>
                 <p>We're happy to see you again!</p>
+                
+                <div id="login-error-msg" style="display: none; color: #C24275; font-size: 13px; font-weight: 600; margin-top: 15px; padding: 10px 14px; background-color: rgba(194, 66, 117, 0.08); border: 1px solid rgba(194, 66, 117, 0.2); border-radius: 8px;">
+                    <i class="fa-solid fa-circle-exclamation" style="margin-right: 6px;"></i> <span id="login-error-text">Invalid email or password.</span>
+                </div>
             </div>
 
-            <form action="#" class="auth-form" id="login-form">
+            <form action="#" class="auth-form" id="login-form" novalidate>
                 <div class="input-group">
                     <i class="fa-regular fa-envelope input-icon"></i>
-                    <input type="email" id="login-email" placeholder="Gbox account" required>
+                    <input type="email" id="login-email" placeholder="Gbox account">
                 </div>
 
                 <div class="input-group">
                     <i class="fa-solid fa-lock input-icon"></i>
-                    <input type="password" id="login-password" placeholder="Password" required>
+                    <input type="password" id="login-password" placeholder="Password">
                     <i class="fa-regular fa-eye show-password-icon"></i>
                 </div>
 
@@ -63,25 +67,59 @@
         </div>
     </div>
 
-    <script type="module" src="login.js"></script>
-
     <script>
+        // Password Visibility Toggle
         document.querySelectorAll('.show-password-icon').forEach(icon => {
             icon.addEventListener('click', function() {
-                // Find the input field that is immediately before the icon
                 const input = this.previousElementSibling;
-                
                 if (input.type === 'password') {
                     input.type = 'text';
-                    // Swap icon to eye-slash
                     this.classList.remove('fa-eye');
                     this.classList.add('fa-eye-slash');
                 } else {
                     input.type = 'password';
-                    // Swap icon back to eye
                     this.classList.remove('fa-eye-slash');
                     this.classList.add('fa-eye');
                 }
+            });
+        });
+
+        // Form Submission / Clean Error Display Logic
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Stop form submission entirely
+            
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const errorBox = document.getElementById('login-error-msg');
+            const errorText = document.getElementById('login-error-text');
+
+            // 1. Check for empty fields
+            if (!email || !password) {
+                errorText.textContent = 'Please fill in all fields.';
+                errorBox.style.display = 'block';
+                if (!email) document.getElementById('login-email').style.borderColor = '#C24275';
+                if (!password) document.getElementById('login-password').style.borderColor = '#C24275';
+                return;
+            }
+
+            // 2. Demo validation (Replace with your actual Firebase/Backend logic)
+            if (email !== "correct@gbox.adnu.edu.ph" || password !== "correctpassword") {
+                errorText.textContent = 'Invalid email or password.';
+                errorBox.style.display = 'block';
+                document.getElementById('login-email').style.borderColor = '#C24275';
+                document.getElementById('login-password').style.borderColor = '#C24275';
+            } else {
+                // Success! Redirect the user
+                window.location.href = 'Dashboard.html';
+            }
+        });
+
+        // Clear the error message smoothly when the user starts typing again
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                document.getElementById('login-error-msg').style.display = 'none';
+                document.getElementById('login-email').style.borderColor = '#CCCCCC';
+                document.getElementById('login-password').style.borderColor = '#CCCCCC';
             });
         });
     </script>

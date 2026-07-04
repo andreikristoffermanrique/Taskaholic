@@ -16,17 +16,21 @@
 
     <div class="auth-container">
         <div class="form-panel">
-            <div class="form-header-left">
+            <div class="form-header-center">
                 <h2>Create an account</h2>
                 <p>Join the campus community today</p>
+                
+                <div id="register-error-msg" style="display: none; color: #C24275; font-size: 13px; font-weight: 600; margin-top: 15px; padding: 10px 14px; background-color: rgba(194, 66, 117, 0.08); border: 1px solid rgba(194, 66, 117, 0.2); border-radius: 8px;">
+                    <i class="fa-solid fa-circle-exclamation" style="margin-right: 6px;"></i> <span id="register-error-text">Please fill in all fields.</span>
+                </div>
             </div>
 
-            <form action="#" class="auth-form" id="register-form">
+            <form action="#" class="auth-form" id="register-form" novalidate>
                 <div class="input-wrapper">
                     <label>Full Name</label>
                     <div class="input-group">
                         <i class="fa-regular fa-user input-icon"></i>
-                        <input type="text" id="register-name" placeholder="Enter your Full Name" required>
+                        <input type="text" id="register-name" placeholder="Enter your Full Name">
                     </div>
                 </div>
 
@@ -34,7 +38,7 @@
                     <label>Your email</label>
                     <div class="input-group">
                         <i class="fa-regular fa-envelope input-icon"></i>
-                        <input type="email" id="register-email" placeholder="Enter your gbox account" required>
+                        <input type="email" id="register-email" placeholder="Enter your gbox account">
                     </div>
                 </div>
 
@@ -42,7 +46,7 @@
                     <label>Password</label>
                     <div class="input-group">
                         <i class="fa-solid fa-lock input-icon"></i>
-                        <input type="password" id="register-password" placeholder="Create your password" required>
+                        <input type="password" id="register-password" placeholder="Create your password">
                         <i class="fa-regular fa-eye show-password-icon"></i>
                     </div>
                 </div>
@@ -51,7 +55,7 @@
                     <label>Confirm Password</label>
                     <div class="input-group">
                         <i class="fa-solid fa-lock input-icon"></i>
-                        <input type="password" id="register-confirm" placeholder="Confirm your password" required>
+                        <input type="password" id="register-confirm" placeholder="Confirm your password">
                         <i class="fa-regular fa-eye show-password-icon"></i>
                     </div>
                 </div>
@@ -84,22 +88,64 @@
     <script type="module" src="register.js"></script>
 
     <script>
+        // Password Visibility Toggle
         document.querySelectorAll('.show-password-icon').forEach(icon => {
             icon.addEventListener('click', function() {
-                // Find the input field that is immediately before the icon
                 const input = this.previousElementSibling;
-                
                 if (input.type === 'password') {
                     input.type = 'text';
-                    // Swap icon to eye-slash
                     this.classList.remove('fa-eye');
                     this.classList.add('fa-eye-slash');
                 } else {
                     input.type = 'password';
-                    // Swap icon back to eye
                     this.classList.remove('fa-eye-slash');
                     this.classList.add('fa-eye');
                 }
+            });
+        });
+
+        // Form Validation Logic
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const name = document.getElementById('register-name').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const pass = document.getElementById('register-password').value.trim();
+            const confirmPass = document.getElementById('register-confirm').value.trim();
+            
+            const errorBox = document.getElementById('register-error-msg');
+            const errorText = document.getElementById('register-error-text');
+            const inputs = document.querySelectorAll('#register-form input');
+
+            // 1. Check for empty fields manually
+            if (!name || !email || !pass || !confirmPass) {
+                errorText.textContent = 'Please fill in all fields.';
+                errorBox.style.display = 'block';
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) input.style.borderColor = '#C24275';
+                });
+                return;
+            }
+
+            // 2. Validate password match
+            if (pass !== confirmPass) {
+                errorText.textContent = 'Passwords do not match.';
+                errorBox.style.display = 'block';
+                document.getElementById('register-password').style.borderColor = '#C24275';
+                document.getElementById('register-confirm').style.borderColor = '#C24275';
+                return;
+            }
+
+            // Success (Connect this to your backend script)
+            window.location.href = 'login.html';
+        });
+
+        // Clear error styling when typing
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                document.getElementById('register-error-msg').style.display = 'none';
+                this.style.borderColor = '#CCCCCC';
             });
         });
     </script>
