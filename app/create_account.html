@@ -104,44 +104,23 @@
             });
         });
 
-        // Form Validation Logic
-        document.getElementById('register-form').addEventListener('submit', function(e) {
-            e.preventDefault(); 
-            
-            const name = document.getElementById('register-name').value.trim();
-            const email = document.getElementById('register-email').value.trim();
-            const pass = document.getElementById('register-password').value.trim();
-            const confirmPass = document.getElementById('register-confirm').value.trim();
-            
+        // Global Error Function called by register.js
+        window.showRegisterError = function(message, inputsToHighlight = []) {
             const errorBox = document.getElementById('register-error-msg');
             const errorText = document.getElementById('register-error-text');
-            const inputs = document.querySelectorAll('#register-form input');
-
-            // 1. Check for empty fields manually
-            if (!name || !email || !pass || !confirmPass) {
-                errorText.textContent = 'Please fill in all fields.';
-                errorBox.style.display = 'block';
-                
-                inputs.forEach(input => {
-                    if (!input.value.trim()) input.style.borderColor = '#C24275';
+            
+            errorText.textContent = message;
+            errorBox.style.display = 'block';
+            
+            // Highlight specific input fields that caused the error
+            if (inputsToHighlight.length > 0) {
+                inputsToHighlight.forEach(id => {
+                    document.getElementById(id).style.borderColor = '#C24275';
                 });
-                return;
             }
+        };
 
-            // 2. Validate password match
-            if (pass !== confirmPass) {
-                errorText.textContent = 'Passwords do not match.';
-                errorBox.style.display = 'block';
-                document.getElementById('register-password').style.borderColor = '#C24275';
-                document.getElementById('register-confirm').style.borderColor = '#C24275';
-                return;
-            }
-
-            // Success (Connect this to your backend script)
-            window.location.href = 'login.html';
-        });
-
-        // Clear error styling when typing
+        // Clear error styling instantly when the user starts typing to fix their mistake
         document.querySelectorAll('input').forEach(input => {
             input.addEventListener('input', function() {
                 document.getElementById('register-error-msg').style.display = 'none';
