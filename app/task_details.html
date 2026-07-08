@@ -12,21 +12,46 @@
 </head>
 <body>
 <div class="dashboard-container">
+    
     <aside class="sidebar-panel">
         <div class="brand-wrapper">
-            <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
-            <span class="brand-title">Taskaholic</span>
+            <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
+            <h1 class="brand-title">Taskaholic</h1>
         </div>
+
         <nav class="sidebar-nav">
-            <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
-            <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
-            <a href="my_tasks.html" class="nav-item active"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
-            <a href="shared_task.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
-            <a href="#" class="nav-item"><i class="fa-regular fa-bell"></i> Notifications</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
-            <a href="#" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
+            <a href="workload.html" class="nav-item">
+                <i class="fa-solid fa-book-open"></i> Workload Overview
+            </a>
+
+            <a href="Dashboard.html" class="nav-item">
+                <i class="fa-solid fa-table-cells-large"></i> Dashboard
+            </a>
+
+            <a href="my_tasks.html" class="nav-item active">
+                <i class="fa-solid fa-clapperboard"></i> My Tasks
+            </a>
+
+            <a href="shared_task.html" class="nav-item">
+                <i class="fa-solid fa-user-group"></i> Shared Tasks
+            </a>
+
+            <a href="notifications.html" class="nav-item">
+                <i class="fa-solid fa-bell"></i> Notifications
+            </a>
+
+            <a href="settings.html" class="nav-item">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <i class="fa-solid fa-circle-user"></i> Profile
+            </a>
         </nav>
-        <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+
+        <a href="login.html" class="logout-btn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+        </a>
     </aside>
 
     <main class="main-content" style="background-color: #FCF8F8;">
@@ -88,7 +113,6 @@
     </main>
 </div>
 
-<!-- APP-BODY MODAL FOR EDITING -->
 <div id="editTaskModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 2147483647; justify-content: center; align-items: center;">
     <div style="background: #F5D6D6; padding: 25px; border-radius: 16px; border: 1px solid #c9a0a0; width: 500px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); position: relative; font-family: 'Inter', sans-serif;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -153,7 +177,6 @@
     </div>
 </div>
 
-<!-- HYBRID CORE ENGINE CONTROLLER -->
 <script type="module">
     import { auth, db } from "./firebase.js";
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
