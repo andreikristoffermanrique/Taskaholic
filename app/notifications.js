@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase.js"; 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+import { collection, query, where, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js"; // Added doc and getDoc
 
 const notificationsContainer = document.getElementById("notifications-feed"); 
 const filterButtons = document.querySelectorAll(".filter-btn");
@@ -35,61 +35,84 @@ async function loadNotifications(uid) {
     try {
         allNotifications = []; 
 
+        // --- NEW: Fetch User Preferences First ---
+        let prefs = { taskDue: true, sharedDue: true, invites: true, announcements: true }; 
+        const userDocRef = doc(db, "users", uid);
+        const userDocSnap = await getDoc(userDocRef);
+        
+        if (userDocSnap.exists() && userDocSnap.data().notificationPrefs) {
+            prefs = userDocSnap.data().notificationPrefs;
+        }
+
         // 1. Fetch Standard Notifications
         const notifQuery = query(collection(db, "notifications"), where("userId", "==", uid));
         const notifSnapshot = await getDocs(notifQuery);
         
         notifSnapshot.forEach((doc) => {
-            allNotifications.push({ id: doc.id, ...doc.data() });
+            const notifData = doc.data();
+            
+            // Check preferences before adding
+            if (notifData.type === 'invitations' && prefs.invites === false) {
+                return; // Skip invites if turned off
+            }
+            if (notifData.type === 'announcements' && prefs.announcements === false) {
+                return; // Skip general announcements if turned off
+            }
+            
+            allNotifications.push({ id: doc.id, ...notifData });
         });
 
         // 2. Fetch Tasks Due Tomorrow for Automatic Reminders
-        const tomorrowStr = getTomorrowDateString();
-        const tasksQuery = query(collection(db, "tasks"), 
-            where("userId", "==", uid),
-            where("deadline", "==", tomorrowStr)
-        );
-        const tasksSnapshot = await getDocs(tasksQuery);
+        if (prefs.taskDue !== false) { // ONLY check if task due reminders are turned ON
+            const tomorrowStr = getTomorrowDateString();
+            const tasksQuery = query(collection(db, "tasks"), 
+                where("userId", "==", uid),
+                where("deadline", "==", tomorrowStr)
+            );
+            const tasksSnapshot = await getDocs(tasksQuery);
 
-        tasksSnapshot.forEach((doc) => {
-            const task = doc.data();
-            if (task.status !== "completed" && task.status !== "Completed") {
-                allNotifications.push({
-                    id: `reminder-${doc.id}`, 
-                    title: `Due Tomorrow: ${task.title}`,
-                    message: `Don't forget to submit this ${task.category || 'task'} by the end of the day.`,
-                    type: 'reminders',
-                    icon: 'fa-calendar-day',
-                    iconColor: '#EED663', // Yellow
-                    time: 'Tomorrow'
-                });
-            }
-        });
+            tasksSnapshot.forEach((doc) => {
+                const task = doc.data();
+                if (task.status !== "completed" && task.status !== "Completed") {
+                    allNotifications.push({
+                        id: `reminder-${doc.id}`, 
+                        title: `Due Tomorrow: ${task.title}`,
+                        message: `Don't forget to submit this ${task.category || 'task'} by the end of the day.`,
+                        type: 'reminders',
+                        icon: 'fa-calendar-day',
+                        iconColor: '#EED663', // Yellow
+                        time: 'Tomorrow'
+                    });
+                }
+            });
+        }
 
         // 3. Fetch Overdue Tasks (Alerts)
-        const todayStr = getTodayDateString();
-        const overdueQuery = query(collection(db, "tasks"), 
-            where("userId", "==", uid),
-            where("deadline", "<", todayStr) // Find all tasks with dates in the past
-        );
-        const overdueSnapshot = await getDocs(overdueQuery);
+        if (prefs.taskDue !== false) { // Assuming overdue tasks fall under the same setting
+            const todayStr = getTodayDateString();
+            const overdueQuery = query(collection(db, "tasks"), 
+                where("userId", "==", uid),
+                where("deadline", "<", todayStr) // Find all tasks with dates in the past
+            );
+            const overdueSnapshot = await getDocs(overdueQuery);
 
-        overdueSnapshot.forEach((doc) => {
-            const task = doc.data();
-            
-            // Only alert if the past-due task is NOT completed
-            if (task.status !== "completed" && task.status !== "Completed") {
-                allNotifications.push({
-                    id: `overdue-${doc.id}`, 
-                    title: `Overdue Alert: ${task.title}`,
-                    message: `This task was due on ${task.deadline}. Please update its status!`,
-                    type: 'updates', // Places it under the "Updates" filter tab
-                    icon: 'fa-triangle-exclamation',
-                    iconColor: '#EAA196', // Salmon/Red color
-                    time: 'Overdue'
-                });
-            }
-        });
+            overdueSnapshot.forEach((doc) => {
+                const task = doc.data();
+                
+                // Only alert if the past-due task is NOT completed
+                if (task.status !== "completed" && task.status !== "Completed") {
+                    allNotifications.push({
+                        id: `overdue-${doc.id}`, 
+                        title: `Overdue Alert: ${task.title}`,
+                        message: `This task was due on ${task.deadline}. Please update its status!`,
+                        type: 'updates', // Places it under the "Updates" filter tab
+                        icon: 'fa-triangle-exclamation',
+                        iconColor: '#EAA196', // Salmon/Red color
+                        time: 'Overdue'
+                    });
+                }
+            });
+        }
 
         // Finally, render everything to the screen
         renderFeed('all');
