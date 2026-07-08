@@ -6,52 +6,27 @@
     <title>Taskaholic - Task Details</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght=600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="dashboard-container">
-    
     <aside class="sidebar-panel">
         <div class="brand-wrapper">
-            <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
-            <h1 class="brand-title">Taskaholic</h1>
+            <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
+            <span class="brand-title">Taskaholic</span>
         </div>
-
         <nav class="sidebar-nav">
-            <a href="workload.html" class="nav-item">
-                <i class="fa-solid fa-book-open"></i> Workload Overview
-            </a>
-
-            <a href="Dashboard.html" class="nav-item">
-                <i class="fa-solid fa-table-cells-large"></i> Dashboard
-            </a>
-
-            <a href="my_tasks.html" class="nav-item active">
-                <i class="fa-solid fa-clapperboard"></i> My Tasks
-            </a>
-
-            <a href="shared_task.html" class="nav-item">
-                <i class="fa-solid fa-user-group"></i> Shared Tasks
-            </a>
-
-            <a href="notifications.html" class="nav-item">
-                <i class="fa-solid fa-bell"></i> Notifications
-            </a>
-
-            <a href="settings.html" class="nav-item">
-                <i class="fa-solid fa-gear"></i> Settings
-            </a>
-
-            <a href="profile.html" class="nav-item">
-                <i class="fa-solid fa-circle-user"></i> Profile
-            </a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
+            <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+            <a href="my_tasks.html" class="nav-item active"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+            <a href="shared_task.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
+            <a href="#" class="nav-item"><i class="fa-regular fa-bell"></i> Notifications</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
         </nav>
-
-        <a href="login.html" class="logout-btn">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-        </a>
+        <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </aside>
 
     <main class="main-content" style="background-color: #FCF8F8;">
@@ -86,10 +61,24 @@
                     <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
                     <p id="detail-collaborators" style="margin-top: 15px; font-size: 13px; color: #666;">No collaborators assigned.</p>
                 </div>
-                <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 220px; position: relative;">
-                    <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Sub Tasks</h3>
-                    <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
-                    <p style="margin-top: 15px; font-size: 13px; color: #666;">No sub-tasks available.</p>
+                
+                <!-- DYNAMICALLY UPGRADED SUB TASKS CARD WITH INPUT ENGINE -->
+                <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 220px; display: flex; flex-direction: column;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3 style="font-size: 15px; font-weight: 700; color: #000000; margin: 0;">Sub Tasks</h3>
+                        <div style="width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
+                    </div>
+                    
+                    <!-- Form field inside the card context -->
+                    <div style="display: flex; gap: 8px; margin-bottom: 15px;">
+                        <input type="text" id="subtask-input" placeholder="Add a new checklist item..." style="flex-grow: 1; padding: 8px 12px; border: 1px solid #000000; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; outline: none;">
+                        <button id="add-subtask-btn" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 0 16px; font-weight: 700; font-size: 12px; cursor: pointer;">ADD</button>
+                    </div>
+
+                    <!-- Dynamic List Mounting Target -->
+                    <div id="subtasks-container" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; max-height: 180px;">
+                        <p style="font-size: 13px; color: #666; margin: 0;">No sub-tasks available.</p>
+                    </div>
                 </div>
             </div>
 
@@ -113,6 +102,7 @@
     </main>
 </div>
 
+<!-- APP-BODY MODAL FOR EDITING -->
 <div id="editTaskModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 2147483647; justify-content: center; align-items: center;">
     <div style="background: #F5D6D6; padding: 25px; border-radius: 16px; border: 1px solid #c9a0a0; width: 500px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); position: relative; font-family: 'Inter', sans-serif;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -177,6 +167,7 @@
     </div>
 </div>
 
+<!-- HYBRID CORE ENGINE CONTROLLER WITH SUBTASKS ROUTING -->
 <script type="module">
     import { auth, db } from "./firebase.js";
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
@@ -186,6 +177,7 @@
     const taskId = params.get('id');
     let liveTaskData = null;
     let isFirebaseTask = false;
+    let matchingLocalStorageKey = null; // Track exact origin storage bucket if local
 
     onAuthStateChanged(auth, async (user) => {
         if (!user) {  
@@ -199,9 +191,7 @@
         }
     });
 
-    // Unified Data Router: Checks Firebase First, Falls Back to LocalStorage keys
     async function loadTaskDataEngine(id) {
-        // Path A: Try to match alphanumeric Firestore ID
         if (isNaN(id) || id.length > 5) {
             try {
                 const docRef = doc(db, "tasks", id);
@@ -210,30 +200,28 @@
                     liveTaskData = docSnap.data();
                     isFirebaseTask = true;
                     renderUI(liveTaskData);
+                    renderSubTasks();
                     return;
                 }
             } catch (error) {
-                console.warn("Firestore route skipped or failed, fallback to storage analysis...");
+                console.warn("Firestore routing clean fallback redirect initiated...");
             }
         }
 
-        // Path B: Fallback index lookup inside multiple local tracking arrays
-        const sharedTasks = JSON.parse(localStorage.getItem('sharedTasksList')) || [];
-        const personalTasksList = JSON.parse(localStorage.getItem('tasksList')) || [];
-        const personalMyTasks = JSON.parse(localStorage.getItem('myTasksList')) || [];
-        const personalTasksGeneric = JSON.parse(localStorage.getItem('tasks')) || [];
-
-        if (sharedTasks[id]) liveTaskData = sharedTasks[id];
-        else if (personalTasksList[id]) liveTaskData = personalTasksList[id];
-        else if (personalMyTasks[id]) liveTaskData = personalMyTasks[id];
-        else if (personalTasksGeneric[id]) liveTaskData = personalTasksGeneric[id];
-
-        if (liveTaskData) {
-            isFirebaseTask = false;
-            renderUI(liveTaskData);
-        } else {
-            showFailureState("Task Not Found", "We couldn't track down this task in LocalStorage or the Cloud Database. Check index pointers.");
+        const keys = ['sharedTasksList', 'tasksList', 'myTasksList', 'tasks'];
+        for (let key of keys) {
+            const list = JSON.parse(localStorage.getItem(key)) || [];
+            if (list[id]) {
+                liveTaskData = list[id];
+                matchingLocalStorageKey = key;
+                isFirebaseTask = false;
+                renderUI(liveTaskData);
+                renderSubTasks();
+                return;
+            }
         }
+
+        showFailureState("Task Not Found", "We couldn't track down this task in LocalStorage or Cloud Database.");
     }
 
     function renderUI(task) {
@@ -252,7 +240,10 @@
                 collabEl.textContent = `Owner: ${task.owner || 'You'} (No shared members assigned)`;
             }
         }
+        updateProgressBar(task);
+    }
 
+    function updateProgressBar(task) {
         let progressPercent = 0;
         const normalizedStatus = (task.status || '').toLowerCase();
         if (normalizedStatus === 'in progress' || normalizedStatus === 'progress') progressPercent = 50;
@@ -267,10 +258,86 @@
         document.getElementById('detail-description').textContent = bodyText;
     }
 
-    // INTERACTION PATTERNS (EDIT / UPDATE / DELETE)
+    // ==========================================
+    // DYNAMIC NESTED SUBTASKS CONTEXT MANAGEMENT
+    // ==========================================
+    function renderSubTasks() {
+        const container = document.getElementById('subtasks-container');
+        const subtasks = liveTaskData.subtasks || [];
+        
+        if (subtasks.length === 0) {
+            container.innerHTML = `<p style="font-size: 13px; color: #666; margin: 0;">No sub-tasks available.</p>`;
+            return;
+        }
+
+        container.innerHTML = subtasks.map((st, index) => `
+            <div style="display: flex; justify-content: space-between; align-items: center; background: #FCF8F8; border: 1px solid #000; border-radius: 6px; padding: 8px 12px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" data-index="${index}" ${st.completed ? 'checked' : ''} class="subtask-checkbox" style="accent-color: #54CBB2; cursor: pointer;">
+                    <span style="font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; ${st.completed ? 'text-decoration: line-through; color: #888;' : 'color: #000;'}">${st.text}</span>
+                </div>
+                <i class="fa-solid fa-trash subtask-delete-btn" data-index="${index}" style="color: #e57373; cursor: pointer; font-size: 13px; transition: opacity 0.2s;" onmouseover="this.style.opacity=0.7" onmouseout="this.style.opacity=1"></i>
+            </div>
+        `).join('');
+
+        // Attach dynamic real-time structural event listener closures
+        document.querySelectorAll('.subtask-checkbox').forEach(box => {
+            box.addEventListener('change', async (e) => {
+                const idx = e.target.getAttribute('data-index');
+                liveTaskData.subtasks[idx].completed = e.target.checked;
+                await commitSubTasksChanges();
+            });
+        });
+
+        document.querySelectorAll('.subtask-delete-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const idx = e.target.getAttribute('data-index');
+                liveTaskData.subtasks.splice(idx, 1);
+                await commitSubTasksChanges();
+            });
+        });
+    }
+
+    // Capture user input and add sub-tasks
+    async function appendNewSubTask() {
+        const input = document.getElementById('subtask-input');
+        const text = input.value.trim();
+        if (!text) return;
+
+        if (!liveTaskData.subtasks) liveTaskData.subtasks = [];
+        liveTaskData.subtasks.push({ text: text, completed: false });
+        
+        input.value = ""; // Clear input field
+        await commitSubTasksChanges();
+    }
+
+    document.getElementById('add-subtask-btn').addEventListener('click', appendNewSubTask);
+    document.getElementById('subtask-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') appendNewSubTask();
+    });
+
+    // Save changes to Firebase or LocalStorage depending on data source
+    async function commitSubTasksChanges() {
+        if (isFirebaseTask) {
+            try {
+                const docRef = doc(db, "tasks", taskId);
+                await updateDoc(docRef, { subtasks: liveTaskData.subtasks });
+            } catch (err) {
+                console.error("Cloud synchronisation failed: ", err);
+            }
+        } else if (matchingLocalStorageKey) {
+            let list = JSON.parse(localStorage.getItem(matchingLocalStorageKey)) || [];
+            if (list[taskId]) {
+                list[taskId].subtasks = liveTaskData.subtasks;
+                localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
+            }
+        }
+        renderSubTasks();
+    }
+
+    // STANDARD PARAMETERS EDIT MODAL CODE
     document.getElementById('edit-task-btn').addEventListener('click', () => {
         if (!liveTaskData) return;
-        
         document.getElementById('modalTaskTitle').value = liveTaskData.title || '';
         document.getElementById('modalTaskDesc').value = liveTaskData.description || '';
         document.getElementById('modalTaskDate').value = liveTaskData.deadline || liveTaskData.dueDate || '';
@@ -278,10 +345,8 @@
 
         const categoryRadio = document.querySelector(`input[name="category"][value="${(liveTaskData.category || 'academic').toLowerCase()}"]`);
         if (categoryRadio) categoryRadio.checked = true;
-
         const priorityRadio = document.querySelector(`input[name="priority"][value="${(liveTaskData.priority || 'medium').toLowerCase()}"]`);
         if (priorityRadio) priorityRadio.checked = true;
-
         const visibilityRadio = document.querySelector(`input[name="visibility"][value="${(liveTaskData.visibility || 'private').toLowerCase()}"]`);
         if (visibilityRadio) visibilityRadio.checked = true;
 
@@ -290,8 +355,6 @@
 
     document.getElementById('editTaskForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (taskId === null || taskId === '') return;
-
         const checkedCategory = document.querySelector('input[name="category"]:checked');
         const checkedPriority = document.querySelector('input[name="priority"]:checked');
         const checkedVisibility = document.querySelector('input[name="visibility"]:checked');
@@ -309,63 +372,38 @@
 
         if (isFirebaseTask) {
             try {
-                const docRef = doc(db, "tasks", taskId);
-                await updateDoc(docRef, updatedFields);
+                await updateDoc(doc(db, "tasks", taskId), updatedFields);
                 liveTaskData = { ...liveTaskData, ...updatedFields };
                 renderUI(liveTaskData);
                 closeEditModal();
-                alert("Changes saved to Firebase successfully!");
             } catch (err) {
-                console.error(err);
-                alert("Failed to submit updates to Firestore.");
+                alert("Failed updating Firestore parameters.");
             }
-        } else {
-            // Update local storage workflow fallback
-            const keys = ['sharedTasksList', 'tasksList', 'myTasksList', 'tasks'];
-            keys.forEach(key => {
-                let list = JSON.parse(localStorage.getItem(key));
-                if (list && list[taskId]) {
-                    list[taskId] = { ...list[taskId], ...updatedFields };
-                    localStorage.setItem(key, JSON.stringify(list));
-                }
-            });
+        } else if (matchingLocalStorageKey) {
+            let list = JSON.parse(localStorage.getItem(matchingLocalStorageKey));
+            list[taskId] = { ...list[taskId], ...updatedFields };
+            localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
             liveTaskData = { ...liveTaskData, ...updatedFields };
             renderUI(liveTaskData);
             closeEditModal();
-            alert("Changes saved locally!");
         }
     });
 
     document.getElementById('delete-task-btn').addEventListener('click', async () => {
-        if (taskId === null || taskId === '') return;
         if (!confirm("Permanently drop this record?")) return;
-
         if (isFirebaseTask) {
-            try {
-                await deleteDoc(doc(db, "tasks", taskId));
-                alert("Task permanently removed from Firestore!");
-                window.location.href = "my_tasks.html";
-            } catch (error) {
-                alert("Failed to drop database records.");
-            }
-        } else {
-            const keys = ['sharedTasksList', 'tasksList', 'myTasksList', 'tasks'];
-            keys.forEach(key => {
-                let list = JSON.parse(localStorage.getItem(key));
-                if (list && list[taskId]) {
-                    list.splice(taskId, 1);
-                    localStorage.setItem(key, JSON.stringify(list));
-                }
-            });
-            alert("Task dropped from local state store.");
-            window.location.href = "my_tasks.html";
+            await deleteDoc(doc(db, "tasks", taskId));
+        } else if (matchingLocalStorageKey) {
+            let list = JSON.parse(localStorage.getItem(matchingLocalStorageKey));
+            list.splice(taskId, 1);
+            localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
         }
+        window.location.href = "my_tasks.html";
     });
 
     function closeEditModal() {
         document.getElementById('editTaskModal').style.setProperty('display', 'none', 'important');
     }
-    
     document.getElementById('close-modal-btn').addEventListener('click', closeEditModal);
     document.getElementById('cancel-modal-btn').addEventListener('click', closeEditModal);
 </script>
