@@ -11,6 +11,7 @@
 <body>
 
     <div class="dashboard-container">
+        <!-- Sidebar Panel -->
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -52,6 +53,7 @@
             </a>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
@@ -154,6 +156,7 @@
         </main>
     </div>
 
+    <!-- MODAL FOR CREATING NEW TASKS (Synchronized with global script logic) -->
     <div id="uniqueTaskFormModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
         <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
             
@@ -207,7 +210,6 @@
                     </div>
                 </div>
 
-                <!-- UPDATED: Exclusively enforces valid adnu gbox structures -->
                 <div id="modalShareContainer" style="display: none; flex-direction: column !important; gap: 3px !important; margin-top: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Share with Gbox Account</label>
                     <div style="display: flex !important; flex-direction: column !important; width: 100% !important;">
@@ -227,28 +229,29 @@
                     </div>
                     <div style="display: flex !important; gap: 10px !important;">
                         <button type="button" onclick="closeAddTaskModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
-                        <button type="button" id="save-new-task-btn" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #111 !important; font-size: 14px !important;">Save Task</button>
+                        <button type="submit" id="save-new-task-btn" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #111 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Application Engine Scripts -->
     <script type="module" src="dashboard.js"></script>
-    <script type="module" src="add_task.js"></script>
+    <script type="module" src="add_task.js"></script> <!-- Firebase upload logic attached here -->
     
     <script>
         function openAddTaskModal() {
             const modal = document.getElementById('uniqueTaskFormModal');
-            if (modal) {
-                modal.style.setProperty('display', 'flex', 'important');
-            }
+            if (modal) modal.style.setProperty('display', 'flex', 'important');
         }
 
         function closeAddTaskModal() {
             const modal = document.getElementById('uniqueTaskFormModal');
             if (modal) {
                 modal.style.setProperty('display', 'none', 'important');
+                document.getElementById('modalTaskTitle').value = '';
+                document.getElementById('modalTaskDesc').value = '';
                 document.getElementById('modalShareContainer').style.setProperty('display', 'none', 'important');
                 document.getElementById('modalShareEmail').value = '';
                 document.getElementById('gboxErrorHint').style.setProperty('display', 'none', 'important');
@@ -257,6 +260,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            // Visibility & Share toggle UI logic
             const visibilityRadios = document.querySelectorAll('input[name="visibility"]');
             const shareContainer = document.getElementById('modalShareContainer');
             const shareEmailInput = document.getElementById('modalShareEmail');
@@ -275,7 +279,6 @@
                 });
             });
 
-            // Interactive context validation for the Gbox domain requirement
             shareEmailInput.addEventListener('input', () => {
                 const val = shareEmailInput.value.trim().toLowerCase();
                 if (val === "" || val.endsWith('@gbox.adnu.edu.ph')) {

@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+import { collection, query, where, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
 const userNameDisplay = document.getElementById("user-name");
 
@@ -45,7 +45,6 @@ onAuthStateChanged(auth, async (user) => {
                     if (task.status === "completed") {
                         completedCount++;
                     } else {
-                        // Only count due/overdue for non-completed tasks
                         if (task.deadline === today) {
                             todayCount++;
                         } else if (task.deadline && task.deadline < today) {
@@ -69,7 +68,6 @@ onAuthStateChanged(auth, async (user) => {
                 });
             }
 
-            // If no items are found in query snapshots, print clean fallback row
             if (total === 0 && tableBody) {
                 tableBody.innerHTML = `<tr><td colspan="2" style="text-align:center; padding: 20px; color: #666; font-size: 14px;">No upcoming deadlines</td></tr>`;
             }
@@ -82,9 +80,7 @@ onAuthStateChanged(auth, async (user) => {
 
             // 5. Update Progress Overview Chart Label Total
             const chartTotalText = document.getElementById("chart-total-tasks");
-            if (chartTotalText) {
-                chartTotalText.textContent = total;
-            }
+            if (chartTotalText) chartTotalText.textContent = total;
 
             // 6. Update Progress Overview SVG Chart Rings
             const ringAcademic = document.getElementById('ring-academic');
@@ -105,7 +101,6 @@ onAuthStateChanged(auth, async (user) => {
                 ringPersonal.setAttribute('stroke-dasharray', `${persPct} ${100 - persPct}`);
                 ringPersonal.setAttribute('stroke-dashoffset', `${25 - acaPct - projPct}`);
             } else if (ringAcademic && ringProject && ringPersonal) {
-                // Reset graphics cleanly if 0 tasks match filters
                 ringAcademic.setAttribute('stroke-dasharray', `0 100`);
                 ringProject.setAttribute('stroke-dasharray', `0 100`);
                 ringPersonal.setAttribute('stroke-dasharray', `0 100`);
@@ -131,8 +126,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (targetBtn) {
         targetBtn.style.cursor = "pointer";
-        targetBtn.addEventListener("click", () => {
-            window.location.href = "my_tasks.html";
-        });
+        targetBtn.addEventListener("click", () => window.location.href = "my_tasks.html");
     }
 });
+
+// 8. ADD TASK LOGIC (FIREBASE CONNECTED)
+const saveTaskBtn = document.getElementById("save-new-task-btn");
+if (saveTaskBtn) {
+    saveTaskBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        
+        if (!auth.currentUser) return alert("You must be logged in to add tasks.");
+
+        const title = document.getElementById('modalTaskTitle').value.trim();
+        const desc = document.getElementById('modalTaskDesc').value.trim();
+        const date = document.getElementById('modalTaskDate').value;
+        const status = document.getElementById('modalTaskStatus').value;
+        
+        const categoryElement = document.querySelector('input[name="category"]:checked');
+        const priorityElement = document.querySelector('input[name="priority"]:checked');
+        const visibilityElement = document.querySelector('input[name="visibility"]:checked');
+        
+        const shareEmailInput = document.getElementById('modalShareEmail');
+        const shareEmail = shareEmailInput ? shareEmailInput.value.trim() : '';
+
+        if (!title) {
+            alert("Please enter a Task Title.");
+            return;
+        }
+
+        const newTask = {
+            title: title,
+            description: desc,
+            dueDate: date,
+            deadline: date,
+            category: categoryElement ? categoryElement.value : 'academic',
+            priority: priorityElement ? priorityElement.value : 'medium',
+            visibility: visibilityElement ? visibilityElement.value : 'private',
+            status: status,
+            completed: status === 'completed',
+            userId: auth.currentUser.uid, // Hooks it to the user!
+            owner: auth.currentUser.email,
+            members: visibilityElement && visibilityElement.value === 'shared' ? shareEmail : 'None',
+            subtasks: [],
+            createdAt: new Date().toISOString()
+        };
+
+        try {
+            saveTaskBtn.innerText = "Saving...";
+            saveTaskBtn.disabled = true;
+
+            await addDoc(collection(db, "tasks"), newTask);
+
+            // Hide the modal & reload to show fresh data
+            const modal = document.getElementById('uniqueTaskFormModal');
+            if (modal) modal.style.setProperty('display', 'none', 'important');
+            window.location.reload();
+        } catch (error) {
+            console.error("Error adding task: ", error);
+            alert("Failed to save task.");
+            saveTaskBtn.innerText = "Save Task";
+            saveTaskBtn.disabled = false;
+        }
+    });
+}

@@ -1,52 +1,92 @@
-import { auth, db } from "./firebase.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+import { auth, db } from "./firebase.js"; 
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+import { collection, query, where, getDocsFromServer, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-const saveTaskBtn = document.getElementById("save-new-task-btn");
+const userNameDisplay = document.getElementById("user-name");
+const tableBody = document.getElementById("taskGridBody");
+const loadingIndicator = document.getElementById("loading");
+const emptyStateContainer = document.getElementById("emptyStateContainer");
 
-if (saveTaskBtn) {
-    saveTaskBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
+onAuthStateChanged(auth, async (user) => { 
+    if (user) {
+        const nameToDisplay = user.displayName || user.email.split('@')[0];
+        if (userNameDisplay) userNameDisplay.textContent = nameToDisplay;
+        
+        loadTasks(user.uid);
+    } else {
+        window.location.href = "login.html";
+    }
+});
 
-        if (!auth.currentUser) {
-            alert("You must be logged in to save a task.");
-            return;
-        }
+async function loadTasks(uid) {
+    if (loadingIndicator) loadingIndicator.style.display = 'block';
+    if (tableBody) tableBody.style.opacity = '0.5';
 
-        try {
+    try {
+        const q = query(collection(db, "tasks"), where("userId", "==", uid));
 
-            const titleInput = document.getElementById("modalTaskTitle").value;
-            const descInput = document.getElementById("modalTaskDesc").value;
-            const dateInput = document.getElementById("modalTaskDate").value;
-            const statusInput = document.getElementById("modalTaskStatus").value;
+        const querySnapshot = await getDocsFromServer(q);
 
-            const categoryInput = document.querySelector('input[name="category"]:checked').value;
-            const priorityInput = document.querySelector('input[name="priority"]:checked').value;
-            const visibilityInput = document.querySelector('input[name="visibility"]:checked').value;
+        if (querySnapshot.empty) {
+            if (emptyStateContainer) emptyStateContainer.style.display = 'block';
+            if (tableBody) tableBody.innerHTML = ""; 
+        } else {
+            if (emptyStateContainer) emptyStateContainer.style.display = 'none';
+            
+            if (tableBody) {
+                tableBody.innerHTML = ""; 
+                querySnapshot.forEach((doc) => {
+                    const task = doc.data();
+                    const tr = document.createElement("tr");
 
-            if (titleInput.trim() === "") {
-                alert("Please enter a Task Title!");
-                return;
+                    // REPLACED: Updated the "Delete" text with a beautifully styled PINK Button!
+                    tr.innerHTML = `
+                        <td>
+                            <a href="task_details.html?id=${doc.id}" style="color: #000000; text-decoration: none;">
+                                <strong style="text-decoration: underline; cursor: pointer;">${task.title || "—"}</strong>
+                            </a>
+                        </td>
+                        <td style="text-transform: capitalize;">${task.category || "—"}</td>
+                        <td style="text-transform: capitalize;">${task.priority || "—"}</td>
+                        <td>${task.deadline || "—"}</td>
+                        <td style="text-transform: capitalize;">${task.status || "—"}</td>
+                        <td style="text-align: center;">
+                            <button class="delete-btn" data-id="${doc.id}" style="background-color: #FA6B6B; color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
+                                DELETE
+                            </button>
+                        </td>
+                    `;
+                    tableBody.appendChild(tr);
+                });
             }
+        }
+    } catch (error) {
+        console.error("Error loading tasks: ", error);
+    } finally {
+        if (loadingIndicator) loadingIndicator.style.display = 'none';
+        if (tableBody) tableBody.style.opacity = '1';
+    }
+}
 
-            await addDoc(collection(db, "tasks"), {
-                title: titleInput,
-                description: descInput,
-                deadline: dateInput,
-                category: categoryInput,
-                priority: priorityInput,
-                visibility: visibilityInput,
-                status: statusInput,
-
-                userId: auth.currentUser.uid,
-                createdAt: new Date().toISOString() 
-            });
-
-            alert("Task added successfully!");
-            window.location.reload(); 
-
-        } catch (error) {
-            console.error("Error adding task: ", error);
-            alert("Failed to save task. Check the console for details.");
+// Delete Event Listener attached to the Grid
+if (tableBody) {
+    tableBody.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("delete-btn")) {
+            const taskId = e.target.getAttribute("data-id");
+            
+            if (confirm("Are you sure you want to delete this task?")) {
+                try {
+                    e.target.style.opacity = '0.5';
+                    e.target.innerText = "DELETING...";
+                    await deleteDoc(doc(db, "tasks", taskId));
+                    loadTasks(auth.currentUser.uid); // Refresh table seamlessly
+                } catch (error) {
+                    console.error("Error deleting task: ", error);
+                    alert("Failed to delete task.");
+                    e.target.style.opacity = '1';
+                    e.target.innerText = "DELETE";
+                }
+            }
         }
     });
 }

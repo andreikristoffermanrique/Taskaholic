@@ -12,7 +12,6 @@
 <body>
 
     <div class="dashboard-container">
-        <!-- Sidebar Panel -->
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -54,7 +53,6 @@
             </a>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
@@ -66,31 +64,30 @@
                 </button>
             </header>
 
-            <!-- Filters Toolbar -->
             <section class="task-filter-stacked-container">
                 <div class="search-row-wrapper">
                     <div class="search-box-wrapper">
                         <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                        <input type="text" placeholder="Search Tasks" id="taskSearchInput" oninput="executeTaskSearch()">
+                        <input type="text" placeholder="Search Tasks" id="taskSearchInput">
                     </div>
                 </div>
 
                 <div class="dropdowns-row-wrapper">
-                    <select class="filter-dropdown" id="categoryFilter" onchange="applyFilters()">
+                    <select class="filter-dropdown" id="categoryFilter">
                         <option value="all">All categories</option>
                         <option value="academic">Academic</option>
                         <option value="project">Project</option>
                         <option value="personal">Personal</option>
                     </select>
 
-                    <select class="filter-dropdown" id="priorityFilter" onchange="applyFilters()">
+                    <select class="filter-dropdown" id="priorityFilter">
                         <option value="all">All priorities</option>
                         <option value="high">High</option>
                         <option value="medium">Medium</option>
                         <option value="low">Low</option>
                     </select>
 
-                    <select class="filter-dropdown" id="statusFilter" onchange="applyFilters()">
+                    <select class="filter-dropdown" id="statusFilter">
                         <option value="all">All statuses</option>
                         <option value="pending">Pending</option>
                         <option value="in progress">In Progress</option>
@@ -99,7 +96,6 @@
                 </div>
             </section>
 
-            <!-- Grid/Table Area -->
             <section class="tasks-table-main-container">
 
                 <table class="master-data-grid-table">
@@ -133,33 +129,26 @@
         </main>
     </div>
 
-    <!-- HIGH-PRIORITY APP-BODY LEVEL MODAL (Matches Dashboard Structure flawlessly) -->
-    <div id="addTaskModal" style="display: none !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
+    <div id="uniqueTaskFormModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
         <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
             
-            <!-- Modal Header -->
             <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
-                <h3 id="modalFormTitle" style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Create New Task</h3>
+                <h3 style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Create New Task</h3>
                 <button type="button" onclick="closeAddTaskModal()" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <!-- Modal Form -->
-            <form id="taskForm" style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
-                <input type="hidden" id="editTaskId">
-                
+            <form id="modalTaskForm" style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
                 <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Task Title</label>
-                    <input type="text" id="taskTitle" placeholder="Enter your task" required style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
+                    <input type="text" id="modalTaskTitle" placeholder="Enter your task" required style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
                 
                 <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Description</label>
-                    <input type="text" id="taskDesc" placeholder="Enter description" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
+                    <input type="text" id="modalTaskDesc" placeholder="Enter description" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
 
-                <!-- 3-Column Settings -->
                 <div style="display: grid !important; grid-template-columns: 1.2fr 1.2fr 1fr !important; gap: 12px !important;">
-                    <!-- Category Radio Selection -->
                     <div>
                         <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Category</label>
                         <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
@@ -169,7 +158,6 @@
                         </div>
                     </div>
 
-                    <!-- Priority Radio Selection -->
                     <div>
                         <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Priority Level</label>
                         <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
@@ -179,11 +167,10 @@
                         </div>
                     </div>
 
-                    <!-- Due Date and Visibility Form Fields -->
                     <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
                         <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
                             <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Due Date</label>
-                            <input type="date" id="taskDueDate" required style="padding: 6px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; text-align: center !important; font-size: 12px !important; background: #fff !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
+                            <input type="date" id="modalTaskDate" style="padding: 6px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; text-align: center !important; font-size: 12px !important; background: #fff !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                         </div>
                         <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
                             <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Visibility</label>
@@ -195,11 +182,18 @@
                     </div>
                 </div>
 
-                <!-- Dropdown & Form Submit controls -->
+                <div id="modalShareContainer" style="display: none; flex-direction: column !important; gap: 3px !important; margin-top: 5px !important;">
+                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Share with Gbox Account</label>
+                    <div style="display: flex !important; flex-direction: column !important; width: 100% !important;">
+                        <input type="email" id="modalShareEmail" placeholder="username@gbox.adnu.edu.ph" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
+                        <span id="gboxErrorHint" style="color: #b32424 !important; font-size: 11px !important; font-weight: 600 !important; margin-top: 4px !important; display: none;">⚠️ Only @gbox.adnu.edu.ph institutional accounts allowed.</span>
+                    </div>
+                </div>
+
                 <div style="display: flex !important; justify-content: space-between !important; align-items: flex-end !important; margin-top: 10px !important;">
                     <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
                         <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important; white-space: nowrap !important;">Current Status</label>
-                        <select id="taskStatus" style="padding: 6px 12px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 13px !important; outline: none !important; cursor: pointer !important;">
+                        <select id="modalTaskStatus" style="padding: 6px 12px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 13px !important; outline: none !important; cursor: pointer !important;">
                             <option value="pending">Pending</option>
                             <option value="in progress">In Progress</option>
                             <option value="completed">Completed</option>
@@ -207,16 +201,63 @@
                     </div>
                     <div style="display: flex !important; gap: 10px !important;">
                         <button type="button" onclick="closeAddTaskModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
-                        <button type="submit" id="btnSaveSubmit" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
+                        <button type="submit" id="save-new-task-btn" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
-
-
     <script type="module" src="my_tasks.js"></script>
-    <script type="module" src="add_task.js"></script>
+    <script type="module" src="add_task.js"></script> <script>
+        function openAddTaskModal() {
+            const modal = document.getElementById('uniqueTaskFormModal');
+            if (modal) modal.style.setProperty('display', 'flex', 'important');
+        }
+
+        function closeAddTaskModal() {
+            const modal = document.getElementById('uniqueTaskFormModal');
+            if (modal) {
+                modal.style.setProperty('display', 'none', 'important');
+                // Clear the fields on close
+                document.getElementById('modalTaskTitle').value = '';
+                document.getElementById('modalTaskDesc').value = '';
+                document.getElementById('modalShareContainer').style.setProperty('display', 'none', 'important');
+                document.getElementById('modalShareEmail').value = '';
+                document.getElementById('gboxErrorHint').style.setProperty('display', 'none', 'important');
+                document.querySelector('input[name="visibility"][value="private"]').checked = true;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // Visibility & Share toggle logic
+            const visibilityRadios = document.querySelectorAll('input[name="visibility"]');
+            const shareContainer = document.getElementById('modalShareContainer');
+            const shareEmailInput = document.getElementById('modalShareEmail');
+            const gboxErrorHint = document.getElementById('gboxErrorHint');
+
+            visibilityRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.value === 'shared') {
+                        shareContainer.style.setProperty('display', 'flex', 'important');
+                        shareEmailInput.focus();
+                    } else {
+                        shareContainer.style.setProperty('display', 'none', 'important');
+                        shareEmailInput.value = '';
+                        gboxErrorHint.style.setProperty('display', 'none', 'important');
+                    }
+                });
+            });
+
+            shareEmailInput.addEventListener('input', () => {
+                const val = shareEmailInput.value.trim().toLowerCase();
+                if (val === "" || val.endsWith('@gbox.adnu.edu.ph')) {
+                    gboxErrorHint.style.setProperty('display', 'none', 'important');
+                } else {
+                    gboxErrorHint.style.setProperty('display', 'block', 'important');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
