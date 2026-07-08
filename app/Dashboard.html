@@ -119,7 +119,7 @@
                                 </tr>
                             </thead>
                             <tbody id="deadlines-tbody">
-                                </tbody>
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
         </main>
     </div>
 
-    <div id="uniqueTaskFormModal" style="display: none !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
+    <div id="uniqueTaskFormModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
         <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
             
             <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
@@ -162,10 +162,10 @@
                 <button type="button" onclick="closeAddTaskModal()" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <form style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
+            <form id="modalTaskForm" style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
                 <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Task Title</label>
-                    <input type="text" id="modalTaskTitle" placeholder="Enter your task" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
+                    <input type="text" id="modalTaskTitle" placeholder="Enter your task" required style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
                 
                 <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
@@ -201,9 +201,18 @@
                             <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Visibility</label>
                             <div style="display: flex !important; gap: 10px !important;">
                                 <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="private" checked style="accent-color: #e57373 !important;"> Private</label>
-                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="shared" style="accent-color: #e57373 !important;"> Shared</label>
+                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="shared"> Shared</label>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <!-- UPDATED: Exclusively enforces valid adnu gbox structures -->
+                <div id="modalShareContainer" style="display: none; flex-direction: column !important; gap: 3px !important; margin-top: 5px !important;">
+                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Share with Gbox Account</label>
+                    <div style="display: flex !important; flex-direction: column !important; width: 100% !important;">
+                        <input type="email" id="modalShareEmail" placeholder="username@gbox.adnu.edu.ph" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
+                        <span id="gboxErrorHint" style="color: #b32424 !important; font-size: 11px !important; font-weight: 600 !important; margin-top: 4px !important; display: none;">⚠️ Only @gbox.adnu.edu.ph institutional accounts allowed.</span>
                     </div>
                 </div>
 
@@ -225,10 +234,57 @@
         </div>
     </div>
 
-
-
     <script type="module" src="dashboard.js"></script>
     <script type="module" src="add_task.js"></script>
     
+    <script>
+        function openAddTaskModal() {
+            const modal = document.getElementById('uniqueTaskFormModal');
+            if (modal) {
+                modal.style.setProperty('display', 'flex', 'important');
+            }
+        }
+
+        function closeAddTaskModal() {
+            const modal = document.getElementById('uniqueTaskFormModal');
+            if (modal) {
+                modal.style.setProperty('display', 'none', 'important');
+                document.getElementById('modalShareContainer').style.setProperty('display', 'none', 'important');
+                document.getElementById('modalShareEmail').value = '';
+                document.getElementById('gboxErrorHint').style.setProperty('display', 'none', 'important');
+                document.querySelector('input[name="visibility"][value="private"]').checked = true;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const visibilityRadios = document.querySelectorAll('input[name="visibility"]');
+            const shareContainer = document.getElementById('modalShareContainer');
+            const shareEmailInput = document.getElementById('modalShareEmail');
+            const gboxErrorHint = document.getElementById('gboxErrorHint');
+
+            visibilityRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.value === 'shared') {
+                        shareContainer.style.setProperty('display', 'flex', 'important');
+                        shareEmailInput.focus();
+                    } else {
+                        shareContainer.style.setProperty('display', 'none', 'important');
+                        shareEmailInput.value = '';
+                        gboxErrorHint.style.setProperty('display', 'none', 'important');
+                    }
+                });
+            });
+
+            // Interactive context validation for the Gbox domain requirement
+            shareEmailInput.addEventListener('input', () => {
+                const val = shareEmailInput.value.trim().toLowerCase();
+                if (val === "" || val.endsWith('@gbox.adnu.edu.ph')) {
+                    gboxErrorHint.style.setProperty('display', 'none', 'important');
+                } else {
+                    gboxErrorHint.style.setProperty('display', 'block', 'important');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
