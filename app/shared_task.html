@@ -7,6 +7,95 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Precision Alignment Layout for Grid Columns */
+        .shared-board-header, 
+        .shared-task-row {
+            display: grid;
+            /* Uniform 4-column distribution matching the header pills */
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 15px;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            padding: 14px 16px;
+        }
+
+        .shared-board-header {
+            border-bottom: 1px solid #E6D5D5;
+        }
+
+        .shared-task-row {
+            border-bottom: 1px solid #E6D5D5;
+            font-size: 14px;
+        }
+
+        .shared-task-row:hover {
+            background-color: #FAF5F5;
+        }
+
+        /* Column Specific Text Alignments to Lock Under Pill Centers */
+        .col-task-name {
+            text-align: left;
+            padding-left: 10px; /* Slight indent to align cleanly inside the first pill border */
+        }
+
+        .col-project-owner,
+        .col-members-invite {
+            text-align: center;
+            word-break: break-all;
+        }
+
+        /* Center-aligned Action / Status Cell Container */
+        .actions-cell,
+        .status-cell {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Buttons & Pills Setup */
+        .btn-invite-confirm {
+            background-color: #D4EDDA;
+            color: #155724;
+            border: 1px solid #C3E6CB;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-invite-confirm:hover { background-color: #C3E6CB; }
+
+        .btn-invite-decline {
+            background-color: #F8D7DA;
+            color: #721C24;
+            border: 1px solid #F5C6CB;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-invite-decline:hover { background-color: #F5C6CB; }
+
+        .status-pill {
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: capitalize;
+            text-align: center;
+        }
+        .status-pending { background: #FFF3CD; color: #856404; }
+        .status-progress { background: #CCE5FF; color: #004085; }
+        .status-completed { background: #D4EDDA; color: #155724; }
+
+        .sub-nav-item { cursor: pointer; }
+    </style>
 </head>
 <body>
 
@@ -21,27 +110,21 @@
                 <a href="workload.html" class="nav-item">
                     <i class="fa-solid fa-book-open"></i> Workload Overview
                 </a>
-    
                 <a href="Dashboard.html" class="nav-item">
                     <i class="fa-solid fa-table-cells-large"></i> Dashboard
                 </a>
-    
                 <a href="my_tasks.html" class="nav-item">
                     <i class="fa-solid fa-clapperboard"></i> My Tasks
                 </a>
-    
                 <a href="shared_task.html" class="nav-item active">
                     <i class="fa-solid fa-user-group"></i> Shared Tasks
                 </a>
-    
                 <a href="notifications.html" class="nav-item">
                     <i class="fa-solid fa-bell"></i> Notifications
                 </a>
-    
                 <a href="settings.html" class="nav-item">
                     <i class="fa-solid fa-gear"></i> Settings
                 </a>
-    
                 <a href="profile.html" class="nav-item">
                     <i class="fa-solid fa-circle-user"></i> Profile
                 </a>
@@ -53,13 +136,12 @@
         </aside>
 
         <main class="main-content">
-            
             <header class="content-header">
                 <div class="welcome-text header-icon-title">
                     <i class="fa-solid fa-user-group fa-2x"></i>
                     <div>
                         <h2>Shared Task</h2>
-                        <p>Tasks you are collaborating on</p>
+                        <p id="pageSubtitle">Tasks you are collaborating on</p>
                     </div>
                 </div>
                 <button class="add-task-btn" onclick="openAddTaskModal()">
@@ -68,70 +150,68 @@
             </header>
 
             <div class="sub-nav-container">
-                <a href="#" class="sub-nav-item active">Shared Task</a>
-                <a href="#" class="sub-nav-item">Invitations</a>
+                <span class="sub-nav-item active" id="tabSharedTasks">Shared Task</span>
+                <span class="sub-nav-item" id="tabInvitations">Invitations</span>
             </div>
             <hr class="sub-nav-divider">
 
             <section class="shared-board-container">
-                
                 <div class="shared-board-header">
-                    <span class="board-header-pill">Task Name</span>
-                    <span class="board-header-pill">Project Owner</span>
-                    <span class="board-header-pill">Members</span>
-                    <span class="board-header-pill">Status</span>
+                    <span class="board-header-pill" id="colHeader1">Task Name</span>
+                    <span class="board-header-pill" id="colHeader2">Project Owner</span>
+                    <span class="board-header-pill" id="colHeader3">Members</span>
+                    <span class="board-header-pill" id="colHeader4">Status</span>
                 </div>
 
-                <div class="shared-board-content"></div>
+                <div class="shared-board-content" id="sharedBoardContent"></div>
 
-                <div class="shared-board-footer">
-                    
+                <div class="shared-board-footer" id="sharedBoardFooter">
                     <div class="share-action-row">
                         <label>Invite Collaborators</label>
                         <div class="share-controls">
-                            <input type="text" class="share-input" placeholder="">
+                            <input type="text" class="share-input" id="quickInviteEmail" placeholder="username@gbox.adnu.edu.ph">
                             <select class="share-select">
                                 <option value="edit">Can Edit</option>
                                 <option value="view">Can View</option>
                             </select>
-                            <button type="button" class="btn-share-action">Send Invitation</button>
+                            <button type="button" class="btn-share-action" id="quickInviteBtn">Send Invitation</button>
                         </div>
                     </div>
 
                     <div class="share-action-row">
                         <label>Share Link</label>
                         <div class="share-controls">
-                            <input type="text" class="share-input" placeholder="">
-                            <button type="button" class="btn-share-action">Copy Link</button>
+                            <input type="text" class="share-input" readonly value="https://taskaholic.adnu.edu/shared/invite-link-101">
+                            <button type="button" class="btn-share-action" onclick="navigator.clipboard.writeText(this.previousElementSibling.value); alert('Link Copied!')">Copy Link</button>
                         </div>
                     </div>
-
                 </div>
             </section>
         </main>
     </div>
 
-    <div class="modal-overlay" id="addTaskModal">
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3>Create New Task</h3>
-                <button class="close-modal-btn" onclick="closeAddTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+    <!-- Add Task Modal Window Context -->
+    <div class="modal-overlay" id="addTaskModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); z-index: 9999; justify-content: center; align-items: center;">
+        <div class="modal-container" style="background: #F5D6D6; padding: 25px; border-radius: 16px; width: 500px; box-shadow: 0 8px 32px rgba(0,0,0,0.2);">
+            <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin:0;">Create New Task</h3>
+                <button class="close-modal-btn" onclick="closeAddTaskModal()" style="background:none; border:none; font-size:20px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <form class="modal-form">
-                <div class="modal-input-group">
-                    <label>Task Title</label>
-                    <input type="text" placeholder="Enter your task">
+            <form class="modal-form" id="modalFormSubmit" style="display: flex; flex-direction: column; gap: 15px;">
+                <div class="modal-input-group" style="display: flex; flex-direction: column; gap: 5px;">
+                    <label style="font-weight: 500;">Task Title</label>
+                    <input type="text" id="modalTitle" placeholder="Enter your task" required style="padding: 10px; border-radius: 8px; border: 1px solid #b5b5b5;">
                 </div>
                 
-                <div class="modal-input-group">
-                    <label>Description</label>
-                    <input type="text" placeholder="Enter description">
+                <div class="modal-input-group" style="display: flex; flex-direction: column; gap: 5px;">
+                    <label style="font-weight: 500;">Description</label>
+                    <input type="text" id="modalDesc" placeholder="Enter description" style="padding: 10px; border-radius: 8px; border: 1px solid #b5b5b5;">
                 </div>
 
-                <div class="modal-row-3">
+                <div class="modal-row-3" style="display: grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap: 12px;">
                     <div class="radio-box-group">
-                        <label class="group-title">Category</label>
-                        <div class="radio-box">
+                        <label class="group-title" style="display:block; margin-bottom:5px; font-size:13px; font-weight:500;">Category</label>
+                        <div class="radio-box" style="background:#fff; border:1px solid #b5b5b5; border-radius:8px; padding:10px; display:flex; flex-direction:column; gap:5px;">
                             <label><input type="radio" name="category" value="academic" checked> Academic</label>
                             <label><input type="radio" name="category" value="project"> Project</label>
                             <label><input type="radio" name="category" value="personal"> Personal</label>
@@ -139,22 +219,22 @@
                     </div>
 
                     <div class="radio-box-group">
-                        <label class="group-title">Priority Level</label>
-                        <div class="radio-box">
+                        <label class="group-title" style="display:block; margin-bottom:5px; font-size:13px; font-weight:500;">Priority Level</label>
+                        <div class="radio-box" style="background:#fff; border:1px solid #b5b5b5; border-radius:8px; padding:10px; display:flex; flex-direction:column; gap:5px;">
                             <label><input type="radio" name="priority" value="high" checked> High</label>
                             <label><input type="radio" name="priority" value="medium"> Medium</label>
                             <label><input type="radio" name="priority" value="low"> Low</label>
                         </div>
                     </div>
 
-                    <div class="column-group">
-                        <div class="modal-input-group">
-                            <label>Due Date</label>
-                            <input type="text" placeholder="mm/dd/yyyy">
+                    <div class="column-group" style="display:flex; flex-direction:column; justify-content:space-between;">
+                        <div class="modal-input-group" style="display:flex; flex-direction:column; gap:4px;">
+                            <label style="font-size:13px; font-weight:500;">Due Date</label>
+                            <input type="text" id="modalDate" placeholder="mm/dd/yyyy" style="padding:6px; border-radius:20px; border:1px solid #b5b5b5; text-align:center; font-size:12px;">
                         </div>
-                        <div class="visibility-group">
-                            <label class="group-title">Visibility</label>
-                            <div class="radio-inline">
+                        <div class="visibility-group" style="display:flex; flex-direction:column; gap:4px;">
+                            <label class="group-title" style="font-size:13px; font-weight:500;">Visibility</label>
+                            <div class="radio-inline" style="display:flex; gap:10px; font-size:12px;">
                                 <label><input type="radio" name="visibility" value="private"> Private</label>
                                 <label><input type="radio" name="visibility" value="shared" checked> Shared</label>
                             </div>
@@ -162,24 +242,32 @@
                     </div>
                 </div>
 
-                <div class="modal-footer-row">
-                    <div class="status-dropdown">
-                        <label>Current Status</label>
-                        <select>
+                <!-- Sliding Gbox Context Sharing Row -->
+                <div id="modalShareContainer" style="display: flex; flex-direction: column; gap: 3px;">
+                    <label style="font-weight: 500; font-size: 14px;">Share with Gbox Account</label>
+                    <input type="email" id="modalShareEmail" placeholder="username@gbox.adnu.edu.ph" style="padding: 10px; border-radius: 8px; border: 1px solid #b5b5b5; background: #fff;">
+                    <span id="gboxErrorHint" style="color: #b32424; font-size: 11px; font-weight: 600; display: none;">⚠️ Only @gbox.adnu.edu.ph institutional accounts allowed.</span>
+                </div>
+
+                <div class="modal-footer-row" style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px;">
+                    <div class="status-dropdown" style="display: flex; align-items: center; gap: 8px;">
+                        <label style="font-weight:500; font-size:14px;">Current Status</label>
+                        <select id="modalStatus" style="padding: 6px 12px; border-radius: 20px; border: 1px solid #b5b5b5;">
                             <option value="pending">Pending</option>
                             <option value="progress">In Progress</option>
                             <option value="completed">Completed</option>
                         </select>
                     </div>
-                    <div class="modal-actions">
-                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()">Cancel</button>
-                        <button type="button" class="btn-save" onclick="closeAddTaskModal()">Save Task</button>
+                    <div class="modal-actions" style="display: flex; gap: 10px;">
+                        <button type="button" class="btn-cancel" onclick="closeAddTaskModal()" style="background: #fff; border: 1px solid #9c9c9c; padding: 10px 24px; border-radius: 12px; cursor: pointer;">Cancel</button>
+                        <button type="button" class="btn-save" id="btnSaveTask" style="background: #ECA1A1; border: 1px solid #c98888; padding: 10px 24px; border-radius: 12px; cursor: pointer; font-weight:500;">Save Task</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Tasks and Invitation Engine Controller -->
     <script>
         function openAddTaskModal() {
             document.getElementById('addTaskModal').style.display = 'flex';
@@ -187,7 +275,232 @@
 
         function closeAddTaskModal() {
             document.getElementById('addTaskModal').style.display = 'none';
+            document.getElementById('modalFormSubmit').reset();
+            document.getElementById('gboxErrorHint').style.display = 'none';
+            document.getElementById('modalShareContainer').style.display = 'flex';
         }
+
+        document.sidebarTasksEngine = function() {
+            const boardContent = document.getElementById('sharedBoardContent');
+            const visibilityRadios = document.querySelectorAll('input[name="visibility"]');
+            const shareContainer = document.getElementById('modalShareContainer');
+            const shareEmailInput = document.getElementById('modalShareEmail');
+            const gboxErrorHint = document.getElementById('gboxErrorHint');
+            
+            const tabSharedTasks = document.getElementById('tabSharedTasks');
+            const tabInvitations = document.getElementById('tabInvitations');
+            const pageSubtitle = document.getElementById('pageSubtitle');
+            const sharedBoardFooter = document.getElementById('sharedBoardFooter');
+            
+            const colHeader3 = document.getElementById('colHeader3');
+            const colHeader4 = document.getElementById('colHeader4');
+
+            const CURRENT_USER_GBOX = "you@gbox.adnu.edu.ph";
+            let currentTab = "shared"; 
+
+            let taskStorage = JSON.parse(localStorage.getItem('sharedTasksList')) || [];
+            let invitationStorage = JSON.parse(localStorage.getItem('incomingInvitationsList')) || [];
+
+            function renderSharedBoard() {
+                boardContent.innerHTML = "";
+
+                if (currentTab === "shared") {
+                    pageSubtitle.textContent = "Tasks you are collaborating on";
+                    colHeader3.textContent = "Members";
+                    colHeader4.textContent = "Status";
+                    sharedBoardFooter.style.display = "block";
+
+                    if(taskStorage.length === 0) {
+                        boardContent.innerHTML = `<div style="padding:40px; grid-column: 1 / -1; text-align:center; color:#777; font-size:14px;">No active shared collaborative tasks yet. Create one above!</div>`;
+                        return;
+                    }
+
+                    taskStorage.forEach((task, index) => {
+                        const row = document.createElement('div');
+                        row.className = 'shared-task-row';
+                        
+                        let statusClass = "status-pending";
+                        let statusText = "Pending";
+                        if (task.status === "progress") { statusClass = "status-progress"; statusText = "In Progress"; }
+                        if (task.status === "completed") { statusClass = "status-completed"; statusText = "Completed"; }
+
+                        // Links dynamically to task_details.html with parameters
+                        row.innerHTML = `
+                            <strong class="col-task-name">
+                                <a href="task_details.html?id=${index}" style="color: #000; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='#c98888'" onmouseout="this.style.color='#000'">
+                                    ${task.title}
+                                </a>
+                            </strong>
+                            <span class="col-project-owner" style="color:#444;">${task.owner}</span>
+                            <span class="col-members-invite" style="color:#444; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" title="${task.members}">${task.members}</span>
+                            <div class="status-cell"><span class="status-pill ${statusClass}">${statusText}</span></div>
+                        `;
+                        boardContent.appendChild(row);
+                    });
+
+                } else {
+                    pageSubtitle.textContent = "Pending collaboration requests sent to you";
+                    colHeader3.textContent = "Invite From";
+                    colHeader4.textContent = "Actions";
+                    sharedBoardFooter.style.display = "none"; 
+
+                    if(invitationStorage.length === 0) {
+                        boardContent.innerHTML = `<div style="padding:40px; grid-column: 1 / -1; text-align:center; color:#777; font-size:14px;">You have no pending invitations at this time.</div>`;
+                        return;
+                    }
+
+                    invitationStorage.forEach((invite, index) => {
+                        const row = document.createElement('div');
+                        row.className = 'shared-task-row';
+                        
+                        row.innerHTML = `
+                            <strong class="col-task-name" style="font-weight:600; color:#000;">${invite.title}</strong>
+                            <span class="col-project-owner" style="color:#444;">${invite.owner}</span>
+                            <span class="col-members-invite" style="color:#444;">${invite.owner}</span>
+                            <div class="actions-cell">
+                                <button class="btn-invite-confirm" onclick="respondToInvitation(${index}, true)">Confirm</button>
+                                <button class="btn-invite-decline" onclick="respondToInvitation(${index}, false)">Decline</button>
+                            </div>
+                        `;
+                        boardContent.appendChild(row);
+                    });
+                }
+            }
+
+            window.respondToInvitation = function(index, approved) {
+                const targetedInvite = invitationStorage[index];
+                
+                if (approved) {
+                    taskStorage.push({
+                        title: targetedInvite.title,
+                        owner: targetedInvite.owner,
+                        members: CURRENT_USER_GBOX,
+                        status: "pending",
+                        description: targetedInvite.description || "",
+                        category: targetedInvite.category || "academic",
+                        priority: targetedInvite.priority || "high",
+                        dueDate: targetedInvite.dueDate || ""
+                    });
+                    localStorage.setItem('sharedTasksList', JSON.stringify(taskStorage));
+                    alert(`Accepted invitation to collaborate on "${targetedInvite.title}"!`);
+                } else {
+                    alert(`Declined invitation to join "${targetedInvite.title}".`);
+                }
+
+                invitationStorage.splice(index, 1);
+                localStorage.setItem('incomingInvitationsList', JSON.stringify(invitationStorage));
+                renderSharedBoard();
+            };
+
+            tabSharedTasks.addEventListener('click', () => {
+                tabInvitations.classList.remove('active');
+                tabSharedTasks.classList.add('active');
+                currentTab = "shared";
+                renderSharedBoard();
+            });
+
+            tabInvitations.addEventListener('click', () => {
+                tabSharedTasks.classList.remove('active');
+                tabInvitations.classList.add('active');
+                currentTab = "invitations";
+                renderSharedBoard();
+            });
+
+            visibilityRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (e.target.value === 'shared') {
+                        shareContainer.style.display = 'flex';
+                    } else {
+                        shareContainer.style.display = 'none';
+                        gboxErrorHint.style.display = 'none';
+                    }
+                });
+            });
+
+            shareEmailInput.addEventListener('input', () => {
+                const val = shareEmailInput.value.trim().toLowerCase();
+                if (val === "" || val.endsWith('@gbox.adnu.edu.ph')) {
+                    gboxErrorHint.style.display = 'none';
+                } else {
+                    gboxErrorHint.style.display = 'block';
+                }
+            });
+
+            document.getElementById('btnSaveTask').addEventListener('click', () => {
+                const title = document.getElementById('modalTitle').value.trim();
+                const desc = document.getElementById('modalDesc').value.trim();
+                const category = document.querySelector('input[name="category"]:checked').value;
+                const priority = document.querySelector('input[name="priority"]:checked').value;
+                const dueDate = document.getElementById('modalDate').value.trim();
+                const isShared = document.querySelector('input[name="visibility"]:checked').value === 'shared';
+                const shareEmail = shareEmailInput.value.trim().toLowerCase();
+
+                if (!title) {
+                    alert("Please fill out the Task Title.");
+                    return;
+                }
+
+                if (isShared && (!shareEmail || !shareEmail.endsWith('@gbox.adnu.edu.ph'))) {
+                    alert("Please enter a valid target @gbox.adnu.edu.ph address to share this task.");
+                    return;
+                }
+
+                const newTask = {
+                    title: title,
+                    description: desc,
+                    category: category,
+                    priority: priority,
+                    dueDate: dueDate,
+                    owner: CURRENT_USER_GBOX,
+                    members: isShared ? shareEmail : "None",
+                    status: document.getElementById('modalStatus').value
+                };
+
+                taskStorage.push(newTask);
+                localStorage.setItem('sharedTasksList', JSON.stringify(taskStorage));
+                
+                tabInvitations.classList.remove('active');
+                tabSharedTasks.classList.add('active');
+                currentTab = "shared";
+                renderSharedBoard();
+                closeAddTaskModal();
+            });
+
+            document.getElementById('quickInviteBtn').addEventListener('click', () => {
+                const emailInput = document.getElementById('quickInviteEmail');
+                const targetEmail = emailInput.value.trim().toLowerCase();
+
+                if (!targetEmail || !targetEmail.endsWith('@gbox.adnu.edu.ph')) {
+                    alert("Please input a valid @gbox.adnu.edu.ph account line.");
+                    return;
+                }
+
+                const newQuickTask = {
+                    title: "Quick Invited Collaboration Task",
+                    description: "Quick task layout entry point.",
+                    category: "project",
+                    priority: "medium",
+                    dueDate: "As assigned",
+                    owner: CURRENT_USER_GBOX,
+                    members: targetEmail,
+                    status: "pending"
+                };
+
+                taskStorage.push(newQuickTask);
+                localStorage.setItem('sharedTasksList', JSON.stringify(taskStorage));
+                emailInput.value = "";
+                
+                tabInvitations.classList.remove('active');
+                tabSharedTasks.classList.add('active');
+                currentTab = "shared";
+                renderSharedBoard();
+                alert("Invitation sent successfully!");
+            });
+
+            renderSharedBoard();
+        };
+
+        document.addEventListener("DOMContentLoaded", document.sidebarTasksEngine);
     </script>
 </body>
 </html>

@@ -11,311 +11,340 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div class="dashboard-container">
-        <aside class="sidebar-panel">
-            <div class="brand-wrapper">
-                <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
-                <span class="brand-title">Taskaholic</span>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
-                <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
-                <a href="my_tasks.html" class="nav-item active"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
-                <a href="#" class="nav-item"><i class="fa-regular fa-bell"></i> Notifications</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
-            </nav>
-
-            <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
-        </aside>
-
-        <main class="main-content" style="background-color: #FCF8F8;">
-            
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                <a href="my_tasks.html" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; color: #000000; text-decoration: none; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-                    <i class="fa-solid fa-caret-left"></i> Back to Tasks
-                </a>
-                
-                <div style="display: flex; gap: 12px;">
-                    <button id="edit-task-btn" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">EDIT</button>
-                    <button id="delete-task-btn" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">DELETE</button>
-                </div>
-            </div>
-
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding: 0 10px;">
-                <div>
-                    <h1 id="detail-title" style="font-size: 32px; font-weight: 800; color: #000000; margin-bottom: 12px;">Loading Task...</h1>
-                    <div style="display: flex; gap: 24px; color: #333333; font-size: 13px; font-weight: 500;">
-                        <span id="detail-category" style="display: flex; align-items: center; gap: 6px; text-transform: capitalize;"><i class="fa-solid fa-layer-group"></i> Category</span>
-                        <span id="detail-date" style="display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> Due Date</span>
-                    </div>
-                </div>
-                
-                <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
-                    <span id="detail-priority" style="border: 1px solid #000000; background-color: #FFFFFF; padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; min-width: 110px; text-align: center; text-transform: capitalize;">Priority Level</span>
-                    <span id="detail-status" style="border: 1px solid #000000; background-color: #FFFFFF; padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; min-width: 110px; text-align: center; text-transform: capitalize;">Status</span>
-                </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
-                
-                <div style="display: flex; flex-direction: column; gap: 24px;">
-                    <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 160px; position: relative;">
-                        <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Collaborators</h3>
-                        <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
-                        <p style="margin-top: 15px; font-size: 13px; color: #666;">No collaborators assigned.</p>
-                    </div>
-
-                    <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 220px; position: relative;">
-                        <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Sub Tasks</h3>
-                        <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
-                        <p style="margin-top: 15px; font-size: 13px; color: #666;">No sub-tasks available.</p>
-                    </div>
-                </div>
-
-                <div style="display: flex; flex-direction: column; gap: 24px;">
-                    <div style="background-color: #FBEFEF; border: 1px solid #000000; border-radius: 12px; padding: 20px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                            <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Progress</h3>
-                            <span id="detail-progress-text" style="font-size: 14px; font-weight: 700; color: #000000;">0%</span>
-                        </div>
-                        <div style="width: 100%; height: 12px; background-color: #FFFFFF; border: 1px solid #000000; border-radius: 8px; overflow: hidden;">
-                            <div id="detail-progress-bar" style="width: 0%; height: 100%; background-color: #54CBB2; border-radius: 8px; transition: width 0.3s ease;"></div>
-                        </div>
-                    </div>
-
-                    <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; flex-grow: 1; min-height: 250px; position: relative;">
-                        <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Description</h3>
-                        <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
-                        <p id="detail-description" style="margin-top: 15px; font-size: 14px; color: #444444; line-height: 1.6;"></p>
-                    </div>
-                </div>
-
-            </div>
-        </main>
-    </div>
-
-    <!-- APP-BODY MODAL FOR EDITING -->
-    <div id="editTaskModal" style="display: none !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
-        <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
-            
-            <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
-                <h3 style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Edit Task Parameters</h3>
-                <button type="button" id="close-modal-btn" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-
-            <form id="editTaskForm" style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
-                <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
-                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Task Title</label>
-                    <input type="text" id="modalTaskTitle" required style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
-                </div>
-                
-                <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
-                    <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Description</label>
-                    <input type="text" id="modalTaskDesc" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
-                </div>
-
-                <div style="display: grid !important; grid-template-columns: 1.2fr 1.2fr 1fr !important; gap: 12px !important;">
-                    <div>
-                        <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Category</label>
-                        <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
-                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="academic" style="accent-color: #e57373 !important;"> Academic</label>
-                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="project" style="accent-color: #e57373 !important;"> Project</label>
-                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="category" value="personal" style="accent-color: #e57373 !important;"> Personal</label>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Priority Level</label>
-                        <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
-                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="high" style="accent-color: #e57373 !important;"> High</label>
-                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="medium" style="accent-color: #e57373 !important;"> Medium</label>
-                            <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="low" style="accent-color: #e57373 !important;"> Low</label>
-                        </div>
-                    </div>
-
-                    <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
-                        <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
-                            <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Due Date</label>
-                            <input type="date" id="modalTaskDate" required style="padding: 6px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; text-align: center !important; font-size: 12px !important; background: #fff !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
-                        </div>
-                        <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
-                            <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Visibility</label>
-                            <div style="display: flex !important; gap: 10px !important;">
-                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="private" style="accent-color: #e57373 !important;"> Private</label>
-                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="shared" style="accent-color: #e57373 !important;"> Shared</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div style="display: flex !important; justify-content: space-between !important; align-items: flex-end !important; margin-top: 10px !important;">
-                    <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
-                        <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important; white-space: nowrap !important;">Current Status</label>
-                        <select id="modalTaskStatus" style="padding: 6px 12px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 13px !important; outline: none !important; cursor: pointer !important;">
-                            <option value="pending">Pending</option>
-                            <option value="in progress">In Progress</option>
-                            <option value="completed">Completed</option>
-                        </select>
-                    </div>
-                    <div style="display: flex !important; gap: 10px !important;">
-                        <button type="button" id="cancel-modal-btn" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
-                        <button type="submit" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Changes</button>
-                    </div>
-                </div>
-            </form>
+<div class="dashboard-container">
+    <aside class="sidebar-panel">
+        <div class="brand-wrapper">
+            <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
+            <span class="brand-title">Taskaholic</span>
         </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
+            <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+            <a href="my_tasks.html" class="nav-item active"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+            <a href="shared_task.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
+            <a href="#" class="nav-item"><i class="fa-regular fa-bell"></i> Notifications</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="#" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
+        </nav>
+        <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </aside>
+
+    <main class="main-content" style="background-color: #FCF8F8;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <a href="my_tasks.html" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; color: #000000; text-decoration: none; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                <i class="fa-solid fa-caret-left"></i> Back to Tasks
+            </a>
+            <div style="display: flex; gap: 12px;">
+                <button id="edit-task-btn" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">EDIT</button>
+                <button id="delete-task-btn" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">DELETE</button>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding: 0 10px;">
+            <div>
+                <h1 id="detail-title" style="font-size: 32px; font-weight: 800; color: #000000; margin-bottom: 12px;">Loading Task...</h1>
+                <div style="display: flex; gap: 24px; color: #333333; font-size: 13px; font-weight: 500;">
+                    <span id="detail-category" style="display: flex; align-items: center; gap: 6px; text-transform: capitalize;"><i class="fa-solid fa-layer-group"></i> Category</span>
+                    <span id="detail-date" style="display: flex; align-items: center; gap: 6px;"><i class="fa-regular fa-calendar"></i> Due Date</span>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end;">
+                <span id="detail-priority" style="border: 1px solid #000000; background-color: #FFFFFF; padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; min-width: 110px; text-align: center; text-transform: capitalize;">Priority Level</span>
+                <span id="detail-status" style="border: 1px solid #000000; background-color: #FFFFFF; padding: 6px 16px; border-radius: 6px; font-size: 12px; font-weight: 500; min-width: 110px; text-align: center; text-transform: capitalize;">Status</span>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 160px; position: relative;">
+                    <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Collaborators</h3>
+                    <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
+                    <p id="detail-collaborators" style="margin-top: 15px; font-size: 13px; color: #666;">No collaborators assigned.</p>
+                </div>
+                <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 220px; position: relative;">
+                    <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Sub Tasks</h3>
+                    <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
+                    <p style="margin-top: 15px; font-size: 13px; color: #666;">No sub-tasks available.</p>
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+                <div style="background-color: #FBEFEF; border: 1px solid #000000; border-radius: 12px; padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                        <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Progress</h3>
+                        <span id="detail-progress-text" style="font-size: 14px; font-weight: 700; color: #000000;">0%</span>
+                    </div>
+                    <div style="width: 100%; height: 12px; background-color: #FFFFFF; border: 1px solid #000000; border-radius: 8px; overflow: hidden;">
+                        <div id="detail-progress-bar" style="width: 0%; height: 100%; background-color: #54CBB2; border-radius: 8px; transition: width 0.3s ease;"></div>
+                    </div>
+                </div>
+                <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; flex-grow: 1; min-height: 250px; position: relative;">
+                    <h3 style="font-size: 15px; font-weight: 700; color: #000000;">Description</h3>
+                    <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
+                    <p id="detail-description" style="margin-top: 15px; font-size: 14px; color: #444444; line-height: 1.6;"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- APP-BODY MODAL FOR EDITING -->
+<div id="editTaskModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 2147483647; justify-content: center; align-items: center;">
+    <div style="background: #F5D6D6; padding: 25px; border-radius: 16px; border: 1px solid #c9a0a0; width: 500px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); position: relative; font-family: 'Inter', sans-serif;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3 style="margin: 0; font-family: 'Inter', sans-serif; font-size: 22px; font-weight: 600; color: #1a1a1a;">Edit Task Parameters</h3>
+            <button type="button" id="close-modal-btn" style="background: none; border: none; font-size: 20px; cursor: pointer; color: #1a1a1a;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="editTaskForm" style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <label style="font-weight: 500; font-size: 14px; color: #333;">Task Title</label>
+                <input type="text" id="modalTaskTitle" required style="padding: 10px; border-radius: 8px; border: 1px solid #b5b5b5; background: #fff; font-size: 14px; outline: none; width: 100%; box-sizing: border-box;">
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 5px;">
+                <label style="font-weight: 500; font-size: 14px; color: #333;">Description</label>
+                <input type="text" id="modalTaskDesc" style="padding: 10px; border-radius: 8px; border: 1px solid #b5b5b5; background: #fff; font-size: 14px; outline: none; width: 100%; box-sizing: border-box;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap: 12px;">
+                <div>
+                    <label style="display: block; font-weight: 500; font-size: 13px; margin-bottom: 5px; color: #333;">Category</label>
+                    <div style="background: #fff; border: 1px solid #b5b5b5; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 13px; color: #444; display: flex; align-items: center; gap: 5px; cursor: pointer;"><input type="radio" name="category" value="academic" style="accent-color: #e57373;"> Academic</label>
+                        <label style="font-size: 13px; color: #444; display: flex; align-items: center; gap: 5px; cursor: pointer;"><input type="radio" name="category" value="project" style="accent-color: #e57373;"> Project</label>
+                        <label style="font-size: 13px; color: #444; display: flex; align-items: center; gap: 5px; cursor: pointer;"><input type="radio" name="category" value="personal" style="accent-color: #e57373;"> Personal</label>
+                    </div>
+                </div>
+                <div>
+                    <label style="display: block; font-weight: 500; font-size: 13px; margin-bottom: 5px; color: #333;">Priority Level</label>
+                    <div style="background: #fff; border: 1px solid #b5b5b5; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px;">
+                        <label style="font-size: 13px; color: #444; display: flex; align-items: center; gap: 5px; cursor: pointer;"><input type="radio" name="priority" value="high" style="accent-color: #e57373;"> High</label>
+                        <label style="font-size: 13px; color: #444; display: flex; align-items: center; gap: 5px; cursor: pointer;"><input type="radio" name="priority" value="medium" style="accent-color: #e57373;"> Medium</label>
+                        <label style="font-size: 13px; color: #444; display: flex; align-items: center; gap: 5px; cursor: pointer;"><input type="radio" name="priority" value="low" style="accent-color: #e57373;"> Low</label>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-weight: 500; font-size: 13px; color: #333;">Due Date</label>
+                        <input type="date" id="modalTaskDate" required style="padding: 6px; border-radius: 20px; border: 1px solid #b5b5b5; text-align: center; font-size: 12px; background: #fff; outline: none; width: 100%; box-sizing: border-box;">
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <label style="font-weight: 500; font-size: 13px; color: #333;">Visibility</label>
+                        <div style="display: flex; gap: 10px;">
+                            <label style="font-size: 12px; color: #444; display: flex; align-items: center; gap: 3px; cursor: pointer;"><input type="radio" name="visibility" value="private" style="accent-color: #e57373;"> Private</label>
+                            <label style="font-size: 12px; color: #444; display: flex; align-items: center; gap: 3px; cursor: pointer;"><input type="radio" name="visibility" value="shared" style="accent-color: #e57373;"> Shared</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <label style="font-weight: 500; font-size: 14px; color: #333; white-space: nowrap;">Current Status</label>
+                    <select id="modalTaskStatus" style="padding: 6px 12px; border-radius: 20px; border: 1px solid #b5b5b5; background: #fff; font-size: 13px; outline: none; cursor: pointer;">
+                        <option value="pending">Pending</option>
+                        <option value="in progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" id="cancel-modal-btn" style="background: #fff; border: 1px solid #9c9c9c; padding: 10px 24px; border-radius: 12px; cursor: pointer; font-weight: 500; color: #333; font-size: 14px;">Cancel</button>
+                    <button type="submit" style="background: #ECA1A1; border: 1px solid #c98888; padding: 10px 24px; border-radius: 12px; cursor: pointer; font-weight: 500; color: #333; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">Save Changes</button>
+                </div>
+            </div>
+        </form>
     </div>
+</div>
 
-    <!-- NEW DETACHED MODULAR FIREBASE CORE CONTROLLER -->
-    <script type="module">
-        import { auth, db } from "./firebase.js";
-        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-        import { doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+<!-- HYBRID CORE ENGINE CONTROLLER -->
+<script type="module">
+    import { auth, db } from "./firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+    import { doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-        const params = new URLSearchParams(window.location.search);
-        const taskId = params.get('id');
-        let liveTaskData = null;
+    const params = new URLSearchParams(window.location.search);
+    const taskId = params.get('id');
+    let liveTaskData = null;
+    let isFirebaseTask = false;
 
-        // Redirect user back to login panel if unauthenticated
-        onAuthStateChanged(auth, async (user) => {
-            if (!user) {
-                window.location.href = "login.html";
-                return;
-            }
-            if (taskId) {
-                await fetchTaskDetails(taskId);
-            } else {
-                showFailureState("No Task Selected", "Please select a task from your task dashboard view grid.");
-            }
-        });
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {  
+            window.location.href = "login.html";
+            return;
+        }
+        if (taskId !== null && taskId !== '') {
+            await loadTaskDataEngine(taskId);
+        } else {
+            showFailureState("No Task Selected", "Please select a task from your dashboard view.");
+        }
+    });
 
-        // Pull task documents from Firestore
-        async function fetchTaskDetails(id) {
+    // Unified Data Router: Checks Firebase First, Falls Back to LocalStorage keys
+    async function loadTaskDataEngine(id) {
+        // Path A: Try to match alphanumeric Firestore ID
+        if (isNaN(id) || id.length > 5) {
             try {
                 const docRef = doc(db, "tasks", id);
                 const docSnap = await getDoc(docRef);
-
                 if (docSnap.exists()) {
                     liveTaskData = docSnap.data();
+                    isFirebaseTask = true;
                     renderUI(liveTaskData);
-                } else {
-                    showFailureState("Task Not Found", "We couldn't find the data for this task. It may have been deleted.");
+                    return;
                 }
             } catch (error) {
-                console.error("Firestore read execution error: ", error);
-                showFailureState("Connection Error", "Failed to retrieve documents from your team's shared database.");
+                console.warn("Firestore route skipped or failed, fallback to storage analysis...");
             }
         }
 
-        // Render the retrieved task information into the UI
-        function renderUI(task) {
-            document.getElementById('detail-title').textContent = task.title || "Untitled Task";
-            document.getElementById('detail-category').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${task.category || 'General'}`;
-            document.getElementById('detail-date').innerHTML = `<i class="fa-regular fa-calendar"></i> Due: ${task.deadline || task.dueDate || 'No Deadline Specified'}`;
-            document.getElementById('detail-priority').textContent = `${task.priority || 'Medium'} Priority`;
-            document.getElementById('detail-status').textContent = `Status: ${task.status || 'Pending'}`;
-            document.getElementById('detail-description').textContent = task.description || "No description provided for this task.";
+        // Path B: Fallback index lookup inside multiple local tracking arrays
+        const sharedTasks = JSON.parse(localStorage.getItem('sharedTasksList')) || [];
+        const personalTasksList = JSON.parse(localStorage.getItem('tasksList')) || [];
+        const personalMyTasks = JSON.parse(localStorage.getItem('myTasksList')) || [];
+        const personalTasksGeneric = JSON.parse(localStorage.getItem('tasks')) || [];
 
-            // Dynamically calculate progress metrics
-            let progressPercent = 0;
-            const normalizedStatus = (task.status || '').toLowerCase();
-            if (normalizedStatus === 'in progress') progressPercent = 50;
-            if (normalizedStatus === 'completed') progressPercent = 100;
+        if (sharedTasks[id]) liveTaskData = sharedTasks[id];
+        else if (personalTasksList[id]) liveTaskData = personalTasksList[id];
+        else if (personalMyTasks[id]) liveTaskData = personalMyTasks[id];
+        else if (personalTasksGeneric[id]) liveTaskData = personalTasksGeneric[id];
 
-            document.getElementById('detail-progress-text').textContent = `${progressPercent}%`;
-            document.getElementById('detail-progress-bar').style.width = `${progressPercent}%`;
+        if (liveTaskData) {
+            isFirebaseTask = false;
+            renderUI(liveTaskData);
+        } else {
+            showFailureState("Task Not Found", "We couldn't track down this task in LocalStorage or the Cloud Database. Check index pointers.");
+        }
+    }
+
+    function renderUI(task) {
+        document.getElementById('detail-title').textContent = task.title || "Untitled Task";
+        document.getElementById('detail-category').innerHTML = `<i class="fa-solid fa-layer-group"></i> ${task.category || 'General'}`;
+        document.getElementById('detail-date').innerHTML = `<i class="fa-regular fa-calendar"></i> Due: ${task.deadline || task.dueDate || 'No Deadline'}`;
+        document.getElementById('detail-priority').textContent = `${task.priority || 'Medium'} Priority`;
+        document.getElementById('detail-status').textContent = `Status: ${task.status || 'Pending'}`;
+        document.getElementById('detail-description').textContent = task.description || "No description provided for this task.";
+        
+        const collabEl = document.getElementById('detail-collaborators');
+        if (collabEl) {
+            if (task.members && task.members !== "None") {
+                collabEl.textContent = `Owner: ${task.owner || 'You'} | Members: ${task.members}`;
+            } else {
+                collabEl.textContent = `Owner: ${task.owner || 'You'} (No shared members assigned)`;
+            }
         }
 
-        function showFailureState(heading, bodyText) {
-            document.getElementById('detail-title').textContent = heading;
-            document.getElementById('detail-description').textContent = bodyText;
-        }
+        let progressPercent = 0;
+        const normalizedStatus = (task.status || '').toLowerCase();
+        if (normalizedStatus === 'in progress' || normalizedStatus === 'progress') progressPercent = 50;
+        if (normalizedStatus === 'completed' || normalizedStatus === 'complete') progressPercent = 100;
 
-        // --- INTERACTION PATTERNS (EDIT / UPDATE / DELETE) ---
+        document.getElementById('detail-progress-text').textContent = `${progressPercent}%`;
+        document.getElementById('detail-progress-bar').style.width = `${progressPercent}%`;
+    }
 
-        // Open Edit Modal
-        document.getElementById('edit-task-btn').addEventListener('click', () => {
-            if (!liveTaskData) return;
-            
-            document.getElementById('modalTaskTitle').value = liveTaskData.title || '';
-            document.getElementById('modalTaskDesc').value = liveTaskData.description || '';
-            document.getElementById('modalTaskDate').value = liveTaskData.deadline || liveTaskData.dueDate || '';
-            document.getElementById('modalTaskStatus').value = (liveTaskData.status || 'pending').toLowerCase();
+    function showFailureState(heading, bodyText) {
+        document.getElementById('detail-title').textContent = heading;
+        document.getElementById('detail-description').textContent = bodyText;
+    }
 
-            // Check matching radio fields
-            const categoryRadio = document.querySelector(`input[name="category"][value="${(liveTaskData.category || '').toLowerCase()}"]`);
-            if (categoryRadio) categoryRadio.checked = true;
+    // INTERACTION PATTERNS (EDIT / UPDATE / DELETE)
+    document.getElementById('edit-task-btn').addEventListener('click', () => {
+        if (!liveTaskData) return;
+        
+        document.getElementById('modalTaskTitle').value = liveTaskData.title || '';
+        document.getElementById('modalTaskDesc').value = liveTaskData.description || '';
+        document.getElementById('modalTaskDate').value = liveTaskData.deadline || liveTaskData.dueDate || '';
+        document.getElementById('modalTaskStatus').value = (liveTaskData.status || 'pending').toLowerCase();
 
-            const priorityRadio = document.querySelector(`input[name="priority"][value="${(liveTaskData.priority || '').toLowerCase()}"]`);
-            if (priorityRadio) priorityRadio.checked = true;
+        const categoryRadio = document.querySelector(`input[name="category"][value="${(liveTaskData.category || 'academic').toLowerCase()}"]`);
+        if (categoryRadio) categoryRadio.checked = true;
 
-            const visibilityRadio = document.querySelector(`input[name="visibility"][value="${(liveTaskData.visibility || 'private').toLowerCase()}"]`);
-            if (visibilityRadio) visibilityRadio.checked = true;
+        const priorityRadio = document.querySelector(`input[name="priority"][value="${(liveTaskData.priority || 'medium').toLowerCase()}"]`);
+        if (priorityRadio) priorityRadio.checked = true;
 
-            document.getElementById('editTaskModal').style.setProperty('display', 'flex', 'important');
-        });
+        const visibilityRadio = document.querySelector(`input[name="visibility"][value="${(liveTaskData.visibility || 'private').toLowerCase()}"]`);
+        if (visibilityRadio) visibilityRadio.checked = true;
 
-        // Submit Changes to Firebase
-        document.getElementById('editTaskForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!taskId) return;
+        document.getElementById('editTaskModal').style.setProperty('display', 'flex', 'important');
+    });
 
-            const checkedCategory = document.querySelector('input[name="category"]:checked');
-            const checkedPriority = document.querySelector('input[name="priority"]:checked');
-            const checkedVisibility = document.querySelector('input[name="visibility"]:checked');
+    document.getElementById('editTaskForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (taskId === null || taskId === '') return;
 
-            const updatedFields = {
-                title: document.getElementById('modalTaskTitle').value,
-                description: document.getElementById('modalTaskDesc').value,
-                deadline: document.getElementById('modalTaskDate').value,
-                dueDate: document.getElementById('modalTaskDate').value, // Sets both field mappings to ensure safety
-                status: document.getElementById('modalTaskStatus').value,
-                category: checkedCategory ? checkedCategory.value : 'general',
-                priority: checkedPriority ? checkedPriority.value : 'medium',
-                visibility: checkedVisibility ? checkedVisibility.value : 'private'
-            };
+        const checkedCategory = document.querySelector('input[name="category"]:checked');
+        const checkedPriority = document.querySelector('input[name="priority"]:checked');
+        const checkedVisibility = document.querySelector('input[name="visibility"]:checked');
 
+        const updatedFields = {
+            title: document.getElementById('modalTaskTitle').value,
+            description: document.getElementById('modalTaskDesc').value,
+            deadline: document.getElementById('modalTaskDate').value,
+            dueDate: document.getElementById('modalTaskDate').value, 
+            status: document.getElementById('modalTaskStatus').value,
+            category: checkedCategory ? checkedCategory.value : 'general',
+            priority: checkedPriority ? checkedPriority.value : 'medium',
+            visibility: checkedVisibility ? checkedVisibility.value : 'private'
+        };
+
+        if (isFirebaseTask) {
             try {
                 const docRef = doc(db, "tasks", taskId);
                 await updateDoc(docRef, updatedFields);
-                
-                // Refresh local tracking object and UI view nodes
                 liveTaskData = { ...liveTaskData, ...updatedFields };
                 renderUI(liveTaskData);
-                
                 closeEditModal();
-                alert("Changes saved to database successfully!");
+                alert("Changes saved to Firebase successfully!");
             } catch (err) {
-                console.error("Firestore update process exception: ", err);
-                alert("Failed to submit updates to the shared database.");
+                console.error(err);
+                alert("Failed to submit updates to Firestore.");
             }
-        });
-
-        // Delete Task from Firebase
-        document.getElementById('delete-task-btn').addEventListener('click', async () => {
-            if (!taskId) return;
-            if (confirm("Are you sure you want to permanently delete this task from the shared database?")) {
-                try {
-                    await deleteDoc(doc(db, "tasks", taskId));
-                    alert("Task permanently removed!");
-                    window.location.href = "my_tasks.html";
-                } catch (error) {
-                    console.error("Firestore removal target error: ", error);
-                    alert("Failed to drop database records.");
+        } else {
+            // Update local storage workflow fallback
+            const keys = ['sharedTasksList', 'tasksList', 'myTasksList', 'tasks'];
+            keys.forEach(key => {
+                let list = JSON.parse(localStorage.getItem(key));
+                if (list && list[taskId]) {
+                    list[taskId] = { ...list[taskId], ...updatedFields };
+                    localStorage.setItem(key, JSON.stringify(list));
                 }
-            }
-        });
-
-        // Modal Helpers Close Binding
-        function closeEditModal() {
-            document.getElementById('editTaskModal').style.setProperty('display', 'none', 'important');
+            });
+            liveTaskData = { ...liveTaskData, ...updatedFields };
+            renderUI(liveTaskData);
+            closeEditModal();
+            alert("Changes saved locally!");
         }
-        document.getElementById('close-modal-btn').addEventListener('click', closeEditModal);
-        document.getElementById('cancel-modal-btn').addEventListener('click', closeEditModal);
-    </script>
+    });
+
+    document.getElementById('delete-task-btn').addEventListener('click', async () => {
+        if (taskId === null || taskId === '') return;
+        if (!confirm("Permanently drop this record?")) return;
+
+        if (isFirebaseTask) {
+            try {
+                await deleteDoc(doc(db, "tasks", taskId));
+                alert("Task permanently removed from Firestore!");
+                window.location.href = "my_tasks.html";
+            } catch (error) {
+                alert("Failed to drop database records.");
+            }
+        } else {
+            const keys = ['sharedTasksList', 'tasksList', 'myTasksList', 'tasks'];
+            keys.forEach(key => {
+                let list = JSON.parse(localStorage.getItem(key));
+                if (list && list[taskId]) {
+                    list.splice(taskId, 1);
+                    localStorage.setItem(key, JSON.stringify(list));
+                }
+            });
+            alert("Task dropped from local state store.");
+            window.location.href = "my_tasks.html";
+        }
+    });
+
+    function closeEditModal() {
+        document.getElementById('editTaskModal').style.setProperty('display', 'none', 'important');
+    }
+    
+    document.getElementById('close-modal-btn').addEventListener('click', closeEditModal);
+    document.getElementById('cancel-modal-btn').addEventListener('click', closeEditModal);
+</script>
 </body>
 </html>
