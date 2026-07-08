@@ -1,6 +1,6 @@
 import { auth, db } from "./firebase.js"; 
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { collection, query, where, getDocsFromServer, doc, deleteDoc, addDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+import { collection, query, where, getDocsFromServer, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
 const userNameDisplay = document.getElementById("user-name");
 const tableBody = document.getElementById("taskGridBody");
@@ -104,7 +104,7 @@ function applyFiltersAndRender() {
                 <td style="text-transform: capitalize;">${task.priority || "—"}</td>
                 <td>${task.deadline || "—"}</td>
                 <td style="text-transform: capitalize;">${task.status || "—"}</td>
-                <td>
+                <td style="text-align: center;">
                     <button class="delete-btn" data-id="${task.id}" style="background-color: #FA6B6B; color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
                         DELETE
                     </button>
@@ -121,97 +121,63 @@ if (categoryFilter) categoryFilter.addEventListener("change", applyFiltersAndRen
 if (priorityFilter) priorityFilter.addEventListener("change", applyFiltersAndRender);
 if (statusFilter) statusFilter.addEventListener("change", applyFiltersAndRender);
 
+let taskToDeleteId = null;
+let activeDeleteButton = null;
 
-// DELETE TASK LOGIC
 if (tableBody) {
-    tableBody.addEventListener("click", async (e) => {
+    // We use event delegation here on the table body to catch clicks
+    tableBody.addEventListener("click", (e) => {
+        
+        // Check if the clicked element is the delete button
         if (e.target.classList.contains("delete-btn")) {
-            const taskId = e.target.getAttribute("data-id");
             
-            if (confirm("Are you sure you want to delete this task?")) {
-                try {
-                    e.target.style.opacity = "0.5"; 
-                    await deleteDoc(doc(db, "tasks", taskId));
-                    loadTasks(auth.currentUser.uid); 
-                } catch (error) {
-                    console.error("Error deleting task: ", error);
-                }
-            }
+            e.preventDefault(); // 🚀 MOVED THIS HERE! Now it only blocks the button, not the links.
+
+            taskToDeleteId = e.target.getAttribute("data-id");
+            activeDeleteButton = e.target;
+            
+            // Pop open the custom modal directly
+            const deleteModal = document.getElementById('deleteConfirmModal');
+            if(deleteModal) deleteModal.style.setProperty('display', 'flex', 'important');
         }
     });
 }
 
-// ADD TASK TO FIREBASE LOGIC
-const taskForm = document.getElementById("modalTaskForm");
+const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+const cancelDeleteBtn = document.getElementById("cancel-delete-btn");
 
-if (taskForm) {
-    taskForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
+if (confirmDeleteBtn) {
+    confirmDeleteBtn.addEventListener("click", async () => {
+        if (!taskToDeleteId) return;
         
-        if (!auth.currentUser) return alert("Please log in to add tasks.");
-
-        const title = document.getElementById('modalTaskTitle').value.trim();
-        const desc = document.getElementById('modalTaskDesc').value.trim();
-        const date = document.getElementById('modalTaskDate').value;
-        const status = document.getElementById('modalTaskStatus').value;
-        
-        const categoryElement = document.querySelector('input[name="category"]:checked');
-        const priorityElement = document.querySelector('input[name="priority"]:checked');
-        const visibilityElement = document.querySelector('input[name="visibility"]:checked');
-        
-        const shareEmailInput = document.getElementById('modalShareEmail');
-        const shareEmail = shareEmailInput ? shareEmailInput.value.trim() : '';
-
-        const submitBtn = document.getElementById('btnSaveSubmit') || taskForm.querySelector('button[type="submit"]');
-
-        if (!title) {
-            alert("Please enter a Task Title.");
-            return;
-        }
-
-        const newTask = {
-            title: title,
-            description: desc,
-            dueDate: date,
-            deadline: date,
-            category: categoryElement ? categoryElement.value : 'academic',
-            priority: priorityElement ? priorityElement.value : 'medium',
-            visibility: visibilityElement ? visibilityElement.value : 'private',
-            status: status,
-            completed: status === 'completed',
-            userId: auth.currentUser.uid, 
-            owner: auth.currentUser.email,
-            members: visibilityElement && visibilityElement.value === 'shared' ? shareEmail : 'None',
-            subtasks: [],
-            createdAt: new Date().toISOString()
-        };
-
         try {
-            if (submitBtn) {
-                submitBtn.innerText = "Saving...";
-                submitBtn.disabled = true;
-            }
-
-            await addDoc(collection(db, "tasks"), newTask);
-
-            const modal = document.getElementById('uniqueTaskFormModal');
-            if (modal) modal.style.setProperty('display', 'none', 'important');
+            confirmDeleteBtn.innerText = "Deleting...";
+            if (activeDeleteButton) activeDeleteButton.style.opacity = "0.5";
             
-            taskForm.reset();
-            if (submitBtn) {
-                submitBtn.innerText = "Save Task";
-                submitBtn.disabled = false;
-            }
-
-            loadTasks(auth.currentUser.uid);
-
+            // Delete from database
+            await deleteDoc(doc(db, "tasks", taskToDeleteId));
+            
+            // Close modal and refresh seamlessly
+            document.getElementById('deleteConfirmModal').style.setProperty('display', 'none', 'important');
+            confirmDeleteBtn.innerText = "Yes, Delete";
+            taskToDeleteId = null;
+            
+            loadTasks(auth.currentUser.uid); 
+            
         } catch (error) {
-            console.error("Error adding task: ", error);
-            alert("Failed to save task.");
-            if (submitBtn) {
-                submitBtn.innerText = "Save Task";
-                submitBtn.disabled = false;
-            }
+            console.error("Error deleting task: ", error);
+            // Replaced the native alert with a console error so it doesn't break immersion
+            console.error("Failed to delete task in Firestore.");
+            confirmDeleteBtn.innerText = "Yes, Delete";
+            if (activeDeleteButton) activeDeleteButton.style.opacity = "1";
         }
+    });
+}
+
+if (cancelDeleteBtn) {
+    cancelDeleteBtn.addEventListener("click", () => {
+        document.getElementById('deleteConfirmModal').style.setProperty('display', 'none', 'important');
+        taskToDeleteId = null;
+        activeDeleteButton = null;
     });
 }

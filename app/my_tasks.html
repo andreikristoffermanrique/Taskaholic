@@ -12,6 +12,7 @@
 <body>
 
     <div class="dashboard-container">
+        <!-- Sidebar Panel -->
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -53,6 +54,7 @@
             </a>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="main-content">
             <header class="content-header">
                 <div class="welcome-text">
@@ -64,6 +66,7 @@
                 </button>
             </header>
 
+            <!-- Filters Toolbar -->
             <section class="task-filter-stacked-container">
                 <div class="search-row-wrapper">
                     <div class="search-box-wrapper">
@@ -96,6 +99,7 @@
                 </div>
             </section>
 
+            <!-- Grid/Table Area -->
             <section class="tasks-table-main-container">
 
                 <table class="master-data-grid-table">
@@ -129,6 +133,7 @@
         </main>
     </div>
 
+    <!-- MODAL FOR CREATING NEW TASKS -->
     <div id="uniqueTaskFormModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
         <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
             
@@ -170,13 +175,13 @@
                     <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
                         <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
                             <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Due Date</label>
-                            <input type="date" id="modalTaskDate" style="padding: 6px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; text-align: center !important; font-size: 12px !important; background: #fff !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
+                            <input type="date" id="modalTaskDate" required style="padding: 6px !important; border-radius: 20px !important; border: 1px solid #b5b5b5 !important; text-align: center !important; font-size: 12px !important; background: #fff !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                         </div>
                         <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
                             <label style="font-weight: 500 !important; font-size: 13px !important; color: #333 !important;">Visibility</label>
                             <div style="display: flex !important; gap: 10px !important;">
                                 <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="private" checked style="accent-color: #e57373 !important;"> Private</label>
-                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="shared" style="accent-color: #e57373 !important;"> Shared</label>
+                                <label style="font-size: 12px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 3px !important; cursor: pointer !important;"><input type="radio" name="visibility" value="shared"> Shared</label>
                             </div>
                         </div>
                     </div>
@@ -201,13 +206,30 @@
                     </div>
                     <div style="display: flex !important; gap: 10px !important;">
                         <button type="button" onclick="closeAddTaskModal()" style="background: #fff !important; border: 1px solid #9c9c9c !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important;">Cancel</button>
-                        <button type="submit" id="save-new-task-btn" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
+                        <button type="submit" id="btnSaveSubmit" style="background: #ECA1A1 !important; border: 1px solid #c98888 !important; padding: 10px 24px !important; border-radius: 12px !important; cursor: pointer !important; font-weight: 500 !important; color: #333 !important; font-size: 14px !important; box-shadow: 0 2px 4px rgba(0,0,0,0.05) !important;">Save Task</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- BRANDED UI CUSTOM DELETE MODAL -->
+    <div id="deleteConfirmModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
+        <div style="background: #FBEFEF !important; padding: 30px !important; border-radius: 16px !important; border: 1px solid #000000 !important; width: 400px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; text-align: center; font-family: 'Inter', sans-serif !important;">
+            <div style="font-size: 44px; color: #FA6B6B; margin-bottom: 15px;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <h3 style="margin: 0 0 10px 0 !important; font-size: 20px !important; font-weight: 700 !important; color: #1a1a1a !important;">Delete Task?</h3>
+            <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Are you sure you want to permanently delete this task? This action cannot be undone.</p>
+            
+            <div style="display: flex !important; justify-content: center !important; gap: 12px !important;">
+                <button type="button" id="cancel-delete-btn" style="background: #fff !important; border: 1px solid #000000 !important; padding: 10px 24px !important; border-radius: 8px !important; cursor: pointer !important; font-weight: 600 !important; color: #333 !important; font-size: 13px !important; transition: background-color 0.2s;">Cancel</button>
+                <button type="button" id="confirm-delete-btn" style="background: #FA6B6B !important; border: 1px solid #000000 !important; padding: 10px 24px !important; border-radius: 8px !important; cursor: pointer !important; font-weight: 600 !important; color: #FFF !important; font-size: 13px !important; transition: opacity 0.2s;">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script type="module" src="my_tasks.js"></script>
     <script type="module" src="add_task.js"></script> 
     <script>
