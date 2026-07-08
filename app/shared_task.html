@@ -33,6 +33,35 @@
             background-color: #FAF5F5;
         }
 
+/* Update these in your style.css */
+.shared-page-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: auto; /* Change from 100vh to auto so it flows naturally */
+}
+
+#view-shared-tasks {
+    flex: 1; 
+    min-height: 200px; /* IMPORTANT: Keeps the area visible even with 0 tasks */
+    overflow-y: auto;
+}
+
+#sharedBoardContent {
+    min-height: 50px; /* Ensures the area exists even if empty */
+    width: 100%;
+}
+
+#sharedBoardFooter {
+    /* Reduce this value to move the footer HIGHER (closer to tasks) */
+    margin-top: -130px; 
+    
+    /* Reduce padding-top to make the space inside the footer smaller */
+    padding-top: 5px; 
+    
+    background: #ffffff;
+}
+
         /* Column Specific Text Alignments to Lock Under Pill Centers */
         .col-task-name {
             text-align: left;
@@ -169,18 +198,26 @@
     <div id="invitations-list" style="display: flex; flex-direction: column; gap: 15px;"></div>
 </div>
 
-                <div class="shared-board-footer" id="sharedBoardFooter">
-    <div class="share-action-row">
-        <label>Invite Collaborators</label>
-        <div class="share-controls">
-            <input type="text" class="share-input" id="quickInviteEmail" placeholder="username@gbox.adnu.edu.ph">
-            <select class="share-select" id="quickInviteRole">
-                <option value="edit">Can Edit</option>
-                <option value="view">Can View</option>
-            </select>
-            <button type="button" class="btn-share-action" id="quickInviteBtn">Send Invitation</button>
+<div class="shared-page-container">
+    
+    <div id="view-shared-tasks">
+        <div id="sharedBoardContent"></div>
+    </div>
+
+    <div class="shared-board-footer" id="sharedBoardFooter">
+        <div class="share-action-row">
+            <label>Invite Collaborators</label>
+            <div class="share-controls">
+                <input type="text" class="share-input" id="quickInviteEmail" placeholder="username@gbox.adnu.edu.ph">
+                <select class="share-select" id="quickInviteRole">
+                    <option value="edit">Can Edit</option>
+                    <option value="view">Can View</option>
+                </select>
+                <button type="button" class="btn-share-action" id="quickInviteBtn">Send Invitation</button>
+            </div>
         </div>
     </div>
+    
 </div>
 
                     <div class="share-action-row">
