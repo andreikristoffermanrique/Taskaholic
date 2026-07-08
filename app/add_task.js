@@ -67,26 +67,3 @@ async function loadTasks(uid) {
         if (tableBody) tableBody.style.opacity = '1';
     }
 }
-
-// Delete Event Listener attached to the Grid
-if (tableBody) {
-    tableBody.addEventListener("click", async (e) => {
-        if (e.target.classList.contains("delete-btn")) {
-            const taskId = e.target.getAttribute("data-id");
-            
-            if (confirm("Are you sure you want to delete this task?")) {
-                try {
-                    e.target.style.opacity = '0.5';
-                    e.target.innerText = "DELETING...";
-                    await deleteDoc(doc(db, "tasks", taskId));
-                    loadTasks(auth.currentUser.uid); // Refresh table seamlessly
-                } catch (error) {
-                    console.error("Error deleting task: ", error);
-                    alert("Failed to delete task.");
-                    e.target.style.opacity = '1';
-                    e.target.innerText = "DELETE";
-                }
-            }
-        }
-    });
-}

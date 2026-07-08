@@ -15,43 +15,19 @@
     
     <aside class="sidebar-panel">
         <div class="brand-wrapper">
-            <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
-            <h1 class="brand-title">Taskaholic</h1>
+            <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
+            <span class="brand-title">Taskaholic</span>
         </div>
-
         <nav class="sidebar-nav">
-            <a href="workload.html" class="nav-item">
-                <i class="fa-solid fa-book-open"></i> Workload Overview
-            </a>
-
-            <a href="Dashboard.html" class="nav-item">
-                <i class="fa-solid fa-table-cells-large"></i> Dashboard
-            </a>
-
-            <a href="my_tasks.html" class="nav-item active">
-                <i class="fa-solid fa-clapperboard"></i> My Tasks
-            </a>
-
-            <a href="shared_task.html" class="nav-item">
-                <i class="fa-solid fa-user-group"></i> Shared Tasks
-            </a>
-
-            <a href="notifications.html" class="nav-item">
-                <i class="fa-solid fa-bell"></i> Notifications
-            </a>
-
-            <a href="settings.html" class="nav-item">
-                <i class="fa-solid fa-gear"></i> Settings
-            </a>
-
-            <a href="profile.html" class="nav-item">
-                <i class="fa-solid fa-circle-user"></i> Profile
-            </a>
+            <a href="workload.html" class="nav-item"><i class="fa-solid fa-book-open"></i> Workload Overview</a>
+            <a href="Dashboard.html" class="nav-item"><i class="fa-solid fa-table-cells-large"></i> Dashboard</a>
+            <a href="my_tasks.html" class="nav-item active"><i class="fa-solid fa-clapperboard"></i> My Tasks</a>
+            <a href="shared_task.html" class="nav-item"><i class="fa-solid fa-user-group"></i> Shared Tasks</a>
+            <a href="notifications.html" class="nav-item"><i class="fa-solid fa-bell"></i> Notifications</a>
+            <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i> Settings</a>
+            <a href="profile.html" class="nav-item"><i class="fa-solid fa-circle-user"></i> Profile</a>
         </nav>
-
-        <a href="login.html" class="logout-btn">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
-        </a>
+        <a href="login.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
     </aside>
 
     <main class="main-content" style="background-color: #FCF8F8;">
@@ -61,7 +37,7 @@
             </a>
             <div style="display: flex; gap: 12px;">
                 <button id="edit-task-btn" style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">EDIT</button>
-                <button id="delete-task-btn" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;">DELETE</button>
+                <button id="delete-task-btn" style="background-color: #FA6B6B; color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">DELETE</button>
             </div>
         </div>
 
@@ -122,6 +98,21 @@
             </div>
         </div>
     </main>
+</div>
+
+<div id="deleteConfirmModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
+    <div style="background: #FBEFEF !important; padding: 30px !important; border-radius: 16px !important; border: 1px solid #000000 !important; width: 400px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; text-align: center; font-family: 'Inter', sans-serif !important;">
+        <div style="font-size: 44px; color: #FA6B6B; margin-bottom: 15px;">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+        <h3 style="margin: 0 0 10px 0 !important; font-size: 20px !important; font-weight: 700 !important; color: #1a1a1a !important;">Delete Task?</h3>
+        <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Are you sure you want to permanently delete this task? This action cannot be undone.</p>
+        
+        <div style="display: flex !important; justify-content: center !important; gap: 12px !important;">
+            <button type="button" id="cancel-delete-btn" style="background: #fff !important; border: 1px solid #000000 !important; padding: 10px 24px !important; border-radius: 8px !important; cursor: pointer !important; font-weight: 600 !important; color: #333 !important; font-size: 13px !important; transition: background-color 0.2s;">Cancel</button>
+            <button type="button" id="confirm-delete-btn" style="background: #FA6B6B !important; border: 1px solid #000000 !important; padding: 10px 24px !important; border-radius: 8px !important; cursor: pointer !important; font-weight: 600 !important; color: #FFF !important; font-size: 13px !important; transition: opacity 0.2s;">Yes, Delete</button>
+        </div>
+    </div>
 </div>
 
 <div id="editTaskModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 2147483647; justify-content: center; align-items: center;">
@@ -197,7 +188,7 @@
     const taskId = params.get('id');
     let liveTaskData = null;
     let isFirebaseTask = false;
-    let matchingLocalStorageKey = null; // Track exact origin storage bucket if local
+    let matchingLocalStorageKey = null; 
 
     onAuthStateChanged(auth, async (user) => {
         if (!user) {  
@@ -231,8 +222,9 @@
         const keys = ['sharedTasksList', 'tasksList', 'myTasksList', 'tasks'];
         for (let key of keys) {
             const list = JSON.parse(localStorage.getItem(key)) || [];
-            if (list[id]) {
-                liveTaskData = list[id];
+            const foundTask = list.find(t => String(t.id) === String(id));
+            if (foundTask) {
+                liveTaskData = foundTask;
                 matchingLocalStorageKey = key;
                 isFirebaseTask = false;
                 renderUI(liveTaskData);
@@ -278,9 +270,6 @@
         document.getElementById('detail-description').textContent = bodyText;
     }
 
-    // ==========================================
-    // DYNAMIC NESTED SUBTASKS CONTEXT MANAGEMENT
-    // ==========================================
     function renderSubTasks() {
         const container = document.getElementById('subtasks-container');
         const subtasks = liveTaskData.subtasks || [];
@@ -300,10 +289,9 @@
             </div>
         `).join('');
 
-        // Attach dynamic real-time structural event listener closures
         document.querySelectorAll('.subtask-checkbox').forEach(box => {
             box.addEventListener('change', async (e) => {
-                const idx = e.target.getAttribute('data-index');
+                const idx = parseInt(e.target.getAttribute('data-index'), 10);
                 liveTaskData.subtasks[idx].completed = e.target.checked;
                 await commitSubTasksChanges();
             });
@@ -311,14 +299,13 @@
 
         document.querySelectorAll('.subtask-delete-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
-                const idx = e.target.getAttribute('data-index');
+                const idx = parseInt(e.target.getAttribute('data-index'), 10);
                 liveTaskData.subtasks.splice(idx, 1);
                 await commitSubTasksChanges();
             });
         });
     }
 
-    // Capture user input and add sub-tasks
     async function appendNewSubTask() {
         const input = document.getElementById('subtask-input');
         const text = input.value.trim();
@@ -327,7 +314,7 @@
         if (!liveTaskData.subtasks) liveTaskData.subtasks = [];
         liveTaskData.subtasks.push({ text: text, completed: false });
         
-        input.value = ""; // Clear input field
+        input.value = ""; 
         await commitSubTasksChanges();
     }
 
@@ -336,7 +323,6 @@
         if (e.key === 'Enter') appendNewSubTask();
     });
 
-    // Save changes to Firebase or LocalStorage depending on data source
     async function commitSubTasksChanges() {
         if (isFirebaseTask) {
             try {
@@ -347,15 +333,15 @@
             }
         } else if (matchingLocalStorageKey) {
             let list = JSON.parse(localStorage.getItem(matchingLocalStorageKey)) || [];
-            if (list[taskId]) {
-                list[taskId].subtasks = liveTaskData.subtasks;
+            const taskIndex = list.findIndex(t => String(t.id) === String(taskId));
+            if (taskIndex !== -1) {
+                list[taskIndex].subtasks = liveTaskData.subtasks;
                 localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
             }
         }
         renderSubTasks();
     }
 
-    // STANDARD PARAMETERS EDIT MODAL CODE
     document.getElementById('edit-task-btn').addEventListener('click', () => {
         if (!liveTaskData) return;
         document.getElementById('modalTaskTitle').value = liveTaskData.title || '';
@@ -397,29 +383,71 @@
                 renderUI(liveTaskData);
                 closeEditModal();
             } catch (err) {
-                alert("Failed updating Firestore parameters.");
+                console.error("Failed updating Firestore parameters: ", err);
+                // Soft UI feedback instead of native alert
+                const titleField = document.getElementById('modalTaskTitle');
+                titleField.style.borderColor = 'red';
+                setTimeout(() => titleField.style.borderColor = '#b5b5b5', 2000);
             }
         } else if (matchingLocalStorageKey) {
             let list = JSON.parse(localStorage.getItem(matchingLocalStorageKey));
-            list[taskId] = { ...list[taskId], ...updatedFields };
-            localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
-            liveTaskData = { ...liveTaskData, ...updatedFields };
-            renderUI(liveTaskData);
-            closeEditModal();
+            const taskIndex = list.findIndex(t => String(t.id) === String(taskId));
+            if (taskIndex !== -1) {
+                list[taskIndex] = { ...list[taskIndex], ...updatedFields };
+                localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
+                liveTaskData = { ...liveTaskData, ...updatedFields };
+                renderUI(liveTaskData);
+                closeEditModal();
+            }
         }
     });
 
-    document.getElementById('delete-task-btn').addEventListener('click', async () => {
-        if (!confirm("Permanently drop this record?")) return;
-        if (isFirebaseTask) {
-            await deleteDoc(doc(db, "tasks", taskId));
-        } else if (matchingLocalStorageKey) {
-            let list = JSON.parse(localStorage.getItem(matchingLocalStorageKey));
-            list.splice(taskId, 1);
-            localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
-        }
-        window.location.href = "my_tasks.html";
-    });
+    // ===============================================
+    // BRANDED UI DELETE MODAL LOGIC FOR TASK DETAILS
+    // ===============================================
+    const openDeleteModalBtn = document.getElementById('delete-task-btn');
+    const deleteModal = document.getElementById('deleteConfirmModal');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+
+    if (openDeleteModalBtn) {
+        openDeleteModalBtn.addEventListener('click', () => {
+            if (taskId === null || taskId === '') return;
+            if (deleteModal) deleteModal.style.setProperty('display', 'flex', 'important');
+        });
+    }
+
+    if (cancelDeleteBtn) {
+        cancelDeleteBtn.addEventListener('click', () => {
+            if (deleteModal) deleteModal.style.setProperty('display', 'none', 'important');
+        });
+    }
+
+    if (confirmDeleteBtn) {
+        confirmDeleteBtn.addEventListener('click', async () => {
+            confirmDeleteBtn.innerText = "Deleting...";
+            openDeleteModalBtn.style.opacity = '0.5';
+
+            try {
+                if (isFirebaseTask) {
+                    await deleteDoc(doc(db, "tasks", taskId));
+                } else if (matchingLocalStorageKey) {
+                    let list = JSON.parse(localStorage.getItem(matchingLocalStorageKey));
+                    const taskIndex = list.findIndex(t => String(t.id) === String(taskId));
+                    if (taskIndex !== -1) {
+                        list.splice(taskIndex, 1);
+                        localStorage.setItem(matchingLocalStorageKey, JSON.stringify(list));
+                    }
+                }
+                window.location.href = "my_tasks.html";
+            } catch (error) {
+                console.error("Deletion failed:", error);
+                confirmDeleteBtn.innerText = "Yes, Delete";
+                openDeleteModalBtn.style.opacity = '1';
+                // Soft fallback, removed immersion-breaking alert
+            }
+        });
+    }
 
     function closeEditModal() {
         document.getElementById('editTaskModal').style.setProperty('display', 'none', 'important');
