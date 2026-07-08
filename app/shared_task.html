@@ -149,34 +149,39 @@
                 </button>
             </header>
 
-            <div class="sub-nav-container">
-                <span class="sub-nav-item active" id="tabSharedTasks">Shared Task</span>
-                <span class="sub-nav-item" id="tabInvitations">Invitations</span>
-            </div>
-            <hr class="sub-nav-divider">
+            <div class="sub-nav-container"> 
+    <span class="sub-nav-item active" id="tabSharedTasks">Shared Task</span>
+    <span class="sub-nav-item" id="tabInvitations">Invitations</span>
+</div>
 
-            <section class="shared-board-container">
-                <div class="shared-board-header">
-                    <span class="board-header-pill" id="colHeader1">Task Name</span>
-                    <span class="board-header-pill" id="colHeader2">Project Owner</span>
-                    <span class="board-header-pill" id="colHeader3">Members</span>
-                    <span class="board-header-pill" id="colHeader4">Status</span>
-                </div>
+<div id="view-shared-tasks">
+    <div class="shared-board-header">
+        <span class="board-header-pill" id="colHeader1">Task Name</span>
+        <span class="board-header-pill" id="colHeader2">Project Owner</span>
+        <span class="board-header-pill" id="colHeader3">Members</span>
+        <span class="board-header-pill" id="colHeader4">Status</span>
+    </div>
+    <div class="shared-board-content" id="sharedBoardContent"></div>
+</div>
 
-                <div class="shared-board-content" id="sharedBoardContent"></div>
+<div id="view-invitations" style="display: none; padding: 20px;">
+    <h3>Pending Invitations</h3>
+    <div id="invitations-list" style="display: flex; flex-direction: column; gap: 15px;"></div>
+</div>
 
                 <div class="shared-board-footer" id="sharedBoardFooter">
-                    <div class="share-action-row">
-                        <label>Invite Collaborators</label>
-                        <div class="share-controls">
-                            <input type="text" class="share-input" id="quickInviteEmail" placeholder="username@gbox.adnu.edu.ph">
-                            <select class="share-select">
-                                <option value="edit">Can Edit</option>
-                                <option value="view">Can View</option>
-                            </select>
-                            <button type="button" class="btn-share-action" id="quickInviteBtn">Send Invitation</button>
-                        </div>
-                    </div>
+    <div class="share-action-row">
+        <label>Invite Collaborators</label>
+        <div class="share-controls">
+            <input type="text" class="share-input" id="quickInviteEmail" placeholder="username@gbox.adnu.edu.ph">
+            <select class="share-select" id="quickInviteRole">
+                <option value="edit">Can Edit</option>
+                <option value="view">Can View</option>
+            </select>
+            <button type="button" class="btn-share-action" id="quickInviteBtn">Send Invitation</button>
+        </div>
+    </div>
+</div>
 
                     <div class="share-action-row">
                         <label>Share Link</label>
@@ -267,240 +272,8 @@
         </div>
     </div>
 
-    <!-- Tasks and Invitation Engine Controller -->
-    <script>
-        function openAddTaskModal() {
-            document.getElementById('addTaskModal').style.display = 'flex';
-        }
 
-        function closeAddTaskModal() {
-            document.getElementById('addTaskModal').style.display = 'none';
-            document.getElementById('modalFormSubmit').reset();
-            document.getElementById('gboxErrorHint').style.display = 'none';
-            document.getElementById('modalShareContainer').style.display = 'flex';
-        }
 
-        document.sidebarTasksEngine = function() {
-            const boardContent = document.getElementById('sharedBoardContent');
-            const visibilityRadios = document.querySelectorAll('input[name="visibility"]');
-            const shareContainer = document.getElementById('modalShareContainer');
-            const shareEmailInput = document.getElementById('modalShareEmail');
-            const gboxErrorHint = document.getElementById('gboxErrorHint');
-            
-            const tabSharedTasks = document.getElementById('tabSharedTasks');
-            const tabInvitations = document.getElementById('tabInvitations');
-            const pageSubtitle = document.getElementById('pageSubtitle');
-            const sharedBoardFooter = document.getElementById('sharedBoardFooter');
-            
-            const colHeader3 = document.getElementById('colHeader3');
-            const colHeader4 = document.getElementById('colHeader4');
-
-            const CURRENT_USER_GBOX = "you@gbox.adnu.edu.ph";
-            let currentTab = "shared"; 
-
-            let taskStorage = JSON.parse(localStorage.getItem('sharedTasksList')) || [];
-            let invitationStorage = JSON.parse(localStorage.getItem('incomingInvitationsList')) || [];
-
-            function renderSharedBoard() {
-                boardContent.innerHTML = "";
-
-                if (currentTab === "shared") {
-                    pageSubtitle.textContent = "Tasks you are collaborating on";
-                    colHeader3.textContent = "Members";
-                    colHeader4.textContent = "Status";
-                    sharedBoardFooter.style.display = "block";
-
-                    if(taskStorage.length === 0) {
-                        boardContent.innerHTML = `<div style="padding:40px; grid-column: 1 / -1; text-align:center; color:#777; font-size:14px;">No active shared collaborative tasks yet. Create one above!</div>`;
-                        return;
-                    }
-
-                    taskStorage.forEach((task, index) => {
-                        const row = document.createElement('div');
-                        row.className = 'shared-task-row';
-                        
-                        let statusClass = "status-pending";
-                        let statusText = "Pending";
-                        if (task.status === "progress") { statusClass = "status-progress"; statusText = "In Progress"; }
-                        if (task.status === "completed") { statusClass = "status-completed"; statusText = "Completed"; }
-
-                        // Links dynamically to task_details.html with parameters
-                        row.innerHTML = `
-                            <strong class="col-task-name">
-                                <a href="task_details.html?id=${index}" style="color: #000; text-decoration: none; font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='#c98888'" onmouseout="this.style.color='#000'">
-                                    ${task.title}
-                                </a>
-                            </strong>
-                            <span class="col-project-owner" style="color:#444;">${task.owner}</span>
-                            <span class="col-members-invite" style="color:#444; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" title="${task.members}">${task.members}</span>
-                            <div class="status-cell"><span class="status-pill ${statusClass}">${statusText}</span></div>
-                        `;
-                        boardContent.appendChild(row);
-                    });
-
-                } else {
-                    pageSubtitle.textContent = "Pending collaboration requests sent to you";
-                    colHeader3.textContent = "Invite From";
-                    colHeader4.textContent = "Actions";
-                    sharedBoardFooter.style.display = "none"; 
-
-                    if(invitationStorage.length === 0) {
-                        boardContent.innerHTML = `<div style="padding:40px; grid-column: 1 / -1; text-align:center; color:#777; font-size:14px;">You have no pending invitations at this time.</div>`;
-                        return;
-                    }
-
-                    invitationStorage.forEach((invite, index) => {
-                        const row = document.createElement('div');
-                        row.className = 'shared-task-row';
-                        
-                        row.innerHTML = `
-                            <strong class="col-task-name" style="font-weight:600; color:#000;">${invite.title}</strong>
-                            <span class="col-project-owner" style="color:#444;">${invite.owner}</span>
-                            <span class="col-members-invite" style="color:#444;">${invite.owner}</span>
-                            <div class="actions-cell">
-                                <button class="btn-invite-confirm" onclick="respondToInvitation(${index}, true)">Confirm</button>
-                                <button class="btn-invite-decline" onclick="respondToInvitation(${index}, false)">Decline</button>
-                            </div>
-                        `;
-                        boardContent.appendChild(row);
-                    });
-                }
-            }
-
-            window.respondToInvitation = function(index, approved) {
-                const targetedInvite = invitationStorage[index];
-                
-                if (approved) {
-                    taskStorage.push({
-                        title: targetedInvite.title,
-                        owner: targetedInvite.owner,
-                        members: CURRENT_USER_GBOX,
-                        status: "pending",
-                        description: targetedInvite.description || "",
-                        category: targetedInvite.category || "academic",
-                        priority: targetedInvite.priority || "high",
-                        dueDate: targetedInvite.dueDate || ""
-                    });
-                    localStorage.setItem('sharedTasksList', JSON.stringify(taskStorage));
-                    alert(`Accepted invitation to collaborate on "${targetedInvite.title}"!`);
-                } else {
-                    alert(`Declined invitation to join "${targetedInvite.title}".`);
-                }
-
-                invitationStorage.splice(index, 1);
-                localStorage.setItem('incomingInvitationsList', JSON.stringify(invitationStorage));
-                renderSharedBoard();
-            };
-
-            tabSharedTasks.addEventListener('click', () => {
-                tabInvitations.classList.remove('active');
-                tabSharedTasks.classList.add('active');
-                currentTab = "shared";
-                renderSharedBoard();
-            });
-
-            tabInvitations.addEventListener('click', () => {
-                tabSharedTasks.classList.remove('active');
-                tabInvitations.classList.add('active');
-                currentTab = "invitations";
-                renderSharedBoard();
-            });
-
-            visibilityRadios.forEach(radio => {
-                radio.addEventListener('change', (e) => {
-                    if (e.target.value === 'shared') {
-                        shareContainer.style.display = 'flex';
-                    } else {
-                        shareContainer.style.display = 'none';
-                        gboxErrorHint.style.display = 'none';
-                    }
-                });
-            });
-
-            shareEmailInput.addEventListener('input', () => {
-                const val = shareEmailInput.value.trim().toLowerCase();
-                if (val === "" || val.endsWith('@gbox.adnu.edu.ph')) {
-                    gboxErrorHint.style.display = 'none';
-                } else {
-                    gboxErrorHint.style.display = 'block';
-                }
-            });
-
-            document.getElementById('btnSaveTask').addEventListener('click', () => {
-                const title = document.getElementById('modalTitle').value.trim();
-                const desc = document.getElementById('modalDesc').value.trim();
-                const category = document.querySelector('input[name="category"]:checked').value;
-                const priority = document.querySelector('input[name="priority"]:checked').value;
-                const dueDate = document.getElementById('modalDate').value.trim();
-                const isShared = document.querySelector('input[name="visibility"]:checked').value === 'shared';
-                const shareEmail = shareEmailInput.value.trim().toLowerCase();
-
-                if (!title) {
-                    alert("Please fill out the Task Title.");
-                    return;
-                }
-
-                if (isShared && (!shareEmail || !shareEmail.endsWith('@gbox.adnu.edu.ph'))) {
-                    alert("Please enter a valid target @gbox.adnu.edu.ph address to share this task.");
-                    return;
-                }
-
-                const newTask = {
-                    title: title,
-                    description: desc,
-                    category: category,
-                    priority: priority,
-                    dueDate: dueDate,
-                    owner: CURRENT_USER_GBOX,
-                    members: isShared ? shareEmail : "None",
-                    status: document.getElementById('modalStatus').value
-                };
-
-                taskStorage.push(newTask);
-                localStorage.setItem('sharedTasksList', JSON.stringify(taskStorage));
-                
-                tabInvitations.classList.remove('active');
-                tabSharedTasks.classList.add('active');
-                currentTab = "shared";
-                renderSharedBoard();
-                closeAddTaskModal();
-            });
-
-            document.getElementById('quickInviteBtn').addEventListener('click', () => {
-                const emailInput = document.getElementById('quickInviteEmail');
-                const targetEmail = emailInput.value.trim().toLowerCase();
-
-                if (!targetEmail || !targetEmail.endsWith('@gbox.adnu.edu.ph')) {
-                    alert("Please input a valid @gbox.adnu.edu.ph account line.");
-                    return;
-                }
-
-                const newQuickTask = {
-                    title: "Quick Invited Collaboration Task",
-                    description: "Quick task layout entry point.",
-                    category: "project",
-                    priority: "medium",
-                    dueDate: "As assigned",
-                    owner: CURRENT_USER_GBOX,
-                    members: targetEmail,
-                    status: "pending"
-                };
-
-                taskStorage.push(newQuickTask);
-                localStorage.setItem('sharedTasksList', JSON.stringify(taskStorage));
-                emailInput.value = "";
-                
-                tabInvitations.classList.remove('active');
-                tabSharedTasks.classList.add('active');
-                currentTab = "shared";
-                renderSharedBoard();
-                alert("Invitation sent successfully!");
-            });
-
-            renderSharedBoard();
-        };
-
-        document.addEventListener("DOMContentLoaded", document.sidebarTasksEngine);
-    </script>
+    <script type="module" src="shared_task.js"></script>
 </body>
 </html>
