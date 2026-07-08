@@ -7,6 +7,33 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Laila:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Precision alignment for the dropdown style update */
+        .privacy-dropdown-select {
+            background-color: #F5D6D6;
+            color: #000;
+            border: 1px solid #b5b5b5;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 30px;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 4 5'><path fill='%23000' d='M2 0L0 2h4zm0 5L0 3h4z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 8px;
+            transition: background-color 0.2s;
+        }
+        .privacy-dropdown-select:hover {
+            background-color: #ECA1A1;
+        }
+    </style>
 </head>
 <body>
 
@@ -85,9 +112,10 @@
                                     <h4>Profile Visibility</h4>
                                     <p>Choose who can see your profile information</p>
                                 </div>
-                                <button class="privacy-dropdown-btn">
-                                    <i class="fa-solid fa-caret-down"></i> Only Me
-                                </button>
+                                <select class="privacy-dropdown-select" id="profileVisibility">
+                                    <option value="only-me">Only Me</option>
+                                    <option value="everyone">Everyone</option>
+                                </select>
                             </div>
 
                             <div class="privacy-row">
@@ -96,7 +124,7 @@
                                     <p>Allow others to see your email address</p>
                                 </div>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" id="showEmailToggle">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -107,7 +135,7 @@
                                     <p>Allow others to invite you to collaborations on tasks</p>
                                 </div>
                                 <label class="toggle-switch">
-                                    <input type="checkbox" checked>
+                                    <input type="checkbox" id="allowInvitesToggle">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -120,5 +148,46 @@
         </main>
     </div>
 
+    <!-- Privacy Settings Engine Controller -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const visibilitySelect = document.getElementById("profileVisibility");
+            const showEmailToggle = document.getElementById("showEmailToggle");
+            const allowInvitesToggle = document.getElementById("allowInvitesToggle");
+
+            // Define fallback configuration defaults
+            const defaults = {
+                visibility: "only-me",
+                showEmail: true,
+                allowInvites: true
+            };
+
+            // Fetch stored user configurations from local storage
+            let privacySettings = JSON.parse(localStorage.getItem("taskaholic_privacy_settings")) || defaults;
+
+            // Gracefully handle if legacy data contained the removed option
+            if (privacySettings.visibility === "gbox-users") {
+                privacySettings.visibility = "only-me";
+            }
+
+            // Initialize UI elements state matching values
+            visibilitySelect.value = privacySettings.visibility;
+            showEmailToggle.checked = privacySettings.showEmail;
+            allowInvitesToggle.checked = privacySettings.allowInvites;
+
+            // Commit modifications to local state allocations
+            function savePrivacySettings() {
+                privacySettings.visibility = visibilitySelect.value;
+                privacySettings.showEmail = showEmailToggle.checked;
+                privacySettings.allowInvites = allowInvitesToggle.checked;
+                localStorage.setItem("taskaholic_privacy_settings", JSON.stringify(privacySettings));
+            }
+
+            // Bind contextual real-time update engine hooks
+            visibilitySelect.addEventListener("change", savePrivacySettings);
+            showEmailToggle.addEventListener("change", savePrivacySettings);
+            allowInvitesToggle.addEventListener("change", savePrivacySettings);
+        });
+    </script>
 </body>
 </html>
