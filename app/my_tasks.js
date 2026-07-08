@@ -7,6 +7,15 @@ const tableBody = document.getElementById("taskGridBody");
 const loadingIndicator = document.getElementById("loading");
 const emptyStateContainer = document.getElementById("emptyStateContainer");
 
+// Get references to search and filter inputs
+const searchInput = document.getElementById("taskSearchInput");
+const categoryFilter = document.getElementById("categoryFilter");
+const priorityFilter = document.getElementById("priorityFilter");
+const statusFilter = document.getElementById("statusFilter");
+
+// Global array to store fetched tasks from server
+let allTasks = [];
+
 onAuthStateChanged(auth, async (user) => { 
     if (user) {
         const nameToDisplay = user.displayName || user.email.split('@')[0];
@@ -26,39 +35,18 @@ async function loadTasks(uid) {
         const q = query(collection(db, "tasks"), where("userId", "==", uid));
         const querySnapshot = await getDocsFromServer(q);
 
-        if (querySnapshot.empty) {
-            if (emptyStateContainer) emptyStateContainer.style.display = 'block';
-            if (tableBody) tableBody.innerHTML = ""; 
-        } else {
-            if (emptyStateContainer) emptyStateContainer.style.display = 'none';
-            
-            if (tableBody) {
-                tableBody.innerHTML = ""; 
-                querySnapshot.forEach((doc) => {
-                    const task = doc.data();
-                    const tr = document.createElement("tr");
+        allTasks = []; // Clear local memory storage
 
-                    // Notice the new styled PINK DELETE BUTTON
-                    tr.innerHTML = `
-                        <td>
-                            <a href="task_details.html?id=${doc.id}" style="color: #000000; text-decoration: none;">
-                                <strong style="text-decoration: underline; cursor: pointer;">${task.title || "—"}</strong>
-                            </a>
-                        </td>
-                        <td style="text-transform: capitalize;">${task.category || "—"}</td>
-                        <td style="text-transform: capitalize;">${task.priority || "—"}</td>
-                        <td>${task.deadline || "—"}</td>
-                        <td style="text-transform: capitalize;">${task.status || "—"}</td>
-                        <td>
-                            <button class="delete-btn" data-id="${doc.id}" style="background-color: #FA6B6B; color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
-                                DELETE
-                            </button>
-                        </td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
-            }
-        }
+        querySnapshot.forEach((doc) => {
+            allTasks.push({
+                id: doc.id,
+                ...doc.data()
+            });
+        });
+
+        // Initial application of rules and rendering
+        applyFiltersAndRender();
+
     } catch (error) {
         console.error("Error loading tasks: ", error);
     } finally {
@@ -66,6 +54,73 @@ async function loadTasks(uid) {
         if (tableBody) tableBody.style.opacity = '1';
     }
 }
+
+// Function to handle client-side filtering and table structure population
+function applyFiltersAndRender() {
+    if (!tableBody) return;
+
+    const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : "";
+    const selectedCategory = categoryFilter ? categoryFilter.value : "all";
+    const selectedPriority = priorityFilter ? priorityFilter.value : "all";
+    const selectedStatus = statusFilter ? statusFilter.value : "all";
+
+    // Perform deep client-side filtering profile operations
+    const filteredTasks = allTasks.filter(task => {
+        const matchesSearch = (task.title || "").toLowerCase().includes(searchTerm) || 
+                              (task.description || "").toLowerCase().includes(searchTerm);
+        
+        const matchesCategory = selectedCategory === "all" || (task.category || "").toLowerCase() === selectedCategory;
+        const matchesPriority = selectedPriority === "all" || (task.priority || "").toLowerCase() === selectedPriority;
+        const matchesStatus = selectedStatus === "all" || (task.status || "").toLowerCase() === selectedStatus;
+
+        return matchesSearch && matchesCategory && matchesPriority && matchesStatus;
+    });
+
+    // Reset layout surface area completely
+    tableBody.innerHTML = "";
+
+    // Suppress external raw styling containers to maintain grid integrity
+    if (emptyStateContainer) emptyStateContainer.style.display = 'none';
+
+    if (filteredTasks.length === 0) {
+        // Render a clean, perfectly centered "No task found" message across all columns
+        const emptyTr = document.createElement("tr");
+        emptyTr.innerHTML = `
+            <td colspan="6" style="text-align: center; padding: 60px 0; color: #333; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600;">
+                No task found
+            </td>
+        `;
+        tableBody.appendChild(emptyTr);
+    } else {
+        filteredTasks.forEach((task) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>
+                    <a href="task_details.html?id=${task.id}" style="color: #000000; text-decoration: none;">
+                        <strong style="text-decoration: underline; cursor: pointer;">${task.title || "—"}</strong>
+                    </a>
+                </td>
+                <td style="text-transform: capitalize;">${task.category || "—"}</td>
+                <td style="text-transform: capitalize;">${task.priority || "—"}</td>
+                <td>${task.deadline || "—"}</td>
+                <td style="text-transform: capitalize;">${task.status || "—"}</td>
+                <td>
+                    <button class="delete-btn" data-id="${task.id}" style="background-color: #FA6B6B; color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
+                        DELETE
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
+    }
+}
+
+// Attach change hooks for operational data modifications
+if (searchInput) searchInput.addEventListener("input", applyFiltersAndRender);
+if (categoryFilter) categoryFilter.addEventListener("change", applyFiltersAndRender);
+if (priorityFilter) priorityFilter.addEventListener("change", applyFiltersAndRender);
+if (statusFilter) statusFilter.addEventListener("change", applyFiltersAndRender);
+
 
 // DELETE TASK LOGIC
 if (tableBody) {
@@ -75,9 +130,9 @@ if (tableBody) {
             
             if (confirm("Are you sure you want to delete this task?")) {
                 try {
-                    e.target.style.opacity = "0.5"; // Visual feedback
+                    e.target.style.opacity = "0.5"; 
                     await deleteDoc(doc(db, "tasks", taskId));
-                    loadTasks(auth.currentUser.uid); // Refresh grid
+                    loadTasks(auth.currentUser.uid); 
                 } catch (error) {
                     console.error("Error deleting task: ", error);
                 }
@@ -137,21 +192,17 @@ if (taskForm) {
                 submitBtn.disabled = true;
             }
 
-            // Push to Firebase
             await addDoc(collection(db, "tasks"), newTask);
 
-            // Hide Modal
             const modal = document.getElementById('uniqueTaskFormModal');
             if (modal) modal.style.setProperty('display', 'none', 'important');
             
-            // Clear Form and restore button
             taskForm.reset();
             if (submitBtn) {
                 submitBtn.innerText = "Save Task";
                 submitBtn.disabled = false;
             }
 
-            // Refresh UI live without reloading the whole page!
             loadTasks(auth.currentUser.uid);
 
         } catch (error) {

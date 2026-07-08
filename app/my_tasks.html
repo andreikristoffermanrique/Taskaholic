@@ -209,7 +209,8 @@
     </div>
 
     <script type="module" src="my_tasks.js"></script>
-    <script type="module" src="add_task.js"></script> <script>
+    <script type="module" src="add_task.js"></script> 
+    <script>
         function openAddTaskModal() {
             const modal = document.getElementById('uniqueTaskFormModal');
             if (modal) modal.style.setProperty('display', 'flex', 'important');
@@ -219,7 +220,6 @@
             const modal = document.getElementById('uniqueTaskFormModal');
             if (modal) {
                 modal.style.setProperty('display', 'none', 'important');
-                // Clear the fields on close
                 document.getElementById('modalTaskTitle').value = '';
                 document.getElementById('modalTaskDesc').value = '';
                 document.getElementById('modalShareContainer').style.setProperty('display', 'none', 'important');
@@ -230,7 +230,6 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Visibility & Share toggle logic
             const visibilityRadios = document.querySelectorAll('input[name="visibility"]');
             const shareContainer = document.getElementById('modalShareContainer');
             const shareEmailInput = document.getElementById('modalShareEmail');
