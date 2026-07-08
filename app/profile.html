@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Ensuring standard image placeholder wrappers maintain their circle styling */
         .profile-image-container, .modal-image-container {
             width: 110px;
             height: 110px;
@@ -142,7 +141,6 @@
         </main>
     </div>
 
-    <!-- Hidden File Input for Explorer Trigger -->
     <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
 
     <div class="modal-overlay" id="editModal">
@@ -155,7 +153,6 @@
                 <div class="form-row">
                     <label class="row-label">Profile photo</label>
                     <div class="row-content">
-                        <!-- Modal Image Trigger Area -->
                         <div class="modal-avatar-wrapper" id="modal-avatar-trigger" style="cursor: pointer;">
                             <div class="modal-image-container">
                                 <i class="fa-solid fa-circle-user modal-avatar-icon" id="modal-avatar-icon"></i>
@@ -178,7 +175,7 @@
                 <div class="form-row">
                     <label for="input-gbox" class="row-label">Gbox Account</label>
                     <div class="row-content">
-                        <input type="email" id="input-gbox" required>
+                        <input type="email" id="input-gbox" readonly style="background-color: #f5f5f5; color: #777;">
                     </div>
                 </div>
 
@@ -204,7 +201,6 @@
         const cancelBtn = document.getElementById('cancelModalBtn');
         const form = document.getElementById('editProfileForm');
 
-        // Aligned layout variables to use corrected profile template DOM IDs
         const displayName = document.getElementById('profile-name-display');
         const displayGbox = document.getElementById('profile-email-display');
         const displayBio = document.getElementById('display-bio');
@@ -212,6 +208,14 @@
         const inputName = document.getElementById('input-name');
         const inputGbox = document.getElementById('input-gbox');
         const inputBio = document.getElementById('input-bio');
+
+        // On Page Load: Fetch bio from localStorage if it exists
+        document.addEventListener('DOMContentLoaded', () => {
+            const localUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+            if (localUser.bio) {
+                displayBio.textContent = localUser.bio;
+            }
+        });
 
         // Photo Upload Elements
         const fileInput = document.getElementById('avatar-file-input');
@@ -279,9 +283,16 @@
 
         form.addEventListener('submit', (e) => {
             e.preventDefault();
+            
+            // Update visual DOM
             displayName.textContent = inputName.value;
-            displayGbox.textContent = inputGbox.value;
             displayBio.textContent = inputBio.value;
+            
+            // SYNCHRONIZATION FIX: Save to LocalStorage so Account Settings reflects it!
+            let localUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+            localUser.name = inputName.value;
+            localUser.bio = inputBio.value;
+            localStorage.setItem('currentUser', JSON.stringify(localUser));
             
             commitImageChange();
             closeModal();

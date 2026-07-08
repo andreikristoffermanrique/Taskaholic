@@ -11,6 +11,7 @@
 <body>
 
     <div class="dashboard-container">
+        <!-- Sidebar Navigation Panel -->
         <aside class="sidebar-panel">
             <div class="brand-wrapper">
                 <img src="LOGO 2.png" alt="T Logo" class="brand-logo-img">
@@ -18,11 +19,11 @@
             </div>
 
             <nav class="sidebar-nav">
-                <a href="#" class="nav-item">
+                <a href="workload.html" class="nav-item">
                     <i class="fa-solid fa-book-open"></i>
                     <span>Workload Overview</span>
                 </a>
-                <a href="dashboard.html" class="nav-item">
+                <a href="Dashboard.html" class="nav-item">
                     <i class="fa-solid fa-table-cells-large"></i>
                     <span>Dashboard</span>
                 </a>
@@ -34,7 +35,7 @@
                     <i class="fa-solid fa-user-group"></i>
                     <span>Shared Tasks</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="notifications.html" class="nav-item">
                     <i class="fa-solid fa-bell"></i>
                     <span>Notifications</span>
                 </a>
@@ -42,88 +43,303 @@
                     <i class="fa-solid fa-gear"></i>
                     <span>Settings</span>
                 </a>
-                <a href="#" class="nav-item">
+                <a href="profile.html" class="nav-item">
                     <i class="fa-solid fa-circle-user"></i>
                     <span>Profile</span>
                 </a>
             </nav>
 
-            <a href="#" class="logout-btn">
+            <a href="login.html" class="logout-btn">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Logout</span>
             </a>
         </aside>
 
+        <!-- Main Content View -->
         <main class="main-content">
-    
-    <div class="account-settings-container">
-        
-        <div class="back-navigation">
-            <a href="settings.html" class="btn-back">
-                <i class="fa-solid fa-caret-left"></i>
-                <span class="btn-back-text">Back to Settings</span>
-            </a>
-        </div>
-
-        <div class="account-settings-wrapper">
-            
-            <div class="account-header">
-                <div class="account-title-row">
-                    <i class="fa-regular fa-circle-user"></i>
-                    <h2>Account Settings</h2>
-                </div>
-                <p>Update your personal information and account details</p>
-            </div>
-
-            <div class="personal-info-card">
-                <div class="info-card-header">
-                    <h3>Personal Information</h3>
-                </div>
+            <div class="account-settings-container">
                 
-                <div class="info-card-body">
-                    <div class="info-form-column">
-                        <div class="info-input-group">
-                            <label>Full Name</label>
-                            <input type="text" id="profile-name" placeholder="Your Full Name">
-                        </div>
-        
-                        <div class="info-input-group">
-                            <label>Email Address</label>
-                            <input type="email" id="profile-email" placeholder="Your Email Address" readonly>
-                        </div>
+                <div class="back-navigation">
+                    <a href="settings.html" class="btn-back">
+                        <i class="fa-solid fa-caret-left"></i>
+                        <span class="btn-back-text">Back to Settings</span>
+                    </a>
+                </div>
 
-                        <div class="info-input-group">
-                            <label>Contact Number</label>
-                            <input type="text" id="profile-contact" placeholder="Your Contact Number">
+                <div class="account-settings-wrapper">
+                    
+                    <div class="account-header">
+                        <div class="account-title-row">
+                            <i class="fa-regular fa-circle-user"></i>
+                            <h2>Account Settings</h2>
                         </div>
+                        <p>Update your personal information and account details</p>
+                    </div>
 
-                        <div class="info-input-group">
-                            <label>Password</label>
-                            <button type="button" class="btn-change-password">Change your password</button>
+                    <div class="personal-info-card">
+                        <div class="info-card-header">
+                            <h3>Personal Information</h3>
                         </div>
+                        
+                        <div class="info-card-body">
+                            <div class="info-form-column">
+                                <div class="info-input-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="profile-name" placeholder="Your Full Name">
+                                </div>
+                
+                                <div class="info-input-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="profile-email" placeholder="Your Email Address" readonly style="background-color: #f5f5f5; color: #777;">
+                                </div>
 
-                        <div class="info-input-group" style="margin-top: 20px;">
-                            <button type="button" id="save-profile-btn" style="padding: 10px 20px; background-color: #fca5a5; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Save Changes</button>
+                                <div class="info-input-group">
+                                    <label>Contact Number</label>
+                                    <input type="text" id="profile-contact" placeholder="Your Contact Number">
+                                </div>
+
+                                <!-- Change Password Button Trigger -->
+                                <div class="info-input-group" id="password-button-group">
+                                    <label>Password</label>
+                                    <button type="button" class="btn-change-password" id="btn-trigger-password">Change your password</button>
+                                </div>
+
+                                <!-- Hidden Password Change Section -->
+                                <div id="password-change-section" style="display: none; flex-direction: column; gap: 16px; margin-top: 10px; padding: 20px; border: 1px solid #333; border-radius: 8px; background-color: #fdfdfd;">
+                                    
+                                    <div id="password-error-msg" style="display: none; color: #C24275; font-size: 12px; font-weight: 600; padding: 8px 12px; background-color: rgba(194, 66, 117, 0.08); border: 1px solid rgba(194, 66, 117, 0.2); border-radius: 6px;">
+                                        <i class="fa-solid fa-circle-exclamation" style="margin-right: 6px;"></i> <span id="password-error-text">Error</span>
+                                    </div>
+
+                                    <div class="info-input-group">
+                                        <label>Old Password</label>
+                                        <div style="position: relative; display: flex; align-items: center; width: 100%;">
+                                            <input type="password" id="old-password" placeholder="Enter old password" style="width: 100%; padding-right: 35px; box-sizing: border-box;">
+                                            <i class="fa-regular fa-eye show-password-icon" style="position: absolute; right: 14px; cursor: pointer; color: #666; font-size: 14px;"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-input-group">
+                                        <label>New Password</label>
+                                        <div style="position: relative; display: flex; align-items: center; width: 100%;">
+                                            <input type="password" id="new-password" placeholder="Enter new password" style="width: 100%; padding-right: 35px; box-sizing: border-box;">
+                                            <i class="fa-regular fa-eye show-password-icon" style="position: absolute; right: 14px; cursor: pointer; color: #666; font-size: 14px;"></i>
+                                        </div>
+                                    </div>
+
+                                    <div class="info-input-group">
+                                        <label>Confirm New Password</label>
+                                        <div style="position: relative; display: flex; align-items: center; width: 100%;">
+                                            <input type="password" id="confirm-new-password" placeholder="Confirm new password" style="width: 100%; padding-right: 35px; box-sizing: border-box;">
+                                            <i class="fa-regular fa-eye show-password-icon" style="position: absolute; right: 14px; cursor: pointer; color: #666; font-size: 14px;"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="display: flex; gap: 10px; margin-top: 5px;">
+                                        <button type="button" id="cancel-password-btn" style="padding: 10px 16px; background-color: #fff; border: 1px solid #333; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; color: #333; transition: 0.2s;">Cancel</button>
+                                        <button type="button" id="save-password-btn" style="padding: 10px 16px; background-color: #f4b2bb; border: 1px solid #333; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; color: #111; transition: 0.2s;">Update Password</button>
+                                    </div>
+                                </div>
+
+                                <div class="info-input-group" style="margin-top: 20px;">
+                                    <button type="button" id="save-profile-btn" style="padding: 10px 20px; background-color: #fca5a5; border: 1px solid #000000; color: #000000; border-radius: 5px; font-family: 'Inter', sans-serif; font-weight: bold; cursor: pointer; transition: 0.2s ease;">Save Changes</button>
+                                </div>
+                            </div>
+
+                            <div class="profile-pic-column">
+                                <label>Profile Picture</label>
+                                <div class="profile-pic-box">
+                                    <i class="fa-regular fa-circle-user main-icon"></i>
+                                    <button type="button" class="edit-icon-btn">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="profile-pic-column">
-                        <label>Profile Picture</label>
-                        <div class="profile-pic-box">
-                            <i class="fa-regular fa-circle-user main-icon"></i>
-                            <button type="button" class="edit-icon-btn">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </div>
-
-        </div>
-    </div>
-</main>
+        </main>
     </div>
 
-    <script type="module" src="account_settings.js"></script>
+    <!-- MAIN FUNCTIONAL SCRIPT (Firebase Connected) -->
+    <script type="module">
+        import { auth } from "./firebase.js";
+        import { onAuthStateChanged, EmailAuthProvider, reauthenticateWithCredential, updatePassword, updateProfile } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const nameInput = document.getElementById('profile-name');
+            const emailInput = document.getElementById('profile-email');
+            const contactInput = document.getElementById('profile-contact');
+            const saveBtn = document.getElementById('save-profile-btn');
+
+            let currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+            let firebaseUser = null;
+
+            // 1. Wait for Firebase to confirm who is logged in
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    firebaseUser = user;
+                    // Auto-fill from Firebase first, fallback to localStorage
+                    nameInput.value = user.displayName || currentUser.name || "";
+                    emailInput.value = user.email || currentUser.email || "";
+                    contactInput.value = currentUser.contact || ""; // Contact is local only
+                } else {
+                    window.location.href = "login.html"; // Kick them out if not logged in
+                }
+            });
+
+            // 2. Handle 'Save Changes' for general info (Updates Firebase Profile!)
+            saveBtn.addEventListener('click', async () => {
+                const newName = nameInput.value.trim();
+                const newContact = contactInput.value.trim();
+
+                try {
+                    // Update Name in Firebase Authentication
+                    if (firebaseUser && newName) {
+                        await updateProfile(firebaseUser, { displayName: newName });
+                    }
+
+                    // Update Local Storage
+                    currentUser.name = newName;
+                    currentUser.contact = newContact;
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+                    // Visual Feedback
+                    const originalText = saveBtn.innerText;
+                    saveBtn.innerText = "Saved Successfully!";
+                    saveBtn.style.backgroundColor = "#54CBB2"; 
+                    saveBtn.style.color = "#FFFFFF";
+
+                    setTimeout(() => {
+                        saveBtn.innerText = originalText;
+                        saveBtn.style.backgroundColor = "#fca5a5";
+                        saveBtn.style.color = "#000000";
+                    }, 2500);
+
+                } catch (error) {
+                    alert("Error saving profile: " + error.message);
+                }
+            });
+
+            /* ==================================================
+               REAL FIREBASE PASSWORD CHANGE LOGIC
+            ================================================== */
+            const btnTriggerPassword = document.getElementById('btn-trigger-password');
+            const passwordButtonGroup = document.getElementById('password-button-group');
+            const passwordChangeSection = document.getElementById('password-change-section');
+            const cancelPasswordBtn = document.getElementById('cancel-password-btn');
+            const savePasswordBtn = document.getElementById('save-password-btn');
+
+            // Open the password section
+            btnTriggerPassword.addEventListener('click', () => {
+                passwordButtonGroup.style.display = 'none';
+                passwordChangeSection.style.display = 'flex';
+            });
+
+            // Cancel and close the password section
+            cancelPasswordBtn.addEventListener('click', () => {
+                passwordChangeSection.style.display = 'none';
+                passwordButtonGroup.style.display = 'flex';
+                document.getElementById('password-error-msg').style.display = 'none';
+                
+                // Clear fields
+                document.getElementById('old-password').value = '';
+                document.getElementById('new-password').value = '';
+                document.getElementById('confirm-new-password').value = '';
+            });
+
+            // Update Password via Firebase
+            savePasswordBtn.addEventListener('click', async () => {
+                const oldPw = document.getElementById('old-password').value.trim();
+                const newPw = document.getElementById('new-password').value.trim();
+                const confirmPw = document.getElementById('confirm-new-password').value.trim();
+                const errorBox = document.getElementById('password-error-msg');
+                const errorText = document.getElementById('password-error-text');
+
+                // Basic Validation
+                if (!oldPw || !newPw || !confirmPw) {
+                    errorText.textContent = "Please fill out all password fields.";
+                    errorBox.style.display = 'block';
+                    return;
+                }
+                
+                if (newPw !== confirmPw) {
+                    errorText.textContent = "New passwords do not match.";
+                    errorBox.style.display = 'block';
+                    return;
+                }
+
+                if (newPw.length < 6) {
+                    errorText.textContent = "New password must be at least 6 characters.";
+                    errorBox.style.display = 'block';
+                    return;
+                }
+
+                try {
+                    // Disable button to prevent spam clicking
+                    savePasswordBtn.innerText = "Updating...";
+                    savePasswordBtn.disabled = true;
+
+                    // Step A: Re-authenticate the user with their OLD password
+                    const credential = EmailAuthProvider.credential(firebaseUser.email, oldPw);
+                    await reauthenticateWithCredential(firebaseUser, credential);
+
+                    // Step B: Update to the NEW password
+                    await updatePassword(firebaseUser, newPw);
+
+                    // Success!
+                    errorBox.style.display = 'none';
+                    savePasswordBtn.innerText = "Password Updated!";
+                    savePasswordBtn.style.backgroundColor = "#54CBB2"; 
+                    savePasswordBtn.style.color = "#FFF";
+                    
+                    setTimeout(() => {
+                        savePasswordBtn.innerText = "Update Password";
+                        savePasswordBtn.style.backgroundColor = "#f4b2bb"; 
+                        savePasswordBtn.style.color = "#111";
+                        savePasswordBtn.disabled = false;
+                        cancelPasswordBtn.click(); // Close form
+                    }, 2000);
+
+                } catch (error) {
+                    // Handle Firebase Errors (Wrong old password, etc.)
+                    savePasswordBtn.innerText = "Update Password";
+                    savePasswordBtn.disabled = false;
+                    
+                    if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                        errorText.textContent = "Incorrect old password.";
+                    } else {
+                        errorText.textContent = "Error: " + error.message;
+                    }
+                    errorBox.style.display = 'block';
+                }
+            });
+
+            // Clear inline errors smoothly when the user starts typing
+            document.querySelectorAll('#password-change-section input').forEach(input => {
+                input.addEventListener('input', () => {
+                    document.getElementById('password-error-msg').style.display = 'none';
+                });
+            });
+
+            // Password Visibility Toggle (Eye Icons)
+            document.querySelectorAll('.show-password-icon').forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const input = this.previousElementSibling;
+                    if (input.type === 'password') {
+                        input.type = 'text';
+                        this.classList.remove('fa-eye');
+                        this.classList.add('fa-eye-slash');
+                    } else {
+                        input.type = 'password';
+                        this.classList.remove('fa-eye-slash');
+                        this.classList.add('fa-eye');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

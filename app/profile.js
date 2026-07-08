@@ -13,8 +13,12 @@ const completedEl = document.getElementById("completed-count");
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        const nameToDisplay = user.displayName || user.email.split('@')[0];
-        const emailToDisplay = user.email;
+        // SYNCHRONIZATION FIX: Check localStorage first for updated settings!
+        const localUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+        
+        // Use the saved local name if it exists, otherwise fallback to Firebase
+        const nameToDisplay = localUser.name || user.displayName || user.email.split('@')[0];
+        const emailToDisplay = localUser.email || user.email;
 
         if (profileNameDisplay) profileNameDisplay.textContent = nameToDisplay;
         if (profileEmailDisplay) profileEmailDisplay.textContent = emailToDisplay;
@@ -40,18 +44,14 @@ onAuthStateChanged(auth, async (user) => {
                 const data = doc.data();
                 totalCount++;
 
-                // Safe check for status values (handles string types or boolean true/false flags)
                 const statusString = data.status ? String(data.status).toLowerCase().trim() : "";
                 const isCompletedBoolean = data.completed === true;
 
-                // FIXED: Direct case-insensitive matching for "completed"
                 if (statusString === "completed" || isCompletedBoolean) {
                     completedCount++;
                 } else {
                     if (data.dueDate) {
-                        // Extract date block component format: YYYY-MM-DD
                         const taskDueDate = data.dueDate.split('T')[0].trim();
-
                         if (taskDueDate === systemToday) {
                             dueTodayCount++;
                         } else if (taskDueDate < systemToday) {
@@ -61,7 +61,6 @@ onAuthStateChanged(auth, async (user) => {
                 }
             });
 
-            // Safely inject calculations down into document display metrics
             if (totalTasksEl) totalTasksEl.textContent = totalCount;
             if (dueTodayEl) dueTodayEl.textContent = dueTodayCount;
             if (overdueEl) overdueEl.textContent = overdueCount;
