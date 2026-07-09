@@ -182,7 +182,7 @@ function setupQuickInvite(currentUser) {
                 recipientEmail: emailInput,
                 userId: null,
                 title: "Collab Invitation",
-                message: `where shared a task with you: "FINAL NA FINAL"`,
+                message: `${senderName} has invited you to collaborate. Role: ${role}.`,
                 type: "invitations", 
                 status: "pending",
                 createdAt: serverTimestamp(),
