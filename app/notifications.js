@@ -19,19 +19,21 @@ function getTodayDateString() {
 
 onAuthStateChanged(auth, async (user) => { 
     if (user) {
-        loadNotifications(user.uid);
+        loadNotifications(user);
     } else {
         window.location.href = "login.html";
     }
 });
 
-async function loadNotifications(uid) {
+async function loadNotifications(user) {
     if (notificationsContainer) {
         notificationsContainer.innerHTML = "<p style='text-align: center;'>Loading notifications...</p>";
     }
 
     try {
         allNotifications = []; 
+        const uid = user.uid;
+        const userEmail = user.email ? user.email.toLowerCase() : "";
 
         let prefs = { taskDue: true, sharedDue: true, invites: true, announcements: true }; 
         const userDocRef = doc(db, "users", uid);
@@ -41,18 +43,27 @@ async function loadNotifications(uid) {
             prefs = userDocSnap.data().notificationPrefs;
         }
 
-        const notifQuery = query(collection(db, "notifications"), where("userId", "==", uid));
-        const notifSnapshot = await getDocs(notifQuery);
-        
-        notifSnapshot.forEach((doc) => {
+        // QUERY 1: Load invitations sent to this user's email
+        if (userEmail) {
+            const inviteQuery = query(collection(db, "notifications"), where("recipientEmail", "==", userEmail));
+            const inviteSnapshot = await getDocs(inviteQuery);
+            inviteSnapshot.forEach((doc) => {
+                const notifData = doc.data();
+                if (prefs.invites === false || notifData.status === 'accepted') return;
+                allNotifications.push({ id: doc.id, ...notifData });
+            });
+        }
+
+        // QUERY 2: Load personal notifications matched by User ID
+        const personalQuery = query(collection(db, "notifications"), where("userId", "==", uid));
+        const personalSnapshot = await getDocs(personalQuery);
+        personalSnapshot.forEach((doc) => {
             const notifData = doc.data();
-            // Only show invitations that are still pending
-            if (notifData.type === 'invitations' && (prefs.invites === false || notifData.status === 'accepted')) return;
             if (notifData.type === 'announcements' && prefs.announcements === false) return;
-            
             allNotifications.push({ id: doc.id, ...notifData });
         });
 
+        // REMINDERS: Due tomorrow
         if (prefs.taskDue !== false) {
             const tomorrowStr = getTomorrowDateString();
             const tasksQuery = query(collection(db, "tasks"), where("userId", "==", uid), where("deadline", "==", tomorrowStr));
@@ -73,6 +84,7 @@ async function loadNotifications(uid) {
             });
         }
 
+        // REMINDERS: Overdue
         if (prefs.taskDue !== false) {
             const todayStr = getTodayDateString();
             const overdueQuery = query(collection(db, "tasks"), where("userId", "==", uid), where("deadline", "<", todayStr));
@@ -139,7 +151,7 @@ document.addEventListener('click', async (e) => {
         try {
             await updateDoc(doc(db, "notifications", id), { status: "accepted" });
             alert("Invitation accepted!");
-            loadNotifications(auth.currentUser.uid);
+            loadNotifications(auth.currentUser);
         } catch (err) { alert("Error accepting invitation."); }
     }
 });

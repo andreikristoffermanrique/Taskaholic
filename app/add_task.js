@@ -6,9 +6,8 @@ const saveBtn = document.getElementById("btnSaveSubmit");
 
 if (taskForm) {
     taskForm.addEventListener("submit", async (e) => {
-        e.preventDefault(); // Prevents the page from refreshing when you submit
+        e.preventDefault(); 
 
-        // UI Feedback: Let the user know it's saving
         const originalBtnText = saveBtn.innerText;
         saveBtn.innerText = "Saving...";
         saveBtn.style.opacity = "0.7";
@@ -17,19 +16,18 @@ if (taskForm) {
         try {
             if (!auth.currentUser) throw new Error("User is not authenticated");
 
-            // Gather all data from the HTML modal
             const title = document.getElementById("modalTaskTitle").value.trim();
             const desc = document.getElementById("modalTaskDesc").value.trim();
             const category = document.querySelector('input[name="category"]:checked').value;
             const priority = document.querySelector('input[name="priority"]:checked').value;
             const deadline = document.getElementById("modalTaskDate").value;
             const visibility = document.querySelector('input[name="visibility"]:checked').value;
-            const shareEmail = document.getElementById("modalShareEmail").value.trim();
+            const shareEmail = document.getElementById("modalShareEmail").value.trim().toLowerCase(); 
             const status = document.getElementById("modalTaskStatus").value;
 
-            // Structure the data to match your database rules
             const taskData = {
                 userId: auth.currentUser.uid,
+                creatorEmail: auth.currentUser.email ? auth.currentUser.email.toLowerCase() : "",
                 title: title,
                 description: desc,
                 category: category,
@@ -41,10 +39,26 @@ if (taskForm) {
                 createdAt: serverTimestamp() 
             };
 
-            // Push to Firebase
+            // 1. Push Task to Firebase
             await addDoc(collection(db, "tasks"), taskData);
 
-            // Cleanly close the modal and reset the form
+            // 2. Push Invitation Notification if shared
+            if (visibility === "shared" && shareEmail) {
+                const senderName = auth.currentUser.displayName || auth.currentUser.email.split('@')[0];
+                await addDoc(collection(db, "notifications"), {
+                    recipientEmail: shareEmail, 
+                    userId: null, // Left null so it doesn't cross wires with creator metrics
+                    title: `Task Invitation`,
+                    message: `${senderName} shared a task with you: "${title}"`,
+                    type: 'invitations',
+                    status: 'pending',
+                    icon: 'fa-user-plus',
+                    iconColor: '#55CBB2',
+                    time: 'New',
+                    createdAt: serverTimestamp()
+                });
+            }
+
             taskForm.reset();
             if (typeof window.closeAddTaskModal === "function") {
                 window.closeAddTaskModal();
@@ -52,9 +66,8 @@ if (taskForm) {
 
         } catch (error) {
             console.error("Error adding task: ", error);
-            console.error("Failed to save task. Please try again.");
+            alert("Failed to save task. Please try again.");
         } finally {
-            // Restore button state
             saveBtn.innerText = originalBtnText;
             saveBtn.style.opacity = "1";
             saveBtn.disabled = false;
