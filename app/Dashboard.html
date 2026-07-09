@@ -10,6 +10,7 @@
 </head>
 <body>
 
+
     <div class="dashboard-container">
         <!-- Sidebar Panel -->
         <aside class="sidebar-panel">
@@ -18,40 +19,43 @@
                 <h1 class="brand-title">Taskaholic</h1>
             </div>
 
+
             <nav class="sidebar-nav">
                 <a href="workload.html" class="nav-item">
                     <i class="fa-solid fa-book-open"></i> Workload Overview
                 </a>
-    
+   
                 <a href="Dashboard.html" class="nav-item active">
                     <i class="fa-solid fa-table-cells-large"></i> Dashboard
                 </a>
-    
+   
                 <a href="my_tasks.html" class="nav-item">
                     <i class="fa-solid fa-clapperboard"></i> My Tasks
                 </a>
-    
+   
                 <a href="shared_task.html" class="nav-item">
                     <i class="fa-solid fa-user-group"></i> Shared Tasks
                 </a>
-    
+   
                 <a href="notifications.html" class="nav-item">
                     <i class="fa-solid fa-bell"></i> Notifications
                 </a>
-    
+   
                 <a href="settings.html" class="nav-item">
                     <i class="fa-solid fa-gear"></i> Settings
                 </a>
-    
+   
                 <a href="profile.html" class="nav-item">
                     <i class="fa-solid fa-circle-user"></i> Profile
                 </a>
             </nav>
 
+
             <a href="login.html" class="logout-btn">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
             </a>
         </aside>
+
 
         <!-- Main Content Area -->
         <main class="main-content">
@@ -64,6 +68,7 @@
                     <i class="fa-solid fa-plus"></i> Add Tasks
                 </button>
             </header>
+
 
             <div class="stats-container-row">
                 <section class="stats-grid">
@@ -106,6 +111,7 @@
                 </section>
             </div>
 
+
             <section class="data-panels">
                 <div class="data-card upcoming-deadlines" style="background-color: #FFFFFF;">
                     <div class="card-header">
@@ -126,11 +132,12 @@
                     </div>
                 </div>
 
+
                 <div class="data-card progress-overview" style="background-color: #FFFFFF;">
                     <div class="card-header">
                         <h3>Progress Overview</h3>
                     </div>
-                    
+                   
                     <div class="chart-container">
                         <div class="progress-chart-wrapper">
                             <svg class="progress-ring-svg" width="130" height="130" viewBox="0 0 42 42">
@@ -146,6 +153,7 @@
                         </div>
                     </div>
 
+
                     <div class="chart-legend">
                         <div class="legend-item"><span class="legend-color academic"></span> Academic</div>
                         <div class="legend-item"><span class="legend-color project"></span> Project</div>
@@ -156,25 +164,28 @@
         </main>
     </div>
 
+
     <!-- MODAL FOR CREATING NEW TASKS (Synchronized with global script logic) -->
     <div id="uniqueTaskFormModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
         <div style="background: #F5D6D6 !important; padding: 25px !important; border-radius: 16px !important; border: 1px solid #c9a0a0 !important; width: 500px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; position: relative !important; font-family: 'Inter', sans-serif !important;">
-            
+           
             <div style="display: flex !important; justify-content: space-between !important; align-items: center !important; margin-bottom: 20px !important;">
                 <h3 style="margin: 0 !important; font-family: 'Inter', sans-serif !important; font-size: 22px !important; font-weight: 600 !important; color: #1a1a1a !important;">Create New Task</h3>
                 <button type="button" onclick="closeAddTaskModal()" style="background: none !important; border: none !important; font-size: 20px !important; cursor: pointer !important; color: #1a1a1a !important;"><i class="fa-solid fa-xmark"></i></button>
             </div>
+
 
             <form id="modalTaskForm" style="display: flex !important; flex-direction: column !important; gap: 15px !important;">
                 <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Task Title</label>
                     <input type="text" id="modalTaskTitle" placeholder="Enter your task" required style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
-                
+               
                 <div style="display: flex !important; flex-direction: column !important; gap: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Description</label>
                     <input type="text" id="modalTaskDesc" placeholder="Enter description" style="padding: 10px !important; border-radius: 8px !important; border: 1px solid #b5b5b5 !important; background: #fff !important; font-size: 14px !important; outline: none !important; width: 100% !important; box-sizing: border-box !important;">
                 </div>
+
 
                 <div style="display: grid !important; grid-template-columns: 1.2fr 1.2fr 1fr !important; gap: 12px !important;">
                     <div>
@@ -186,6 +197,7 @@
                         </div>
                     </div>
 
+
                     <div>
                         <label style="display: block !important; font-weight: 500 !important; font-size: 13px !important; margin-bottom: 5px !important; color: #333 !important;">Priority Level</label>
                         <div style="background: #fff !important; border: 1px solid #b5b5b5 !important; border-radius: 8px !important; padding: 10px !important; display: flex !important; flex-direction: column !important; gap: 6px !important;">
@@ -194,6 +206,7 @@
                             <label style="font-size: 13px !important; color: #444 !important; display: flex !important; align-items: center !important; gap: 5px !important; cursor: pointer !important;"><input type="radio" name="priority" value="low" style="accent-color: #e57373 !important;"> Low</label>
                         </div>
                     </div>
+
 
                     <div style="display: flex !important; flex-direction: column !important; justify-content: space-between !important;">
                         <div style="display: flex !important; flex-direction: column !important; gap: 4px !important;">
@@ -210,6 +223,7 @@
                     </div>
                 </div>
 
+
                 <div id="modalShareContainer" style="display: none; flex-direction: column !important; gap: 3px !important; margin-top: 5px !important;">
                     <label style="font-weight: 500 !important; font-size: 14px !important; color: #333 !important;">Share with Gbox Account</label>
                     <div style="display: flex !important; flex-direction: column !important; width: 100% !important;">
@@ -217,6 +231,7 @@
                         <span id="gboxErrorHint" style="color: #b32424 !important; font-size: 11px !important; font-weight: 600 !important; margin-top: 4px !important; display: none;">⚠️ Only @gbox.adnu.edu.ph institutional accounts allowed.</span>
                     </div>
                 </div>
+
 
                 <div style="display: flex !important; justify-content: space-between !important; align-items: flex-end !important; margin-top: 10px !important;">
                     <div style="display: flex !important; align-items: center !important; gap: 8px !important;">
@@ -236,15 +251,17 @@
         </div>
     </div>
 
+
     <!-- Application Engine Scripts -->
     <script type="module" src="dashboard.js"></script>
     <script type="module" src="add_task.js"></script> <!-- Firebase upload logic attached here -->
-    
+   
     <script>
         function openAddTaskModal() {
             const modal = document.getElementById('uniqueTaskFormModal');
             if (modal) modal.style.setProperty('display', 'flex', 'important');
         }
+
 
         function closeAddTaskModal() {
             const modal = document.getElementById('uniqueTaskFormModal');
@@ -259,12 +276,14 @@
             }
         }
 
+
         document.addEventListener("DOMContentLoaded", () => {
             // Visibility & Share toggle UI logic
             const visibilityRadios = document.querySelectorAll('input[name="visibility"]');
             const shareContainer = document.getElementById('modalShareContainer');
             const shareEmailInput = document.getElementById('modalShareEmail');
             const gboxErrorHint = document.getElementById('gboxErrorHint');
+
 
             visibilityRadios.forEach(radio => {
                 radio.addEventListener('change', (e) => {
@@ -279,6 +298,7 @@
                 });
             });
 
+
             shareEmailInput.addEventListener('input', () => {
                 const val = shareEmailInput.value.trim().toLowerCase();
                 if (val === "" || val.endsWith('@gbox.adnu.edu.ph')) {
@@ -291,3 +311,4 @@
     </script>
 </body>
 </html>
+

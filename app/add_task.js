@@ -1,69 +1,63 @@
-import { auth, db } from "./firebase.js"; 
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
-import { collection, query, where, getDocsFromServer, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+import { auth, db } from "./firebase.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-const userNameDisplay = document.getElementById("user-name");
-const tableBody = document.getElementById("taskGridBody");
-const loadingIndicator = document.getElementById("loading");
-const emptyStateContainer = document.getElementById("emptyStateContainer");
+const taskForm = document.getElementById("modalTaskForm");
+const saveBtn = document.getElementById("btnSaveSubmit");
 
-onAuthStateChanged(auth, async (user) => { 
-    if (user) {
-        const nameToDisplay = user.displayName || user.email.split('@')[0];
-        if (userNameDisplay) userNameDisplay.textContent = nameToDisplay;
-        
-        loadTasks(user.uid);
-    } else {
-        window.location.href = "login.html";
-    }
-});
+if (taskForm) {
+    taskForm.addEventListener("submit", async (e) => {
+        e.preventDefault(); // Prevents the page from refreshing when you submit
 
-async function loadTasks(uid) {
-    if (loadingIndicator) loadingIndicator.style.display = 'block';
-    if (tableBody) tableBody.style.opacity = '0.5';
+        // UI Feedback: Let the user know it's saving
+        const originalBtnText = saveBtn.innerText;
+        saveBtn.innerText = "Saving...";
+        saveBtn.style.opacity = "0.7";
+        saveBtn.disabled = true;
 
-    try {
-        const q = query(collection(db, "tasks"), where("userId", "==", uid));
+        try {
+            if (!auth.currentUser) throw new Error("User is not authenticated");
 
-        const querySnapshot = await getDocsFromServer(q);
+            // Gather all data from the HTML modal
+            const title = document.getElementById("modalTaskTitle").value.trim();
+            const desc = document.getElementById("modalTaskDesc").value.trim();
+            const category = document.querySelector('input[name="category"]:checked').value;
+            const priority = document.querySelector('input[name="priority"]:checked').value;
+            const deadline = document.getElementById("modalTaskDate").value;
+            const visibility = document.querySelector('input[name="visibility"]:checked').value;
+            const shareEmail = document.getElementById("modalShareEmail").value.trim();
+            const status = document.getElementById("modalTaskStatus").value;
 
-        if (querySnapshot.empty) {
-            if (emptyStateContainer) emptyStateContainer.style.display = 'block';
-            if (tableBody) tableBody.innerHTML = ""; 
-        } else {
-            if (emptyStateContainer) emptyStateContainer.style.display = 'none';
-            
-            if (tableBody) {
-                tableBody.innerHTML = ""; 
-                querySnapshot.forEach((doc) => {
-                    const task = doc.data();
-                    const tr = document.createElement("tr");
+            // Structure the data to match your database rules
+            const taskData = {
+                userId: auth.currentUser.uid,
+                title: title,
+                description: desc,
+                category: category,
+                priority: priority,
+                deadline: deadline,
+                visibility: visibility,
+                sharedWith: visibility === "shared" ? shareEmail : null,
+                status: status,
+                createdAt: serverTimestamp() 
+            };
 
-                    // REPLACED: Updated the "Delete" text with a beautifully styled PINK Button!
-                    tr.innerHTML = `
-                        <td>
-                            <a href="task_details.html?id=${doc.id}" style="color: #000000; text-decoration: none;">
-                                <strong style="text-decoration: underline; cursor: pointer;">${task.title || "—"}</strong>
-                            </a>
-                        </td>
-                        <td style="text-transform: capitalize;">${task.category || "—"}</td>
-                        <td style="text-transform: capitalize;">${task.priority || "—"}</td>
-                        <td>${task.deadline || "—"}</td>
-                        <td style="text-transform: capitalize;">${task.status || "—"}</td>
-                        <td style="text-align: center;">
-                            <button class="delete-btn" data-id="${doc.id}" style="background-color: #FA6B6B; color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">
-                                DELETE
-                            </button>
-                        </td>
-                    `;
-                    tableBody.appendChild(tr);
-                });
+            // Push to Firebase
+            await addDoc(collection(db, "tasks"), taskData);
+
+            // Cleanly close the modal and reset the form
+            taskForm.reset();
+            if (typeof window.closeAddTaskModal === "function") {
+                window.closeAddTaskModal();
             }
+
+        } catch (error) {
+            console.error("Error adding task: ", error);
+            console.error("Failed to save task. Please try again.");
+        } finally {
+            // Restore button state
+            saveBtn.innerText = originalBtnText;
+            saveBtn.style.opacity = "1";
+            saveBtn.disabled = false;
         }
-    } catch (error) {
-        console.error("Error loading tasks: ", error);
-    } finally {
-        if (loadingIndicator) loadingIndicator.style.display = 'none';
-        if (tableBody) tableBody.style.opacity = '1';
-    }
+    });
 }

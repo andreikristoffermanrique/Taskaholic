@@ -12,7 +12,7 @@
 </head>
 <body>
 <div class="dashboard-container">
-    
+   
     <aside class="sidebar-panel">
         <div class="brand-wrapper">
             <img src="LOGO 2.png" alt="Taskaholic Logo" class="brand-logo-img">
@@ -30,6 +30,7 @@
         <a href="login.html" class="logout-btn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
     </aside>
 
+
     <main class="main-content" style="background-color: #FCF8F8;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
             <a href="my_tasks.html" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 6px 16px; color: #000000; text-decoration: none; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
@@ -40,6 +41,7 @@
                 <button id="delete-task-btn" style="background-color: #FA6B6B; color: #FFFFFF; border: 1px solid #000000; border-radius: 6px; padding: 6px 24px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;">DELETE</button>
             </div>
         </div>
+
 
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; padding: 0 10px;">
             <div>
@@ -55,6 +57,7 @@
             </div>
         </div>
 
+
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
             <div style="display: flex; flex-direction: column; gap: 24px;">
                 <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 160px; position: relative;">
@@ -62,23 +65,25 @@
                     <div style="position: absolute; top: 20px; right: 20px; width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
                     <p id="detail-collaborators" style="margin-top: 15px; font-size: 13px; color: #666;">No collaborators assigned.</p>
                 </div>
-                
+               
                 <div style="background-color: #FFFFFF; border: 1px solid #000000; border-radius: 12px; padding: 20px; min-height: 220px; display: flex; flex-direction: column;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                         <h3 style="font-size: 15px; font-weight: 700; color: #000000; margin: 0;">Sub Tasks</h3>
                         <div style="width: 14px; height: 14px; border: 1px solid #CCCCCC; border-radius: 50%; background-color: #F9F9F9;"></div>
                     </div>
-                    
+                   
                     <div style="display: flex; gap: 8px; margin-bottom: 15px;">
                         <input type="text" id="subtask-input" placeholder="Add a new checklist item..." style="flex-grow: 1; padding: 8px 12px; border: 1px solid #000000; border-radius: 6px; font-family: 'Inter', sans-serif; font-size: 13px; outline: none;">
                         <button id="add-subtask-btn" style="background-color: #F9DFDF; border: 1px solid #000000; border-radius: 6px; padding: 0 16px; font-weight: 700; font-size: 12px; cursor: pointer;">ADD</button>
                     </div>
+
 
                     <div id="subtasks-container" style="display: flex; flex-direction: column; gap: 10px; overflow-y: auto; max-height: 180px;">
                         <p style="font-size: 13px; color: #666; margin: 0;">No sub-tasks available.</p>
                     </div>
                 </div>
             </div>
+
 
             <div style="display: flex; flex-direction: column; gap: 24px;">
                 <div style="background-color: #FBEFEF; border: 1px solid #000000; border-radius: 12px; padding: 20px;">
@@ -100,6 +105,7 @@
     </main>
 </div>
 
+
 <div id="deleteConfirmModal" style="display: none; position: fixed !important; top: 0 !important; left: 0 !important; width: 100vw !important; height: 100vh !important; background: rgba(0, 0, 0, 0.4) !important; z-index: 2147483647 !important; justify-content: center !important; align-items: center !important;">
     <div style="background: #FBEFEF !important; padding: 30px !important; border-radius: 16px !important; border: 1px solid #000000 !important; width: 400px !important; box-shadow: 0 8px 32px rgba(0,0,0,0.2) !important; text-align: center; font-family: 'Inter', sans-serif !important;">
         <div style="font-size: 44px; color: #FA6B6B; margin-bottom: 15px;">
@@ -107,13 +113,14 @@
         </div>
         <h3 style="margin: 0 0 10px 0 !important; font-size: 20px !important; font-weight: 700 !important; color: #1a1a1a !important;">Delete Task?</h3>
         <p style="font-size: 14px; color: #555; margin-bottom: 25px;">Are you sure you want to permanently delete this task? This action cannot be undone.</p>
-        
+       
         <div style="display: flex !important; justify-content: center !important; gap: 12px !important;">
             <button type="button" id="cancel-delete-btn" style="background: #fff !important; border: 1px solid #000000 !important; padding: 10px 24px !important; border-radius: 8px !important; cursor: pointer !important; font-weight: 600 !important; color: #333 !important; font-size: 13px !important; transition: background-color 0.2s;">Cancel</button>
             <button type="button" id="confirm-delete-btn" style="background: #FA6B6B !important; border: 1px solid #000000 !important; padding: 10px 24px !important; border-radius: 8px !important; cursor: pointer !important; font-weight: 600 !important; color: #FFF !important; font-size: 13px !important; transition: opacity 0.2s;">Yes, Delete</button>
         </div>
     </div>
 </div>
+
 
 <div id="editTaskModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.4); z-index: 2147483647; justify-content: center; align-items: center;">
     <div style="background: #F5D6D6; padding: 25px; border-radius: 16px; border: 1px solid #c9a0a0; width: 500px; box-shadow: 0 8px 32px rgba(0,0,0,0.2); position: relative; font-family: 'Inter', sans-serif;">
@@ -179,16 +186,19 @@
     </div>
 </div>
 
+
 <script type="module">
     import { auth, db } from "./firebase.js";
     import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
     import { doc, getDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
+
     const params = new URLSearchParams(window.location.search);
     const taskId = params.get('id');
     let liveTaskData = null;
     let isFirebaseTask = false;
-    let matchingLocalStorageKey = null; 
+    let matchingLocalStorageKey = null;
+
 
     onAuthStateChanged(auth, async (user) => {
         if (!user) {  
@@ -201,6 +211,7 @@
             showFailureState("No Task Selected", "Please select a task from your dashboard view.");
         }
     });
+
 
     async function loadTaskDataEngine(id) {
         if (isNaN(id) || id.length > 5) {
@@ -219,6 +230,7 @@
             }
         }
 
+
         const keys = ['sharedTasksList', 'tasksList', 'myTasksList', 'tasks'];
         for (let key of keys) {
             const list = JSON.parse(localStorage.getItem(key)) || [];
@@ -233,8 +245,10 @@
             }
         }
 
+
         showFailureState("Task Not Found", "We couldn't track down this task in LocalStorage or Cloud Database.");
     }
+
 
     function renderUI(task) {
         document.getElementById('detail-title').textContent = task.title || "Untitled Task";
@@ -243,7 +257,7 @@
         document.getElementById('detail-priority').textContent = `${task.priority || 'Medium'} Priority`;
         document.getElementById('detail-status').textContent = `Status: ${task.status || 'Pending'}`;
         document.getElementById('detail-description').textContent = task.description || "No description provided for this task.";
-        
+       
         const collabEl = document.getElementById('detail-collaborators');
         if (collabEl) {
             if (task.members && task.members !== "None") {
@@ -255,29 +269,34 @@
         updateProgressBar(task);
     }
 
+
     function updateProgressBar(task) {
         let progressPercent = 0;
         const normalizedStatus = (task.status || '').toLowerCase();
         if (normalizedStatus === 'in progress' || normalizedStatus === 'progress') progressPercent = 50;
         if (normalizedStatus === 'completed' || normalizedStatus === 'complete') progressPercent = 100;
 
+
         document.getElementById('detail-progress-text').textContent = `${progressPercent}%`;
         document.getElementById('detail-progress-bar').style.width = `${progressPercent}%`;
     }
+
 
     function showFailureState(heading, bodyText) {
         document.getElementById('detail-title').textContent = heading;
         document.getElementById('detail-description').textContent = bodyText;
     }
 
+
     function renderSubTasks() {
         const container = document.getElementById('subtasks-container');
         const subtasks = liveTaskData.subtasks || [];
-        
+       
         if (subtasks.length === 0) {
             container.innerHTML = `<p style="font-size: 13px; color: #666; margin: 0;">No sub-tasks available.</p>`;
             return;
         }
+
 
         container.innerHTML = subtasks.map((st, index) => `
             <div style="display: flex; justify-content: space-between; align-items: center; background: #FCF8F8; border: 1px solid #000; border-radius: 6px; padding: 8px 12px;">
@@ -289,6 +308,7 @@
             </div>
         `).join('');
 
+
         document.querySelectorAll('.subtask-checkbox').forEach(box => {
             box.addEventListener('change', async (e) => {
                 const idx = parseInt(e.target.getAttribute('data-index'), 10);
@@ -296,6 +316,7 @@
                 await commitSubTasksChanges();
             });
         });
+
 
         document.querySelectorAll('.subtask-delete-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
@@ -306,22 +327,26 @@
         });
     }
 
+
     async function appendNewSubTask() {
         const input = document.getElementById('subtask-input');
         const text = input.value.trim();
         if (!text) return;
 
+
         if (!liveTaskData.subtasks) liveTaskData.subtasks = [];
         liveTaskData.subtasks.push({ text: text, completed: false });
-        
-        input.value = ""; 
+       
+        input.value = "";
         await commitSubTasksChanges();
     }
+
 
     document.getElementById('add-subtask-btn').addEventListener('click', appendNewSubTask);
     document.getElementById('subtask-input').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') appendNewSubTask();
     });
+
 
     async function commitSubTasksChanges() {
         if (isFirebaseTask) {
@@ -342,12 +367,14 @@
         renderSubTasks();
     }
 
+
     document.getElementById('edit-task-btn').addEventListener('click', () => {
         if (!liveTaskData) return;
         document.getElementById('modalTaskTitle').value = liveTaskData.title || '';
         document.getElementById('modalTaskDesc').value = liveTaskData.description || '';
         document.getElementById('modalTaskDate').value = liveTaskData.deadline || liveTaskData.dueDate || '';
         document.getElementById('modalTaskStatus').value = (liveTaskData.status || 'pending').toLowerCase();
+
 
         const categoryRadio = document.querySelector(`input[name="category"][value="${(liveTaskData.category || 'academic').toLowerCase()}"]`);
         if (categoryRadio) categoryRadio.checked = true;
@@ -356,8 +383,10 @@
         const visibilityRadio = document.querySelector(`input[name="visibility"][value="${(liveTaskData.visibility || 'private').toLowerCase()}"]`);
         if (visibilityRadio) visibilityRadio.checked = true;
 
+
         document.getElementById('editTaskModal').style.setProperty('display', 'flex', 'important');
     });
+
 
     document.getElementById('editTaskForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -365,16 +394,18 @@
         const checkedPriority = document.querySelector('input[name="priority"]:checked');
         const checkedVisibility = document.querySelector('input[name="visibility"]:checked');
 
+
         const updatedFields = {
             title: document.getElementById('modalTaskTitle').value,
             description: document.getElementById('modalTaskDesc').value,
             deadline: document.getElementById('modalTaskDate').value,
-            dueDate: document.getElementById('modalTaskDate').value, 
+            dueDate: document.getElementById('modalTaskDate').value,
             status: document.getElementById('modalTaskStatus').value,
             category: checkedCategory ? checkedCategory.value : 'general',
             priority: checkedPriority ? checkedPriority.value : 'medium',
             visibility: checkedVisibility ? checkedVisibility.value : 'private'
         };
+
 
         if (isFirebaseTask) {
             try {
@@ -402,6 +433,7 @@
         }
     });
 
+
     // ===============================================
     // BRANDED UI DELETE MODAL LOGIC FOR TASK DETAILS
     // ===============================================
@@ -410,6 +442,7 @@
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
+
     if (openDeleteModalBtn) {
         openDeleteModalBtn.addEventListener('click', () => {
             if (taskId === null || taskId === '') return;
@@ -417,16 +450,19 @@
         });
     }
 
+
     if (cancelDeleteBtn) {
         cancelDeleteBtn.addEventListener('click', () => {
             if (deleteModal) deleteModal.style.setProperty('display', 'none', 'important');
         });
     }
 
+
     if (confirmDeleteBtn) {
         confirmDeleteBtn.addEventListener('click', async () => {
             confirmDeleteBtn.innerText = "Deleting...";
             openDeleteModalBtn.style.opacity = '0.5';
+
 
             try {
                 if (isFirebaseTask) {
@@ -449,6 +485,7 @@
         });
     }
 
+
     function closeEditModal() {
         document.getElementById('editTaskModal').style.setProperty('display', 'none', 'important');
     }
@@ -457,3 +494,4 @@
 </script>
 </body>
 </html>
+
