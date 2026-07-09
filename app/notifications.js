@@ -136,7 +136,7 @@ function renderFeed(filterType) {
                 <div style="flex-grow: 1;">
                     <h4 style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700;">${notif.title}</h4>
                     <p style="margin: 0; font-size: 12px; color: #555;">${notif.message}</p>
-                    ${notif.type === 'invitations' ? `<button class="accept-btn" data-id="${notif.id}" style="margin-top:8px; padding: 4px 12px; background: #55CBB2; color: white; border: none; border-radius: 5px; cursor: pointer;">Accept</button>` : ''}
+                    ${notif.type === 'invitations' ? `<button class="accept-btn" data-id="${notif.id}" data-taskid="${notif.taskId || ''}" style="margin-top:8px; padding: 4px 12px; background: #55CBB2; border: none; border-radius: 4px; color: white; cursor: pointer;">Accept</button>` : ''}
                 </div>
                 <div style="font-size: 11px; color: #888;">${notifTime}</div>
             </div>
@@ -144,15 +144,49 @@ function renderFeed(filterType) {
     });
 }
 
-// Handle "Accept" Click
+// Handle "Accept" Click (Fully updated with Task logic)
 document.addEventListener('click', async (e) => {
     if (e.target.classList.contains('accept-btn')) {
-        const id = e.target.getAttribute('data-id');
+        const notifId = e.target.getAttribute('data-id');
+        const taskId = e.target.getAttribute('data-taskid'); // Needs to exist in your HTML loop!
+        const userEmail = auth.currentUser.email.toLowerCase().trim();
+
+        // Optional UX: Disable button while loading
+        const originalText = e.target.innerText;
+        e.target.innerText = "Accepting...";
+        e.target.disabled = true;
+
         try {
-            await updateDoc(doc(db, "notifications", id), { status: "accepted" });
-            alert("Invitation accepted!");
+            // 1. Update the Notification
+            await updateDoc(doc(db, "notifications", notifId), { status: "accepted" });
+
+            // 2. Update the actual Task (This is what routes it to the Shared dashboard!)
+            if (taskId) {
+                await updateDoc(doc(db, "tasks", taskId), { status: "Accepted" });
+            } else {
+                // Fallback loop if taskId is missing
+                const taskQuery = query(collection(db, "tasks"), where("sharedWith", "==", userEmail));
+                const querySnapshot = await getDocs(taskQuery);
+                
+                for (const taskDoc of querySnapshot.docs) {
+                    const currentStatus = taskDoc.data().status ? taskDoc.data().status.toLowerCase().trim() : "";
+                    if (currentStatus === "pending") {
+                        await updateDoc(doc(db, "tasks", taskDoc.id), { status: "Accepted" });
+                    }
+                }
+            }
+
+            alert("Invitation accepted successfully! It will now appear under your Shared Tasks.");
+            
+            // 3. Refresh the Notifications UI
             loadNotifications(auth.currentUser);
-        } catch (err) { alert("Error accepting invitation."); }
+
+        } catch (err) {
+            console.error("Error accepting invitation:", err);
+            alert("Error trying to process invitation acceptance updates.");
+            e.target.innerText = originalText;
+            e.target.disabled = false;
+        }
     }
 });
 
